@@ -1,0 +1,24 @@
+{
+  "title": "Modrinth",
+  "description": "A LifeForge client module for one of the largest Minecraft modding community",
+  "items": {
+    "entry": "Entry"
+  },
+  "modals": {
+    "entry": {
+      "create": "Create Entry",
+      "update": "Update Entry"
+    }
+  },
+  "inputs": {
+    "name": "Entry Name",
+    "icon": "Entry Icon",
+    "color": "Entry Color"
+  },
+  "empty": {
+    "entry": {
+      "title": "No entries yet",
+      "description": "Get started by creating your first entry."
+    }
+  }
+}
