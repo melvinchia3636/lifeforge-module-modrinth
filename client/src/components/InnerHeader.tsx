@@ -6,6 +6,7 @@ import {
   Button,
   HeaderFilter,
   SearchInput,
+  ViewModeSelector,
   useModuleSidebarState
 } from 'lifeforge-ui'
 import _ from 'lodash'
@@ -18,6 +19,8 @@ function InnerHeader({ totalItemsCount }: { totalItemsCount: number }) {
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   const {
+    viewMode,
+    setViewMode,
     searchQuery,
     setSearchQuery,
     version,
@@ -118,12 +121,31 @@ function InnerHeader({ totalItemsCount }: { totalItemsCount: number }) {
           categories: categories.split(',')
         }}
       />
-      <SearchInput
-        className="mt-4 mb-6 xl:mt-6"
-        searchTarget="Modrinth"
-        setValue={setSearchQuery}
-        value={searchQuery}
-      />
+      <div className="mt-4 mb-6 flex gap-2 xl:mt-6">
+        <SearchInput
+          searchTarget="Modrinth"
+          setValue={setSearchQuery}
+          value={searchQuery}
+        />
+        <ViewModeSelector
+          options={[
+            {
+              icon: 'tabler:list',
+              value: 'list'
+            },
+            {
+              icon: 'uil:apps',
+              value: 'grid'
+            },
+            {
+              icon: 'tabler:photo',
+              value: 'gallery'
+            }
+          ]}
+          setViewMode={setViewMode}
+          viewMode={viewMode}
+        />
+      </div>
     </>
   )
 }

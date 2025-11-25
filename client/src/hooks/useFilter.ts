@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import {
   parseAsInteger,
   parseAsString,
+  parseAsStringEnum,
   useQueryState,
   useQueryStates
 } from 'shared'
@@ -14,6 +15,11 @@ export default function useFilter() {
   )
 
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+
+  const [viewMode, setViewMode] = useQueryState(
+    'view',
+    parseAsStringEnum(['grid', 'list', 'gallery']).withDefault('list')
+  )
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
 
@@ -43,6 +49,8 @@ export default function useFilter() {
   return {
     page,
     setPage,
+    viewMode,
+    setViewMode,
     searchQuery,
     debouncedSearchQuery,
     setSearchQuery,

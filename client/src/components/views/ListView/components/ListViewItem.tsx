@@ -6,11 +6,11 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
 import { ItemWrapper } from 'lifeforge-ui'
 
-import CategoryIcon from './CategoryIcon'
+import CategoryIcon from '../../../CategoryIcon'
 
 dayjs.extend(relativeTime)
 
-function EntryItem({ entry }: { entry: Hit }) {
+function ListViewItem({ entry }: { entry: Hit }) {
   return (
     <ItemWrapper className="flex flex-col gap-4 md:flex-row">
       <div className="bg-bg-100 shadow-custom dark:bg-bg-800/70 relative isolate size-38 shrink-0 overflow-hidden rounded-lg">
@@ -72,4 +72,4 @@ function EntryItem({ entry }: { entry: Hit }) {
   )
 }
 
-export default EntryItem
+export default ListViewItem

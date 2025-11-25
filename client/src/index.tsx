@@ -10,9 +10,11 @@ import {
 } from 'lifeforge-ui'
 import { type InferOutput } from 'shared'
 
-import EntryItem from './components/EntryItem'
 import InnerHeader from './components/InnerHeader'
 import Sidebar from './components/Sidebar'
+import GalleryView from './components/views/GalleryView'
+import GridView from './components/views/GridView'
+import ListView from './components/views/ListView'
 import useFilter from './hooks/useFilter'
 import forgeAPI from './utils/forgeAPI'
 
@@ -20,9 +22,22 @@ export type Hit = InferOutput<
   typeof forgeAPI.modrinth.listProjects
 >['items'][number]
 
+const VIEW_COMPONENTS = {
+  list: ListView,
+  grid: GridView,
+  gallery: GalleryView
+}
+
 function Modrinth() {
-  const { page, setPage, debouncedSearchQuery, version, loaders, categories } =
-    useFilter()
+  const {
+    viewMode,
+    page,
+    setPage,
+    debouncedSearchQuery,
+    version,
+    loaders,
+    categories
+  } = useFilter()
 
   const entriesQuery = useQuery(
     forgeAPI.modrinth.listProjects
@@ -61,9 +76,13 @@ function Modrinth() {
                       totalPages={Math.ceil(entries.total / 20)}
                       onPageChange={setPage}
                     />
-                    {entries.items.map(entry => (
-                      <EntryItem key={entry.project_id} entry={entry} />
-                    ))}
+                    {(() => {
+                      const ViewComponent = VIEW_COMPONENTS[viewMode]
+
+                      return ViewComponent ? (
+                        <ViewComponent entries={entries.items} />
+                      ) : null
+                    })()}
                     <Pagination
                       className="my-6"
                       currentPage={page}
