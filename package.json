@@ -8,6 +8,7 @@
         "@uidotdev/usehooks": "^2.4.1",
         "clsx": "^2.1.1",
         "dayjs": "^1.11.18",
+        "human-readable": "^0.2.1",
         "lifeforge-ui": "workspace:*",
         "react": "^19.2.0",
         "react-i18next": "^15.1.1",

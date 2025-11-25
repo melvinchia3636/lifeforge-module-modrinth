@@ -1,63 +1,82 @@
 import { useQuery } from '@tanstack/react-query'
 import {
-  Button,
+  ContentWrapperWithSidebar,
   EmptyStateScreen,
+  LayoutWithSidebar,
   ModuleHeader,
-  WithQuery,
-  useModalStore
+  Pagination,
+  Scrollbar,
+  WithQuery
 } from 'lifeforge-ui'
-import { useTranslation } from 'react-i18next'
-import type { InferOutput } from 'shared'
+import { type InferOutput } from 'shared'
 
 import EntryItem from './components/EntryItem'
-import ModifyEntryModal from './components/ModifyEntryModal'
+import InnerHeader from './components/InnerHeader'
+import Sidebar from './components/Sidebar'
+import useFilter from './hooks/useFilter'
 import forgeAPI from './utils/forgeAPI'
 
-export type Entry = InferOutput<typeof forgeAPI.modrinth.entries.getById>
+export type Hit = InferOutput<
+  typeof forgeAPI.modrinth.listProjects
+>['items'][number]
 
 function Modrinth() {
-  const { t } = useTranslation('apps.modrinth')
+  const { page, setPage, debouncedSearchQuery, version, loaders, categories } =
+    useFilter()
 
-  const open = useModalStore(state => state.open)
-
-  const entriesQuery = useQuery(forgeAPI.modrinth.entries.list.queryOptions())
+  const entriesQuery = useQuery(
+    forgeAPI.modrinth.listProjects
+      .input({
+        page: page.toString(),
+        query: debouncedSearchQuery || undefined,
+        version: version || undefined,
+        loaders: loaders || undefined,
+        categories: categories || undefined
+      })
+      .queryOptions()
+  )
 
   return (
     <>
-      <ModuleHeader
-        actionButton={
-          <Button
-            icon="tabler:plus"
-            tProps= {{
-              item: t('items.entry')
-            }}  
-            onClick={() => {
-              open(ModifyEntryModal, {
-                openType: 'create'
-              })
-            }}
-          >
-            new
-          </Button>
-        }
-      />
-      <WithQuery query={entriesQuery}>
-        {entries =>
-          entries.length === 0 ? (
-            <EmptyStateScreen
-              icon="tabler:cube-off"
-              name="entry"
-              namespace="apps.modrinth"
-            />
-          ) : (
-            <div className="space-y-3">
-              {entries.map(entry => (
-                <EntryItem key={entry.id} entry={entry} />
-              ))}
-            </div>
-          )
-        }
-      </WithQuery>
+      <ModuleHeader />
+      <LayoutWithSidebar>
+        <Sidebar />
+        <ContentWrapperWithSidebar>
+          <InnerHeader totalItemsCount={entriesQuery.data?.total ?? 0} />
+
+          <WithQuery query={entriesQuery}>
+            {entries =>
+              entries.total === 0 ? (
+                <EmptyStateScreen
+                  icon="tabler:search-off"
+                  name="search"
+                  namespace="apps.modrinth"
+                />
+              ) : (
+                <Scrollbar>
+                  <div className="space-y-3">
+                    <Pagination
+                      className="mb-6"
+                      currentPage={page}
+                      totalPages={Math.ceil(entries.total / 20)}
+                      onPageChange={setPage}
+                    />
+                    {entries.items.map(entry => (
+                      <EntryItem key={entry.project_id} entry={entry} />
+                    ))}
+                    <Pagination
+                      className="my-6"
+                      currentPage={page}
+                      totalPages={Math.ceil(entries.total / 20)}
+                      onPageChange={setPage}
+                    />
+                  </div>
+                </Scrollbar>
+              )
+            }
+          </WithQuery>
+        </ContentWrapperWithSidebar>
+      </LayoutWithSidebar>
     </>
   )
 }

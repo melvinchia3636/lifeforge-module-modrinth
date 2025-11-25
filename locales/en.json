@@ -4,21 +4,18 @@
   "items": {
     "entry": "Entry"
   },
-  "modals": {
-    "entry": {
-      "create": "Create Entry",
-      "update": "Update Entry"
-    }
-  },
-  "inputs": {
-    "name": "Entry Name",
-    "icon": "Entry Icon",
-    "color": "Entry Color"
-  },
   "empty": {
-    "entry": {
-      "title": "No entries yet",
-      "description": "Get started by creating your first entry."
+    "search": {
+      "title": "No results found",
+      "description": "Try adjusting your search or filter to find what you're looking for."
     }
+  },
+  "sidebar": {
+    "categories": "Categories",
+    "loaders": "Loaders",
+    "gameVersions": "Game Versions",
+    "allMods": "All Mods",
+    "myFavourites": "My Favourites",
+    "filteredMods": "Filtered Mods"
   }
 }

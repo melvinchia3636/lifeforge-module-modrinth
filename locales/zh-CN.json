@@ -4,21 +4,18 @@
   "items": {
     "entry": "条目"
   },
-  "modals": {
-    "entry": {
-      "create": "创建条目",
-      "update": "更新条目"
-    }
-  },
-  "inputs": {
-    "name": "条目名称",
-    "icon": "条目图标",
-    "color": "条目颜色"
-  },
   "empty": {
-    "entry": {
-      "title": "还没有条目",
-      "description": "通过创建您的第一个条目开始吧。"
+    "search": {
+      "title": "未找到结果",
+      "description": "尝试调整您的搜索或过滤器以找到您要查找的内容。"
     }
+  },
+  "sidebar": {
+    "categories": "分类",
+    "loaders": "加载器",
+    "gameVersions": "游戏版本",
+    "allMods": "所有模组",
+    "myFavourites": "我的收藏",
+    "filteredMods": "已过滤模组"
   }
 }

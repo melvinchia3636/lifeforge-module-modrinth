@@ -4,21 +4,18 @@
   "items": {
     "entry": "Entri"
   },
-  "modals": {
-    "entry": {
-      "create": "Buat Entri",
-      "update": "Kemaskini Entri"
-    }
-  },
-  "inputs": {
-    "name": "Nama Entri",
-    "icon": "Ikon Entri",
-    "color": "Warna Entri"
-  },
   "empty": {
-    "entry": {
-      "title": "Tiada entri lagi",
-      "description": "Mulakan dengan mencipta entri pertama anda."
+    "search": {
+      "title": "Tiada keputusan ditemui",
+      "description": "Cuba laraskan carian atau penapis anda untuk mencari apa yang anda cari."
     }
+  },
+  "sidebar": {
+    "categories": "Kategori",
+    "loaders": "Pemuatan",
+    "gameVersions": "Versi Permainan",
+    "allMods": "Semua Mod",
+    "myFavourites": "Kegemaran Saya",
+    "filteredMods": "Mod Ditapis"
   }
 }
