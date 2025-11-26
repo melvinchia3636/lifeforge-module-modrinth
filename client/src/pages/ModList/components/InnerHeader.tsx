@@ -30,7 +30,7 @@ function InnerHeader({ totalItemsCount }: { totalItemsCount: number }) {
   } = useFilter()
 
   const versionsQuery = useQuery(
-    forgeAPI.modrinth.listGameVersions.queryOptions()
+    forgeAPI.modrinth.gameVersions.list.queryOptions()
   )
 
   return (
