@@ -1,8 +1,5 @@
 import forgeAPI from '@/utils/forgeAPI'
-import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
-import dayjs from 'dayjs'
-import { sizeFormatter } from 'human-readable'
 import {
   Button,
   ContentWrapperWithSidebar,
@@ -10,20 +7,22 @@ import {
   LayoutWithSidebar,
   Scrollbar,
   Tabs,
-  WithQuery
+  WithQuery,
+  useModuleSidebarState
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { type InferOutput, useNavigate, useParams } from 'shared'
 
-import CategoryIcon from '../ModList/components/CategoryIcon'
-import { getKey } from '../ModList/constants/icons'
+import ChangelogSection from './components/ChangelogSection'
 import DescriptionSection from './components/DescriptionSection'
 import GallerySection from './components/GallerySection'
+import Header from './components/Header'
 import Sidebar from './components/Sidebar'
+import VersionsSection from './components/VersionsSection'
 
 export type ProjectDetails = InferOutput<
-  typeof forgeAPI.modrinth.getProjectDetails
+  typeof forgeAPI.modrinth.projects.getDetails
 >
 
 function ProjectDetails() {
@@ -35,8 +34,10 @@ function ProjectDetails() {
     'description' | 'gallery' | 'changelog' | 'versions'
   >('description')
 
+  const { setIsSidebarOpen } = useModuleSidebarState()
+
   const dataQuery = useQuery(
-    forgeAPI.modrinth.getProjectDetails
+    forgeAPI.modrinth.projects.getDetails
       .input({
         projectId: projectId!
       })
@@ -59,77 +60,16 @@ function ProjectDetails() {
     <WithQuery query={dataQuery} showRetryButton={false}>
       {data => (
         <>
-          <GoBackButton onClick={() => navigate(-1)} />
-          <header className="flex-between border-bg-200 dark:border-bg-700/50 mt-2 mb-6 gap-12 border-b pb-6">
-            <div className="flex gap-4">
-              <div className="bg-bg-100 border-bg-200 dark:border-bg-700/50 shadow-custom dark:bg-bg-800/70 relative isolate size-32 shrink-0 overflow-hidden rounded-lg border">
-                {data.icon_url ? (
-                  <img
-                    alt={`${data.title} icon`}
-                    className="absolute inset-0 h-full w-full object-cover"
-                    src={data.icon_url}
-                  />
-                ) : (
-                  <Icon
-                    className="text-bg-200 dark:text-bg-700 absolute bottom-1/2 left-1/2 z-[-1] size-12 -translate-x-1/2 translate-y-1/2"
-                    icon="simple-icons:modrinth"
-                  />
-                )}
-              </div>
-              <div>
-                <h3 className="text-3xl font-medium">{data.title}</h3>
-                <p className="text-bg-500 mt-2">{data.description}</p>
-                <div className="text-bg-500 mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <div className="flex items-center gap-1">
-                    <Icon className="size-5" icon="tabler:download" />
-                    <span className="text-base">
-                      {
-                        sizeFormatter({
-                          render: (literal, suffix) => `${literal}${suffix}`
-                        })(data.downloads) as string
-                      }{' '}
-                      downloads
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Icon className="size-5" icon="tabler:users" />
-                    <span className="text-base">
-                      {sizeFormatter()(data.followers) as string} follows
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Icon className="size-5" icon="tabler:history" />
-                    <span className="text-base">
-                      Updated {dayjs(data.updated).fromNow()}
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {data.categories.map(category => (
-                    <span
-                      key={category}
-                      className="bg-bg-200 dark:bg-bg-800 text-bg-500 flex items-center gap-2 rounded-full px-3 py-1 text-sm"
-                    >
-                      <CategoryIcon id={category} />
-                      {getKey(category) || category}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button icon="tabler:download" onClick={() => {}}>
-                Download
-              </Button>
-              <Button
-                icon="tabler:heart"
-                variant="secondary"
-                onClick={() => {}}
-              >
-                Add to Favourites
-              </Button>
-            </div>
-          </header>
+          <div className="flex-between flex">
+            <GoBackButton onClick={() => navigate(-1)} />
+            <Button
+              className="mb-2"
+              icon="tabler:info-circle"
+              variant="plain"
+              onClick={() => setIsSidebarOpen(true)}
+            />
+          </div>
+          <Header data={data} />
           <LayoutWithSidebar>
             <ContentWrapperWithSidebar>
               <Tabs
@@ -171,21 +111,36 @@ function ProjectDetails() {
                   )
                 }}
               />
-              <Scrollbar>
+              <Scrollbar className="hidden lg:block">
                 {currentSection === 'description' && (
                   <DescriptionSection description={data.body} />
                 )}
                 {currentSection === 'gallery' && (
                   <GallerySection gallery={data.gallery} />
                 )}
+                {currentSection === 'changelog' && <ChangelogSection />}
+                {currentSection === 'versions' && <VersionsSection />}
               </Scrollbar>
+              <div className="block lg:hidden">
+                {currentSection === 'description' && (
+                  <DescriptionSection description={data.body} />
+                )}
+                {currentSection === 'gallery' && (
+                  <GallerySection gallery={data.gallery} />
+                )}
+                {currentSection === 'changelog' && <ChangelogSection />}
+                {currentSection === 'versions' && <VersionsSection />}
+              </div>
             </ContentWrapperWithSidebar>
             <Sidebar
-              discordUrl={data.discord_url}
+              discord_url={data.discord_url}
               hasOrganization={!!data.organization}
-              issuesUrl={data.issues_url}
+              issues_url={data.issues_url}
+              license={data.license}
               loaders={data.loaders}
-              sourceUrl={data.source_url}
+              published={data.published}
+              source_url={data.source_url}
+              updated={data.updated}
               versions={data.game_versions}
             />
           </LayoutWithSidebar>

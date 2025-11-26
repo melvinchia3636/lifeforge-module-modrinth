@@ -1,18 +1,27 @@
-import type { Hit } from '@'
+import type { Hit } from '@/pages/ModList'
 import { getKey } from '@/pages/ModList/constants/icons'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
 import { ItemWrapper } from 'lifeforge-ui'
+import { useNavigate } from 'shared'
 
 import CategoryIcon from '../../../CategoryIcon'
 
 dayjs.extend(relativeTime)
 
 function GalleryViewItem({ entry }: { entry: Hit }) {
+  const navigate = useNavigate()
+
   return (
-    <ItemWrapper className="flex flex-col gap-4 p-0!">
+    <ItemWrapper
+      isInteractive
+      className="flex flex-col gap-4 p-0!"
+      onClick={() => {
+        navigate(`/modrinth/project/${entry.project_id}`)
+      }}
+    >
       <div
         className="bg-bg-200 dark:bg-bg-800/70 aspect-video w-full"
         style={

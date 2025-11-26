@@ -19,7 +19,7 @@ import ListView from './components/views/ListView'
 import useFilter from './hooks/useFilter'
 
 export type Hit = InferOutput<
-  typeof forgeAPI.modrinth.listProjects
+  typeof forgeAPI.modrinth.projects.list
 >['items'][number]
 
 const VIEW_COMPONENTS = {
@@ -40,7 +40,7 @@ function Modrinth() {
   } = useFilter()
 
   const entriesQuery = useQuery(
-    forgeAPI.modrinth.listProjects
+    forgeAPI.modrinth.projects.list
       .input({
         page: page.toString(),
         query: debouncedSearchQuery || undefined,

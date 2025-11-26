@@ -1,18 +1,27 @@
-import type { Hit } from '@'
+import type { Hit } from '@/pages/ModList'
 import { getKey } from '@/pages/ModList/constants/icons'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
 import { ItemWrapper } from 'lifeforge-ui'
+import { useNavigate } from 'shared'
 
 import CategoryIcon from '../../../CategoryIcon'
 
 dayjs.extend(relativeTime)
 
 function GridViewItem({ entry }: { entry: Hit }) {
+  const navigate = useNavigate()
+
   return (
-    <ItemWrapper className="flex flex-col gap-4">
+    <ItemWrapper
+      isInteractive
+      className="flex flex-col gap-4"
+      onClick={() => {
+        navigate(`/modrinth/project/${entry.project_id}`)
+      }}
+    >
       <div className="flex items-center gap-4">
         <div className="bg-bg-100 shadow-custom dark:bg-bg-800/70 relative isolate size-16 shrink-0 overflow-hidden rounded-lg">
           {entry.icon_url ? (

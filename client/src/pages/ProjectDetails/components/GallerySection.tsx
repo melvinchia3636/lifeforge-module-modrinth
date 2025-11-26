@@ -6,7 +6,7 @@ import type { ProjectDetails } from '..'
 
 function GallerySection({ gallery }: { gallery: ProjectDetails['gallery'] }) {
   return (
-    <div className="mb-8 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
+    <div className="mb-8 grid gap-4 sm:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
       {gallery
         .sort((a, b) => a.ordering - b.ordering)
         .map(image => (

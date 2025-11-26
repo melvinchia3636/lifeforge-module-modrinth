@@ -3,6 +3,7 @@ import { getKey } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
+import dayjs from 'dayjs'
 import {
   SidebarDivider,
   SidebarItem,
@@ -15,25 +16,35 @@ import { useMemo } from 'react'
 import { useParams } from 'shared'
 import tinycolor from 'tinycolor2'
 
+import type { ProjectDetails } from '..'
+
 function Sidebar({
   versions,
   loaders,
-  issuesUrl,
-  sourceUrl,
-  discordUrl,
-  hasOrganization
-}: {
-  versions: string[]
-  loaders: string[]
-  issuesUrl?: string
-  sourceUrl?: string
-  discordUrl?: string
-  hasOrganization?: boolean
+  issues_url: issuesUrl,
+  source_url: sourceUrl,
+  discord_url: discordUrl,
+  hasOrganization,
+  published,
+  updated,
+  license
+}: Pick<
+  ProjectDetails,
+  | 'versions'
+  | 'loaders'
+  | 'issues_url'
+  | 'source_url'
+  | 'discord_url'
+  | 'license'
+  | 'published'
+  | 'updated'
+> & {
+  hasOrganization: boolean
 }) {
   const { projectId } = useParams<{ projectId: string }>()
 
   const gameVersionsQuery = useQuery(
-    forgeAPI.modrinth.listGameVersions.queryOptions()
+    forgeAPI.modrinth.gameVersions.list.queryOptions()
   )
 
   const allVersionsGrouped = useMemo(() => {
@@ -166,7 +177,7 @@ function Sidebar({
       <div className="px-8">
         {hasOrganization && (
           <WithQueryData
-            controller={forgeAPI.modrinth.getProjectOrganization.input({
+            controller={forgeAPI.modrinth.projects.getOrganization.input({
               projectId: projectId!
             })}
           >
@@ -216,7 +227,7 @@ function Sidebar({
           </WithQueryData>
         )}
         <WithQueryData
-          controller={forgeAPI.modrinth.listProjectMembers.input({
+          controller={forgeAPI.modrinth.projects.listMembers.input({
             projectId: projectId!
           })}
         >
@@ -262,6 +273,33 @@ function Sidebar({
             </div>
           )}
         </WithQueryData>
+      </div>
+      <SidebarDivider />
+      <SidebarTitle className="text-bg-500!" label="Details" />
+      <div className="space-y-3 px-8">
+        {license.name && (
+          <div className="text-bg-500 flex items-center gap-2">
+            <Icon className="size-5 shrink-0" icon="tabler:license" />
+            <span className="min-w-0 truncate">
+              License{' '}
+              <span className="text-custom-500 font-medium">
+                {license.name}
+              </span>
+            </span>
+          </div>
+        )}
+        <div className="text-bg-500 flex items-center gap-2">
+          <Icon className="size-5 shrink-0" icon="tabler:calendar" />
+          <span className="min-w-0 truncate">
+            Published {dayjs(published).fromNow()}
+          </span>
+        </div>
+        <div className="text-bg-500 flex items-center gap-2">
+          <Icon className="size-5 shrink-0" icon="tabler:history" />
+          <span className="min-w-0 truncate">
+            Updated {dayjs(updated).fromNow()}
+          </span>
+        </div>
       </div>
     </SidebarWrapper>
   )
