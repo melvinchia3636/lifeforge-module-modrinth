@@ -17,6 +17,7 @@
         "react-toastify": "^11.0.5",
         "rehype-raw": "^7.0.0",
         "shared": "workspace:*",
+        "tailwindcss": "^4.1.17",
         "vite": "^7.1.9",
         "zod": "^4.1.12"
     },
