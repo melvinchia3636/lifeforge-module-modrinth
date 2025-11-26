@@ -1,4 +1,5 @@
 import { forgeController, forgeRouter } from '@functions/routes'
+import { ClientError } from '@functions/routes/utils/response'
 import { JSDOM } from 'jsdom'
 import { z } from 'zod'
 
@@ -24,6 +25,113 @@ export interface Hit {
   gallery: string[]
   featured_gallery: null | string
   color: number | null
+}
+
+export interface ProjectDetails {
+  client_side: string
+  server_side: string
+  game_versions: string[]
+  id: string
+  slug: string
+  project_type: string
+  team: string
+  organization: string | null
+  title: string
+  description: string
+  body: string
+  body_url: null
+  published: Date
+  updated: Date
+  approved: Date
+  queued: null
+  status: string
+  requested_status: null
+  moderator_message: null
+  license: License
+  downloads: number
+  followers: number
+  categories: string[]
+  additional_categories: any[]
+  loaders: string[]
+  versions: string[]
+  icon_url: string
+  issues_url: string
+  source_url: string
+  wiki_url: string
+  discord_url: string
+  donation_urls: any[]
+  gallery: Gallery[]
+  color: number
+  thread_id: string
+  monetization_status: string
+}
+
+export interface Gallery {
+  url: string
+  raw_url: string
+  featured: boolean
+  title: null | string
+  description: null
+  created: Date
+  ordering: number
+}
+
+export interface License {
+  id: string
+  name: string
+  url: null
+}
+
+export interface ProjectMember {
+  role: string
+  team_id: string
+  user: User
+  permissions: null
+  accepted: boolean
+  payouts_split: null
+  ordering: number
+}
+
+export interface Organization {
+  id: string
+  slug: string
+  name: string
+  team_id: string
+  description: string
+  icon_url: string
+  color: number
+  members: Member[]
+}
+
+export interface Member {
+  team_id: string
+  user: User
+  role: string
+  is_owner: boolean
+  permissions: null
+  organization_permissions: null
+  accepted: boolean
+  payouts_split: null
+  ordering: number
+}
+
+export interface User {
+  id: string
+  username: string
+  avatar_url: string
+  bio: string | null
+  created: Date
+  role: string
+  badges: number
+  auth_providers: null
+  email: null
+  email_verified: null
+  has_password: null
+  has_totp: null
+  payout_data: null
+  stripe_customer_id: null
+  allow_friend_requests: null
+  github_id: null
 }
 
 const API_ENDPOINT = 'https://api.modrinth.com/v2/search'
@@ -106,7 +214,33 @@ const listProjects = forgeController
     }
   )
 
-const listVersions = forgeController
+const getProjectDetails = forgeController
+  .query()
+  .description('Get Modrinth project details')
+  .input({
+    query: z.object({
+      projectId: z.string()
+    })
+  })
+  .callback(async ({ query: { projectId } }) => {
+    const response = await fetch(
+      `https://api.modrinth.com/v2/project/${projectId}`
+    )
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new ClientError('Project not found', 404)
+      }
+
+      throw new Error('Failed to fetch project details')
+    }
+
+    const data = await response.json()
+
+    return data as ProjectDetails
+  })
+
+const listGameVersions = forgeController
   .query()
   .description('List all versions for Minecraft')
   .input({})
@@ -126,4 +260,65 @@ const listVersions = forgeController
       .slice(1, -1)
   })
 
-export default forgeRouter({ listProjects, listVersions })
+const listProjectMembers = forgeController
+  .query()
+  .description('List all members of a Modrinth project team')
+  .input({
+    query: z.object({
+      projectId: z.string()
+    })
+  })
+  .callback(async ({ query: { projectId } }) => {
+    const response = await fetch(
+      `https://api.modrinth.com/v2/project/${projectId}/members`
+    )
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new ClientError('Project not found', 404)
+      }
+      throw new Error('Failed to fetch project members')
+    }
+
+    const data = await response.json()
+
+    return data as ProjectMember[]
+  })
+
+const getProjectOrganization = forgeController
+  .query()
+  .description('Get the organization of a Modrinth project')
+  .input({
+    query: z.object({
+      projectId: z.string()
+    })
+  })
+  .callback(async ({ query: { projectId } }) => {
+    const response = await fetch(
+      `https://api.modrinth.com/v3/project/${projectId}/organization`
+    )
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new ClientError('Organization not found', 404)
+      }
+      throw new Error('Failed to fetch project organization')
+    }
+
+    const data = (await response.json()) as Organization
+
+    return {
+      slug: data.slug,
+      name: data.name,
+      icon: data.icon_url,
+      color: data.color
+    }
+  })
+
+export default forgeRouter({
+  listProjects,
+  getProjectDetails,
+  listProjectMembers,
+  getProjectOrganization,
+  listGameVersions
+})

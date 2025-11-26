@@ -1,4 +1,4 @@
-import type { Hit } from '@'
+import type { Hit } from '@/pages/ModList'
 
 import ListViewItem from './components/ListViewItem'
 

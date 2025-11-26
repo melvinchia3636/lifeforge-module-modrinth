@@ -1,4 +1,4 @@
-import { ICONS, getKey } from '@/constants/icons'
+import { ICONS, getKey } from '@/pages/ModList/constants/icons'
 
 function CategoryIcon({ id }: { id: string }) {
   const key = getKey(id)

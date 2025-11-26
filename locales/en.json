@@ -4,6 +4,14 @@
   "items": {
     "entry": "Entry"
   },
+  "subsections": {
+    "mods": "Mods",
+    "resourcePacks": "Resource Packs",
+    "datapacks": "Datapacks",
+    "shaders": "Shaders",
+    "modpacks": "Modpacks",
+    "plugins": "Plugins"
+  },
   "empty": {
     "search": {
       "title": "No results found",

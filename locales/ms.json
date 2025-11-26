@@ -4,6 +4,14 @@
   "items": {
     "entry": "Entri"
   },
+  "subsections": {
+    "mods": "Mod",
+    "resourcePacks": "Pakej Sumber",
+    "datapacks": "Pakej Data",
+    "shaders": "Shader",
+    "modpacks": "Pakej Mod",
+    "plugins": "Pemalam"
+  },
   "empty": {
     "search": {
       "title": "Tiada keputusan ditemui",

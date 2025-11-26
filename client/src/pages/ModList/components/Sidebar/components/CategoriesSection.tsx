@@ -1,29 +1,29 @@
-import { ICONS } from '@/constants/icons'
+import { ICONS } from '@/pages/ModList/constants/icons'
 import useFilter, {
   findInFilterList,
   toggleInFilterList
-} from '@/hooks/useFilter'
+} from '@/pages/ModList/hooks/useFilter'
 import { SidebarItem, SidebarTitle } from 'lifeforge-ui'
 import _ from 'lodash'
 
-function LoadersSection() {
-  const { loaders: selectedLoaders, updateFilter } = useFilter()
+function CategoriesSection() {
+  const { categories: selectedCategories, updateFilter } = useFilter()
 
   return (
     <>
-      <SidebarTitle label="Loaders" namespace="apps.modrinth" />
-      {Object.keys(ICONS.loaders).map(loader => (
+      <SidebarTitle label="Categories" namespace="apps.modrinth" />
+      {Object.keys(ICONS.categories).map(category => (
         <SidebarItem
-          key={loader}
+          key={category}
           actionButtonIcon="tabler:ban"
           active={
-            findInFilterList(selectedLoaders, loader, {
+            findInFilterList(selectedCategories, category, {
               isNegation: undefined,
               transformString: str => _.kebabCase(str.toLowerCase())
             }) !== null
           }
           activeClassNames={
-            findInFilterList(selectedLoaders, loader, {
+            findInFilterList(selectedCategories, category, {
               isNegation: true,
               transformString: str => _.kebabCase(str.toLowerCase())
             }) !== null
@@ -33,11 +33,11 @@ function LoadersSection() {
                 }
               : undefined
           }
-          icon={`customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`}
-          label={loader}
+          icon={`customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`}
+          label={category}
           onActionButtonClick={() => {
             updateFilter(prev => ({
-              loaders: toggleInFilterList(prev.loaders, loader, {
+              categories: toggleInFilterList(prev.categories, category, {
                 isNegation: true,
                 transformString: str => _.kebabCase(str.toLowerCase())
               })
@@ -45,7 +45,7 @@ function LoadersSection() {
           }}
           onClick={() => {
             updateFilter(prev => ({
-              loaders: toggleInFilterList(prev.loaders, loader, {
+              categories: toggleInFilterList(prev.categories, category, {
                 isNegation: false,
                 transformString: str => _.kebabCase(str.toLowerCase())
               })
@@ -57,4 +57,4 @@ function LoadersSection() {
   )
 }
 
-export default LoadersSection
+export default CategoriesSection

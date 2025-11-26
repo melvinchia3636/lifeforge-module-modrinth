@@ -4,6 +4,14 @@
   "items": {
     "entry": "條目"
   },
+  "subsections": {
+    "mods": "模組",
+    "resourcePacks": "資源包",
+    "datapacks": "資料包",
+    "shaders": "光影",
+    "modpacks": "模組包",
+    "plugins": "插件"
+  },
   "empty": {
     "search": {
       "title": "未找到結果",

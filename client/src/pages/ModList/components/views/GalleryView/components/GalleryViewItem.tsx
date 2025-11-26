@@ -1,5 +1,5 @@
 import type { Hit } from '@'
-import { getKey } from '@/constants/icons'
+import { getKey } from '@/pages/ModList/constants/icons'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'

@@ -1,4 +1,4 @@
-import useFilter from '@/hooks/useFilter'
+import useFilter from '@/pages/ModList/hooks/useFilter'
 import forgeAPI from '@/utils/forgeAPI'
 import {
   Scrollbar,
@@ -14,7 +14,7 @@ function VersionsSection() {
     <>
       <SidebarTitle label="Game Versions" namespace="apps.modrinth" />
       <Scrollbar className="min-h-[400px]">
-        <WithQueryData controller={forgeAPI.modrinth.listVersions}>
+        <WithQueryData controller={forgeAPI.modrinth.listGameVersions}>
           {versions => (
             <div className="space-y-1">
               {versions.map(version => (

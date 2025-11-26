@@ -1,5 +1,5 @@
-import { ICONS } from '@/constants/icons'
-import useFilter from '@/hooks/useFilter'
+import { ICONS } from '@/pages/ModList/constants/icons'
+import useFilter from '@/pages/ModList/hooks/useFilter'
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import {
@@ -29,7 +29,9 @@ function InnerHeader({ totalItemsCount }: { totalItemsCount: number }) {
     updateFilter
   } = useFilter()
 
-  const versionsQuery = useQuery(forgeAPI.modrinth.listVersions.queryOptions())
+  const versionsQuery = useQuery(
+    forgeAPI.modrinth.listGameVersions.queryOptions()
+  )
 
   return (
     <>

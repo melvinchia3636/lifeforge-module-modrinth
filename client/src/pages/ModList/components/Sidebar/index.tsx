@@ -1,4 +1,4 @@
-import useFilter from '@/hooks/useFilter'
+import useFilter from '@/pages/ModList/hooks/useFilter'
 import { SidebarDivider, SidebarItem, SidebarWrapper } from 'lifeforge-ui'
 
 import CategoriesSection from './components/CategoriesSection'
