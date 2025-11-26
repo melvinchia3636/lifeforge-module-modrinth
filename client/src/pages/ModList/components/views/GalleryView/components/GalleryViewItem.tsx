@@ -1,13 +1,11 @@
 import type { Hit } from '@/pages/ModList'
-import { getKey } from '@/pages/ModList/constants/icons'
+import { getIcon, getKey } from '@/pages/ModList/constants/icons'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
-import { ItemWrapper } from 'lifeforge-ui'
+import { ItemWrapper, TagChip } from 'lifeforge-ui'
 import { useNavigate } from 'shared'
-
-import CategoryIcon from '../../../CategoryIcon'
 
 dayjs.extend(relativeTime)
 
@@ -94,13 +92,11 @@ function GalleryViewItem({ entry }: { entry: Hit }) {
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
           {entry.categories.map(category => (
-            <span
+            <TagChip
               key={category}
-              className="bg-bg-200 dark:bg-bg-800 text-bg-500 flex items-center gap-2 rounded-full px-3 py-1 text-sm"
-            >
-              <CategoryIcon id={category} />
-              {getKey(category) || category}
-            </span>
+              icon={`customHTML:${getIcon(category)}`}
+              label={getKey(category) || category}
+            />
           ))}
         </div>
       </div>

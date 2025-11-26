@@ -90,6 +90,18 @@ export const ICONS = {
   }
 }
 
+export function getIcon(id: string) {
+  const key = getKey(id)
+
+  if (!key) return null
+
+  return Object.fromEntries(
+    Object.values(ICONS)
+      .map(e => Object.entries(e))
+      .flat()
+  )[key]
+}
+
 export function getKey(id: string) {
   return Object.keys(
     Object.fromEntries(

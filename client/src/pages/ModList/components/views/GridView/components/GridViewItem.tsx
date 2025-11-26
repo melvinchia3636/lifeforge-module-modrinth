@@ -1,13 +1,11 @@
 import type { Hit } from '@/pages/ModList'
-import { getKey } from '@/pages/ModList/constants/icons'
+import { getIcon, getKey } from '@/pages/ModList/constants/icons'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
-import { ItemWrapper } from 'lifeforge-ui'
+import { ItemWrapper, TagChip } from 'lifeforge-ui'
 import { useNavigate } from 'shared'
-
-import CategoryIcon from '../../../CategoryIcon'
 
 dayjs.extend(relativeTime)
 
@@ -23,7 +21,7 @@ function GridViewItem({ entry }: { entry: Hit }) {
       }}
     >
       <div className="flex items-center gap-4">
-        <div className="bg-bg-100 shadow-custom dark:bg-bg-800/70 relative isolate size-16 shrink-0 overflow-hidden rounded-lg">
+        <div className="bg-bg-100 border-bg-200 dark:border-bg-700/50 shadow-custom dark:bg-bg-800/70 relative isolate size-16 shrink-0 overflow-hidden rounded-lg border">
           {entry.icon_url ? (
             <img
               alt={`${entry.title} icon`}
@@ -48,7 +46,7 @@ function GridViewItem({ entry }: { entry: Hit }) {
       </div>
       <div className="flex flex-1 flex-col">
         <p className="text-bg-500">{entry.description}</p>
-        <div className="text-bg-500 mt-3 mt-auto flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="text-bg-500 mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-4">
           <div className="flex items-center gap-1">
             <Icon className="size-5" icon="tabler:download" />
             <span className="text-base">
@@ -75,13 +73,11 @@ function GridViewItem({ entry }: { entry: Hit }) {
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
           {entry.categories.map(category => (
-            <span
+            <TagChip
               key={category}
-              className="bg-bg-200 dark:bg-bg-800 text-bg-500 flex items-center gap-2 rounded-full px-3 py-1 text-sm"
-            >
-              <CategoryIcon id={category} />
-              {getKey(category) || category}
-            </span>
+              icon={`customHTML:${getIcon(category)}`}
+              label={getKey(category) || category}
+            />
           ))}
         </div>
       </div>

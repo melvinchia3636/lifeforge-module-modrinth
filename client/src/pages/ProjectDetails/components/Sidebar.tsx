@@ -1,5 +1,4 @@
-import CategoryIcon from '@/pages/ModList/components/CategoryIcon'
-import { getKey } from '@/pages/ModList/constants/icons'
+import { getIcon } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
@@ -9,6 +8,7 @@ import {
   SidebarItem,
   SidebarTitle,
   SidebarWrapper,
+  TagChip,
   WithQuery,
   WithQueryData
 } from 'lifeforge-ui'
@@ -121,12 +121,7 @@ function Sidebar({
         {() => (
           <div className="flex flex-wrap gap-2 px-8">
             {finalVerisons.map(version => (
-              <span
-                key={version}
-                className="bg-bg-200 dark:bg-bg-800 text-bg-500 rounded-full px-3 py-1 text-sm"
-              >
-                {version}
-              </span>
+              <TagChip key={version} label={version} />
             ))}
           </div>
         )}
@@ -135,13 +130,11 @@ function Sidebar({
       <SidebarTitle className="text-bg-500!" label="Platforms" />
       <div className="flex flex-wrap gap-2 px-8">
         {loaders.map(loader => (
-          <span
+          <TagChip
             key={loader}
-            className="bg-bg-200 dark:bg-bg-800 text-bg-500 flex items-center gap-2 rounded-full px-3 py-1 text-sm"
-          >
-            <CategoryIcon id={loader} />
-            {getKey(loader) || loader}
-          </span>
+            icon={`customHTML:${getIcon(loader)}`}
+            label={loader}
+          />
         ))}
       </div>
       <SidebarDivider />

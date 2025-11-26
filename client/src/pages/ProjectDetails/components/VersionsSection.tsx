@@ -1,10 +1,15 @@
-import CategoryIcon from '@/pages/ModList/components/CategoryIcon'
-import { getKey } from '@/pages/ModList/constants/icons'
+import { getIcon } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
-import { Button, ItemWrapper, Pagination, WithQueryData } from 'lifeforge-ui'
+import {
+  Button,
+  ItemWrapper,
+  Pagination,
+  TagChip,
+  WithQueryData
+} from 'lifeforge-ui'
 import { useState } from 'react'
 import { useParams } from 'shared'
 
@@ -53,25 +58,18 @@ function VersionsSection() {
                     <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-1">
                         {version.game_versions.map(v => (
-                          <span
-                            key={v}
-                            className="bg-bg-200 dark:bg-bg-800 text-bg-500 inline-block rounded-full px-3 py-1 text-sm"
-                          >
-                            {v}
-                          </span>
+                          <TagChip key={v} label={v} />
                         ))}
                       </div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-1">
                         {version.loaders.map(loader => (
-                          <span
+                          <TagChip
                             key={loader}
-                            className="bg-bg-200 dark:bg-bg-800 text-bg-500 flex-center gap-1 rounded-full px-3 py-1 text-sm"
-                          >
-                            <CategoryIcon id={loader} />
-                            {getKey(loader) || loader}
-                          </span>
+                            icon={`customHTML:${getIcon(loader)}`}
+                            label={loader}
+                          />
                         ))}
                       </div>
                     </td>
@@ -122,12 +120,7 @@ function VersionsSection() {
                     </h4>
                     <div className="flex flex-wrap gap-1">
                       {version.game_versions.map(v => (
-                        <span
-                          key={v}
-                          className="bg-bg-200 dark:bg-bg-800 text-bg-500 inline-block rounded-full px-3 py-1 text-sm"
-                        >
-                          {v}
-                        </span>
+                        <TagChip key={v} label={v} />
                       ))}
                     </div>
                   </div>
@@ -137,13 +130,11 @@ function VersionsSection() {
                     </h4>
                     <div className="flex flex-wrap gap-1">
                       {version.loaders.map(loader => (
-                        <span
+                        <TagChip
                           key={loader}
-                          className="bg-bg-200 dark:bg-bg-800 text-bg-500 flex-center gap-1 rounded-full px-3 py-1 text-sm"
-                        >
-                          <CategoryIcon id={loader} />
-                          {getKey(loader) || loader}
-                        </span>
+                          icon={`customHTML:${getIcon(loader)}`}
+                          label={loader}
+                        />
                       ))}
                     </div>
                   </div>
