@@ -1,5 +1,6 @@
 import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
+import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
 import {
@@ -9,9 +10,10 @@ import {
   LayoutWithSidebar,
   Scrollbar,
   Tabs,
-  WithQueryData
+  WithQuery
 } from 'lifeforge-ui'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { type InferOutput, useNavigate, useParams } from 'shared'
 
 import CategoryIcon from '../ModList/components/CategoryIcon'
@@ -33,13 +35,28 @@ function ProjectDetails() {
     'description' | 'gallery' | 'changelog' | 'versions'
   >('description')
 
-  return (
-    <WithQueryData
-      controller={forgeAPI.modrinth.getProjectDetails.input({
+  const dataQuery = useQuery(
+    forgeAPI.modrinth.getProjectDetails
+      .input({
         projectId: projectId!
-      })}
-      showRetryButton={false}
-    >
+      })
+      .queryOptions({
+        retry: false
+      })
+  )
+
+  useEffect(() => {
+    if (
+      dataQuery.isError &&
+      dataQuery.error.message.toLowerCase().includes('not found')
+    ) {
+      navigate('/modrinth', { replace: true })
+      toast.error('Project not found')
+    }
+  }, [dataQuery.isError, dataQuery.error, navigate])
+
+  return (
+    <WithQuery query={dataQuery} showRetryButton={false}>
       {data => (
         <>
           <GoBackButton onClick={() => navigate(-1)} />
@@ -174,7 +191,7 @@ function ProjectDetails() {
           </LayoutWithSidebar>
         </>
       )}
-    </WithQueryData>
+    </WithQuery>
   )
 }
 
