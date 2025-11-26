@@ -1,13 +1,15 @@
-import CategoryIcon from '@/pages/ModList/components/CategoryIcon'
-import { getKey } from '@/pages/ModList/constants/icons'
+import { getIcon, getKey } from '@/pages/ModList/constants/icons'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
-import { Button } from 'lifeforge-ui'
+import { Button, TagChip, useModalStore } from 'lifeforge-ui'
 
 import type { ProjectDetails } from '..'
+import DownloadModal from './DownloadModal'
 
 function Header({ data }: { data: ProjectDetails }) {
+  const open = useModalStore(state => state.open)
+
   return (
     <header className="border-bg-200 dark:border-bg-700/50 mt-2 mb-6 flex flex-col items-start justify-between gap-6 border-b pb-6 lg:flex-row lg:items-center lg:gap-12">
       <div className="flex flex-col gap-4 sm:flex-row">
@@ -63,19 +65,23 @@ function Header({ data }: { data: ProjectDetails }) {
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
             {data.categories.map(category => (
-              <span
+              <TagChip
                 key={category}
-                className="bg-bg-200 dark:bg-bg-800 text-bg-500 flex items-center gap-2 rounded-full px-3 py-1 text-sm"
-              >
-                <CategoryIcon id={category} />
-                {getKey(category) || category}
-              </span>
+                icon={`customHTML:${getIcon(category)}`}
+                label={getKey(category) || category}
+              />
             ))}
           </div>
         </div>
       </div>
       <div className="flex w-full flex-col items-center gap-2 sm:flex-row lg:w-auto">
-        <Button className="w-full" icon="tabler:download" onClick={() => {}}>
+        <Button
+          className="w-full"
+          icon="tabler:download"
+          onClick={() => {
+            open(DownloadModal, { slug: data.slug, name: data.title })
+          }}
+        >
           Download
         </Button>
         <Button
