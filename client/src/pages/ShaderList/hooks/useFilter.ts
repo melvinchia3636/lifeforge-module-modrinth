@@ -6,6 +6,7 @@ export default function useFilter() {
     version: parseAsString.withDefault(''),
     loaders: parseAsString.withDefault(''),
     categories: parseAsString.withDefault(''),
-    environments: parseAsString.withDefault('')
+    features: parseAsString.withDefault(''),
+    performanceImpact: parseAsString.withDefault('')
   })
 }

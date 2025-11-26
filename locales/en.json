@@ -2,7 +2,12 @@
   "title": "Modrinth",
   "description": "A LifeForge client module for one of the largest Minecraft modding community",
   "items": {
-    "entry": "Entry"
+    "mod": "Mod",
+    "resourcePack": "Resource Pack",
+    "datapack": "Datapack",
+    "shader": "Shader",
+    "modpack": "Modpack",
+    "plugin": "Plugin"
   },
   "subsections": {
     "mods": "Mods",
@@ -22,8 +27,73 @@
     "categories": "Categories",
     "loaders": "Loaders",
     "gameVersions": "Game Versions",
+    "features": "Features",
+    "resolutions": "Resolutions",
     "allMods": "All Mods",
+    "allResourcePacks": "All Resource Packs",
+    "allDataPacks": "All Data Packs",
+    "allShaders": "All Shaders",
+    "allModpacks": "All Modpacks",
+    "allPlugins": "All Plugins",
     "myFavourites": "My Favourites",
-    "filteredMods": "Filtered Mods"
+    "filteredMods": "Filtered Mods",
+    "filteredResourcePacks": "Filtered Resource Packs",
+    "filteredDataPacks": "Filtered Data Packs",
+    "filteredShaders": "Filtered Shaders",
+    "filteredModpacks": "Filtered Modpacks",
+    "filteredPlugins": "Filtered Plugins"
+  },
+  "projectDetails": {
+    "projectNotFound": "Project not found",
+    "tabs": {
+      "description": "Description",
+      "gallery": "Gallery",
+      "changelog": "Changelog",
+      "versions": "Versions"
+    },
+    "changelog": {
+      "by": "by",
+      "on": "on",
+      "noChangelog": "No changelog provided.",
+      "unknown": "Unknown"
+    },
+    "gallery": {
+      "untitled": "Untitled",
+      "imageAlt": "Gallery image"
+    },
+    "header": {
+      "downloads": "downloads",
+      "follows": "follows",
+      "updated": "Updated",
+      "download": "Download"
+    },
+    "sidebar": {
+      "compatibility": "Compatibility",
+      "platforms": "Platforms",
+      "links": "Links",
+      "reportIssue": "Report Issue",
+      "sourceCode": "Source Code",
+      "discord": "Discord",
+      "creators": "Creators",
+      "organization": "Organization",
+      "details": "Details",
+      "license": "License",
+      "published": "Published",
+      "updated": "Updated"
+    },
+    "versions": {
+      "name": "Name",
+      "gameVersions": "Game Versions",
+      "platforms": "Platforms",
+      "published": "Published",
+      "downloads": "Downloads"
+    },
+    "downloadModal": {
+      "title": "Download {{name}}",
+      "gameVersion": "Game Version",
+      "platform": "Platform",
+      "selectPlatform": "Select a platform",
+      "download": "Download"
+    }
   }
 }

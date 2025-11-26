@@ -1,5 +1,5 @@
 import { forgeController } from '@functions/routes'
-import { JSDOM } from 'jsdom'
+import { JSDOM, VirtualConsole } from 'jsdom'
 
 export const list = forgeController
   .query()
@@ -8,7 +8,14 @@ export const list = forgeController
   .callback(async () => {
     const raw = await fetch('https://modrinth.com/mods').then(res => res.text())
 
-    const dom = new JSDOM(raw)
+    const virtualConsole = new VirtualConsole()
+
+    // @ts-ignore
+    const dom = new JSDOM(raw, { virtualConsole, contentType: "text/html;charset=UTF-8", verbose: false })
+
+    virtualConsole.on("error", (e: any) => {
+      console.error(e)
+    })
 
     const document = dom.window.document
 

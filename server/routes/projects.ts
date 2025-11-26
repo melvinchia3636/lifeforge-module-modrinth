@@ -23,14 +23,38 @@ export const list = forgeController
       query: z.string().optional(),
       version: z.string().optional(),
       loaders: z.string().optional(),
-      categories: z.string().optional()
+      categories: z.string().optional(),
+      environment: z.string().optional(),
+      projectType: z
+        .enum([
+          'mod',
+          'modpack',
+          'resourcepack',
+          'shader',
+          'datapack',
+          'plugin'
+        ])
+        .optional()
+        .default('mod'),
+      facets: z.string().optional() // Additional facets as JSON string
     })
   })
   .callback(
     async ({
-      query: { page, query, version: versions, loaders, categories }
+      query: {
+        page,
+        query,
+        version: versions,
+        loaders,
+        categories,
+        environment,
+        projectType,
+        facets: additionalFacets
+      }
     }) => {
-      const facets: string[][] = [['project_type:mod']]
+      console.log(categories)
+
+      const facets: string[][] = [[`project_type:${projectType}`]]
 
       if (versions) {
         const versionArray = versions.split(',').filter(Boolean)
@@ -67,6 +91,36 @@ export const list = forgeController
 
         for (const c of categoryArray.filter(c => c.startsWith('!'))) {
           facets.push([`categories!=${c.replace('!', '')}`])
+        }
+      }
+
+      if (environment) {
+        const envArray = environment.split(',').filter(Boolean)
+
+        const hasClient = envArray.includes('client')
+
+        const hasServer = envArray.includes('server')
+
+        if (hasClient && !hasServer) {
+          facets.push(['client_side:optional', 'client_side:required'])
+          facets.push(['server_side:optional', 'server_side:unsupported'])
+        } else if (!hasClient && hasServer) {
+          facets.push(['client_side:optional', 'client_side:unsupported'])
+          facets.push(['server_side:optional', 'server_side:required'])
+        } else if (hasClient && hasServer) {
+          facets.push(['client_side:required'])
+          facets.push(['server_side:required'])
+        }
+      }
+
+      // Parse and merge additional facets if provided
+      if (additionalFacets) {
+        try {
+          const parsedFacets = JSON.parse(additionalFacets) as string[][]
+
+          facets.push(...parsedFacets)
+        } catch {
+          // Ignore invalid JSON facets
         }
       }
 

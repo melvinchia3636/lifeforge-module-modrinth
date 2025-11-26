@@ -1,4 +1,4 @@
-import { getIcon } from '@/pages/ModList/constants/icons'
+import { getModIcon } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
@@ -13,7 +13,8 @@ import {
   WithQueryData
 } from 'lifeforge-ui'
 import { useMemo } from 'react'
-import { useParams } from 'shared'
+import { useTranslation } from 'react-i18next'
+import { useParams, usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
 import type { ProjectDetails } from '..'
@@ -41,7 +42,13 @@ function Sidebar({
 > & {
   hasOrganization: boolean
 }) {
+  const { t } = useTranslation('apps.modrinth')
+
+  const { bgTempPalette } = usePersonalization()
+
   const { projectId } = useParams<{ projectId: string }>()
+
+  const { language } = usePersonalization()
 
   const gameVersionsQuery = useQuery(
     forgeAPI.modrinth.gameVersions.list.queryOptions()
@@ -116,7 +123,10 @@ function Sidebar({
 
   return (
     <SidebarWrapper>
-      <SidebarTitle className="text-bg-500!" label="Compatibility" />
+      <SidebarTitle
+        className="text-bg-500!"
+        label={t('projectDetails.sidebar.compatibility')}
+      />
       <WithQuery query={gameVersionsQuery}>
         {() => (
           <div className="flex flex-wrap gap-2 px-8">
@@ -127,24 +137,30 @@ function Sidebar({
         )}
       </WithQuery>
       <SidebarDivider />
-      <SidebarTitle className="text-bg-500!" label="Platforms" />
+      <SidebarTitle
+        className="text-bg-500!"
+        label={t('projectDetails.sidebar.platforms')}
+      />
       <div className="flex flex-wrap gap-2 px-8">
         {loaders.map(loader => (
           <TagChip
             key={loader}
-            icon={`customHTML:${getIcon(loader)}`}
+            icon={`customHTML:${getModIcon(loader)}`}
             label={loader}
           />
         ))}
       </div>
       <SidebarDivider />
-      <SidebarTitle className="text-bg-500!" label="Links" />
+      <SidebarTitle
+        className="text-bg-500!"
+        label={t('projectDetails.sidebar.links')}
+      />
       <div>
         {issuesUrl && (
           <SidebarItem
             active={false}
             icon="tabler:bug"
-            label="Report Issue"
+            label={t('projectDetails.sidebar.reportIssue')}
             onClick={() => goToURL(issuesUrl)}
           />
         )}
@@ -152,7 +168,7 @@ function Sidebar({
           <SidebarItem
             active={false}
             icon="tabler:code"
-            label="Source Code"
+            label={t('projectDetails.sidebar.sourceCode')}
             onClick={() => goToURL(sourceUrl)}
           />
         )}
@@ -160,13 +176,16 @@ function Sidebar({
           <SidebarItem
             active={false}
             icon="tabler:brand-discord"
-            label="Discord"
+            label={t('projectDetails.sidebar.discord')}
             onClick={() => goToURL(discordUrl)}
           />
         )}
       </div>
       <SidebarDivider />
-      <SidebarTitle className="text-bg-500!" label="Creators" />
+      <SidebarTitle
+        className="text-bg-500!"
+        label={t('projectDetails.sidebar.creators')}
+      />
       <div className="px-8">
         {hasOrganization && (
           <WithQueryData
@@ -177,12 +196,16 @@ function Sidebar({
             {data => (
               <div className="mb-4 flex items-center gap-3">
                 <div
-                  className="size-9 rounded-md"
+                  className="flex-center size-10 rounded-md"
                   style={{
                     backgroundColor: data?.color
                       ? `#${data.color.toString(16).padStart(6, '0')}`
-                      : 'transparent',
+                      : tinycolor(bgTempPalette[500]).darken(30).toHexString(),
                     color: (() => {
+                      if (!data?.color) {
+                        return bgTempPalette[500]
+                      }
+
                       const color = tinycolor(
                         `#${data.color.toString(16).padStart(6, '0')}`
                       )
@@ -200,10 +223,7 @@ function Sidebar({
                       src={data.icon}
                     />
                   ) : (
-                    <Icon
-                      className="m-auto mt-2 size-5"
-                      icon="simple-icons:modrinth"
-                    />
+                    <Icon className="size-5" icon="simple-icons:modrinth" />
                   )}
                 </div>
                 <div>
@@ -212,7 +232,7 @@ function Sidebar({
                   </p>
                   <p className="text-bg-500 flex items-center gap-1 text-sm">
                     <Icon className="size-4" icon="tabler:building" />
-                    Organization
+                    {t('projectDetails.sidebar.organization')}
                   </p>
                 </div>
               </div>
@@ -268,13 +288,16 @@ function Sidebar({
         </WithQueryData>
       </div>
       <SidebarDivider />
-      <SidebarTitle className="text-bg-500!" label="Details" />
+      <SidebarTitle
+        className="text-bg-500!"
+        label={t('projectDetails.sidebar.details')}
+      />
       <div className="space-y-3 px-8">
         {license.name && (
           <div className="text-bg-500 flex items-center gap-2">
             <Icon className="size-5 shrink-0" icon="tabler:license" />
             <span className="min-w-0 truncate">
-              License{' '}
+              {t('projectDetails.sidebar.license')}{' '}
               <span className="text-custom-500 font-medium">
                 {license.name}
               </span>
@@ -284,13 +307,15 @@ function Sidebar({
         <div className="text-bg-500 flex items-center gap-2">
           <Icon className="size-5 shrink-0" icon="tabler:calendar" />
           <span className="min-w-0 truncate">
-            Published {dayjs(published).fromNow()}
+            {t('projectDetails.sidebar.published')}{' '}
+            {dayjs(published).locale(language).fromNow()}
           </span>
         </div>
         <div className="text-bg-500 flex items-center gap-2">
           <Icon className="size-5 shrink-0" icon="tabler:history" />
           <span className="min-w-0 truncate">
-            Updated {dayjs(updated).fromNow()}
+            {t('projectDetails.sidebar.updated')}{' '}
+            {dayjs(updated).locale(language).fromNow()}
           </span>
         </div>
       </div>

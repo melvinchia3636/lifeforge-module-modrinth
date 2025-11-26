@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next'
 import COLORS from 'tailwindcss/colors'
 
 import forgeAPI from '../../utils/forgeAPI'
-import { ICONS, getModIcon, getModKey } from './constants/icons'
+import { ICONS, getModpackIcon, getModpackKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
-function Modrinth() {
+function ModpackList() {
   const { t } = useTranslation('apps.modrinth')
 
   const {
@@ -38,7 +38,7 @@ function Modrinth() {
         loaders: loaders || undefined,
         categories: categories || undefined,
         environment: environments || undefined,
-        projectType: 'mod'
+        projectType: 'modpack'
       })
       .queryOptions()
   )
@@ -89,6 +89,22 @@ function Modrinth() {
         }))
       ],
       isColored: true
+    },
+    environments: {
+      data: [
+        ...Object.keys(ICONS.environments).map(environment => ({
+          id: _.kebabCase(environment.toLowerCase()),
+          name: environment,
+          icon: `customHTML:${ICONS.environments[environment as keyof typeof ICONS.environments]}`
+        })),
+        ...Object.keys(ICONS.environments).map(environment => ({
+          id: `!${_.kebabCase(environment.toLowerCase())}`,
+          name: environment,
+          icon: `customHTML:${ICONS.environments[environment as keyof typeof ICONS.environments]}`,
+          color: COLORS.red[500]
+        }))
+      ],
+      isColored: true
     }
   }
 
@@ -100,15 +116,6 @@ function Modrinth() {
         label="My Favourites"
         namespace="apps.modrinth"
         onClick={() => {}}
-      />
-      <SidebarDivider />
-      <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
-      <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.loaders}
-        name="loaders"
-        selectedItem={loaders}
-        updateFilter={updateFilter}
       />
       <SidebarDivider />
       <GeneralSection
@@ -124,15 +131,24 @@ function Modrinth() {
         selectedItem={environments}
         updateFilter={updateFilter}
       />
+      <SidebarDivider />
+      <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
+      <SidebarDivider />
+      <GeneralSection
+        icons={ICONS.loaders}
+        name="loaders"
+        selectedItem={loaders}
+        updateFilter={updateFilter}
+      />
     </>
   )
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredMods')}
+      filteredTitle={t('sidebar.filteredModpacks')}
       filterValues={{ version, loaders, categories, environments }}
-      getIcon={getModIcon}
-      getKey={getModKey}
+      getIcon={getModpackIcon}
+      getKey={getModpackKey}
       headerFilterItems={headerFilterItems}
       isLoading={entriesQuery.isLoading}
       items={entriesQuery.data?.items ?? []}
@@ -142,7 +158,7 @@ function Modrinth() {
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All Mods"
+      title="All Modpacks"
       totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
@@ -159,4 +175,4 @@ function Modrinth() {
   )
 }
 
-export default Modrinth
+export default ModpackList

@@ -2,7 +2,12 @@
   "title": "Modrinth",
   "description": "一个LifeForge客户端模块，用于最大的Minecraft modding社区之一。",
   "items": {
-    "entry": "条目"
+    "mod": "模组",
+    "resourcePack": "资源包",
+    "datapack": "数据包",
+    "shader": "光影",
+    "modpack": "模组包",
+    "plugin": "插件"
   },
   "subsections": {
     "mods": "模组",
@@ -22,8 +27,73 @@
     "categories": "分类",
     "loaders": "加载器",
     "gameVersions": "游戏版本",
+    "features": "功能",
+    "resolutions": "分辨率",
     "allMods": "所有模组",
     "myFavourites": "我的收藏",
-    "filteredMods": "已过滤模组"
+    "filteredMods": "已过滤模组",
+    "allResourcePacks": "所有资源包",
+    "filteredResourcePacks": "已过滤资源包",
+    "allDataPacks": "所有数据包",
+    "filteredDataPacks": "已过滤数据包",
+    "allShaders": "所有光影",
+    "filteredShaders": "已过滤光影",
+    "allModpacks": "所有模组包",
+    "filteredModpacks": "已过滤模组包",
+    "allPlugins": "所有插件",
+    "filteredPlugins": "已过滤插件"
+  },
+  "projectDetails": {
+    "projectNotFound": "未找到项目",
+    "tabs": {
+      "description": "描述",
+      "gallery": "画廊",
+      "changelog": "更新日志",
+      "versions": "版本"
+    },
+    "changelog": {
+      "by": "由",
+      "on": "于",
+      "noChangelog": "未提供更新日志。",
+      "unknown": "未知"
+    },
+    "gallery": {
+      "untitled": "无标题",
+      "imageAlt": "画廊图片"
+    },
+    "header": {
+      "downloads": "下载",
+      "follows": "关注",
+      "updated": "更新于",
+      "download": "下载"
+    },
+    "sidebar": {
+      "compatibility": "兼容性",
+      "platforms": "平台",
+      "links": "链接",
+      "reportIssue": "报告问题",
+      "sourceCode": "源代码",
+      "discord": "Discord",
+      "creators": "创作者",
+      "organization": "组织",
+      "details": "详情",
+      "license": "许可证",
+      "published": "发布于",
+      "updated": "更新于"
+    },
+    "versions": {
+      "name": "名称",
+      "gameVersions": "游戏版本",
+      "platforms": "平台",
+      "published": "发布于",
+      "downloads": "下载"
+    },
+    "downloadModal": {
+      "title": "下载 {{name}}",
+      "gameVersion": "游戏版本",
+      "platform": "平台",
+      "selectPlatform": "选择平台",
+      "download": "下载"
+    }
   }
 }

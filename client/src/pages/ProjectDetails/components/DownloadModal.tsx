@@ -1,5 +1,4 @@
-import CategoryIcon from '@/pages/ModList/components/CategoryIcon'
-import { getIcon, getKey } from '@/pages/ModList/constants/icons'
+import { getModIcon, getModKey } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import {
@@ -10,6 +9,7 @@ import {
   WithQuery
 } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function DownloadModal({
   data: { slug, name },
@@ -18,6 +18,8 @@ function DownloadModal({
   data: { slug: string; name: string }
   onClose: () => void
 }) {
+  const { t } = useTranslation('apps.modrinth')
+
   const versionsQuery = useQuery(
     forgeAPI.modrinth.projects.getVersions
       .input({ projectId: slug })
@@ -92,7 +94,7 @@ function DownloadModal({
     <div className="min-w-[40vw]">
       <ModalHeader
         icon="tabler:download"
-        title={`Download ${name}`}
+        title={t('projectDetails.downloadModal.title', { name })}
         onClose={onClose}
       />
       <WithQuery query={versionsQuery}>
@@ -101,7 +103,7 @@ function DownloadModal({
             <ListboxInput
               buttonContent={<>{selectedVersion}</>}
               icon="tabler:device-gamepad"
-              label="Game Version"
+              label={t('projectDetails.downloadModal.gameVersion')}
               setValue={value => {
                 setSelectedVersion(value)
                 setSelectedPlatform(null)
@@ -118,24 +120,29 @@ function DownloadModal({
                   <>
                     {selectedPlatform ? (
                       <>
-                        <CategoryIcon id={selectedPlatform!} />
-                        {getKey(selectedPlatform!) || selectedPlatform}
+                        <span
+                          className="size-4"
+                          dangerouslySetInnerHTML={{
+                            __html: getModIcon(selectedPlatform!) || ''
+                          }}
+                        />
+                        {getModKey(selectedPlatform!) || selectedPlatform}
                       </>
                     ) : (
-                      'Select a platform'
+                      t('projectDetails.downloadModal.selectPlatform')
                     )}
                   </>
                 }
                 icon="tabler:device-desktop"
-                label="Platform"
+                label={t('projectDetails.downloadModal.platform')}
                 setValue={setSelectedPlatform}
                 value={selectedPlatform}
               >
                 {platformOptions.map(platform => (
                   <ListboxOption
                     key={platform}
-                    icon={`customHTML:${getIcon(platform)}`}
-                    label={getKey(platform) || platform}
+                    icon={`customHTML:${getModIcon(platform)}`}
+                    label={getModKey(platform) || platform}
                     value={platform}
                   />
                 ))}
@@ -147,7 +154,7 @@ function DownloadModal({
               icon="tabler:download"
               onClick={download}
             >
-              Download
+              {t('projectDetails.downloadModal.download')}
             </Button>
           </div>
         )}

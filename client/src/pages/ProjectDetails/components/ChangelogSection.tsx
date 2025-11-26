@@ -3,12 +3,17 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { Button, Pagination, WithQueryData } from 'lifeforge-ui'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Markdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
-import { useParams } from 'shared'
+import { useParams, usePersonalization } from 'shared'
 
 function ChangelogSection() {
+  const { t } = useTranslation('apps.modrinth')
+
   const { projectId } = useParams<{ projectId: string }>()
+
+  const { language } = usePersonalization()
 
   const [page, setPage] = useState(1)
 
@@ -49,17 +54,18 @@ function ChangelogSection() {
                         <h3 className="mb-2 flex min-w-0 flex-col text-2xl font-bold sm:flex-row sm:items-end sm:gap-2">
                           {version.version_number}
                           <span className="text-bg-500 w-full min-w-0 truncate text-base font-normal">
-                            <span>by</span>
+                            <span>{t('projectDetails.changelog.by')}</span>
                             <span className="text-custom-500 ml-1.5 text-base font-medium">
                               {members.find(
                                 member => member.user.id === version.author_id
-                              )?.user.username || 'Unknown'}
+                              )?.user.username ||
+                                t('projectDetails.changelog.unknown')}
                             </span>
                             <span className="ml-2">
-                              on{' '}
-                              {dayjs(version.date_published).format(
-                                'MMMM D, YYYY'
-                              )}
+                              {t('projectDetails.changelog.on')}{' '}
+                              {dayjs(version.date_published)
+                                .locale(language)
+                                .format('MMMM D, YYYY')}
                             </span>
                           </span>
                         </h3>
@@ -75,7 +81,8 @@ function ChangelogSection() {
                       </div>
                       <div className="prose modrinth-prose mt-4 max-w-full!">
                         <Markdown rehypePlugins={[rehypeRaw]}>
-                          {version.changelog || 'No changelog provided.'}
+                          {version.changelog ||
+                            t('projectDetails.changelog.noChangelog')}
                         </Markdown>
                       </div>
                     </div>

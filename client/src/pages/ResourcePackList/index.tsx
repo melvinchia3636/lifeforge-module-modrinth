@@ -8,10 +8,25 @@ import { useTranslation } from 'react-i18next'
 import COLORS from 'tailwindcss/colors'
 
 import forgeAPI from '../../utils/forgeAPI'
-import { ICONS, getModIcon, getModKey } from './constants/icons'
+import ResolutionsSection from './components/ResolutionsSection'
+import {
+  ICONS,
+  getResourcePackIcon,
+  getResourcePackKey
+} from './constants/icons'
 import useFilter from './hooks/useFilter'
 
-function Modrinth() {
+const RESOLUTIONS = [
+  '8x or lower',
+  '16x',
+  '32x',
+  '64x',
+  '128x',
+  '256x',
+  '512x or higher'
+]
+
+function ResourcePackList() {
   const { t } = useTranslation('apps.modrinth')
 
   const {
@@ -23,9 +38,9 @@ function Modrinth() {
     setSearchQuery,
     debouncedSearchQuery,
     version,
-    loaders,
     categories,
-    environments,
+    features,
+    resolutions,
     updateFilter
   } = useFilter()
 
@@ -35,10 +50,10 @@ function Modrinth() {
         page: page.toString(),
         query: debouncedSearchQuery || undefined,
         version: version || undefined,
-        loaders: loaders || undefined,
-        categories: categories || undefined,
-        environment: environments || undefined,
-        projectType: 'mod'
+        categories:
+          [categories, features, resolutions].filter(Boolean).join(',') ||
+          undefined,
+        projectType: 'resourcepack'
       })
       .queryOptions()
   )
@@ -56,24 +71,6 @@ function Modrinth() {
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
-    loaders: {
-      data: [
-        ...Object.keys(ICONS.loaders).map(loader => ({
-          id: _.kebabCase(loader.toLowerCase()),
-          name: loader,
-          icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`
-        })),
-        ...Object.keys(ICONS.loaders)
-          .slice(0, 10)
-          .map(loader => ({
-            id: `!${_.kebabCase(loader.toLowerCase())}`,
-            name: loader,
-            icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`,
-            color: COLORS.red[500]
-          }))
-      ],
-      isColored: true
-    },
     categories: {
       data: [
         ...Object.keys(ICONS.categories).map(category => ({
@@ -85,6 +82,41 @@ function Modrinth() {
           id: `!${_.kebabCase(category.toLowerCase())}`,
           name: category,
           icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`,
+          color: COLORS.red[500]
+        }))
+      ],
+      isColored: true
+    },
+    features: {
+      data: [
+        ...Object.keys(ICONS.features).map(feature => ({
+          id: _.kebabCase(feature.toLowerCase()),
+          name: feature,
+          icon: `customHTML:${ICONS.features[feature as keyof typeof ICONS.features]}`
+        })),
+        ...Object.keys(ICONS.features).map(feature => ({
+          id: `!${_.kebabCase(feature.toLowerCase())}`,
+          name: feature,
+          icon: `customHTML:${ICONS.features[feature as keyof typeof ICONS.features]}`,
+          color: COLORS.red[500]
+        }))
+      ],
+      isColored: true
+    },
+    resolutions: {
+      data: [
+        ...RESOLUTIONS.map(resolution => ({
+          id: resolution
+            .replace(' or higher', '+')
+            .replace(' or lower', '-')
+            .toLowerCase(),
+          name: resolution,
+          icon: 'tabler:aspect-ratio'
+        })),
+        ...RESOLUTIONS.map(resolution => ({
+          id: `!${resolution.replace(' or higher', '+').replace(' or lower', '-').toLowerCase()}`,
+          name: resolution,
+          icon: 'tabler:aspect-ratio',
           color: COLORS.red[500]
         }))
       ],
@@ -105,13 +137,6 @@ function Modrinth() {
       <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
       <SidebarDivider />
       <GeneralSection
-        icons={ICONS.loaders}
-        name="loaders"
-        selectedItem={loaders}
-        updateFilter={updateFilter}
-      />
-      <SidebarDivider />
-      <GeneralSection
         icons={ICONS.categories}
         name="categories"
         selectedItem={categories}
@@ -119,20 +144,22 @@ function Modrinth() {
       />
       <SidebarDivider />
       <GeneralSection
-        icons={ICONS.environments}
-        name="environments"
-        selectedItem={environments}
+        icons={ICONS.features}
+        name="features"
+        selectedItem={features}
         updateFilter={updateFilter}
       />
+      <SidebarDivider />
+      <ResolutionsSection />
     </>
   )
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredMods')}
-      filterValues={{ version, loaders, categories, environments }}
-      getIcon={getModIcon}
-      getKey={getModKey}
+      filteredTitle={t('sidebar.filteredResourcePacks')}
+      filterValues={{ version, categories, features, resolutions }}
+      getIcon={getResourcePackIcon}
+      getKey={getResourcePackKey}
       headerFilterItems={headerFilterItems}
       isLoading={entriesQuery.isLoading}
       items={entriesQuery.data?.items ?? []}
@@ -142,14 +169,14 @@ function Modrinth() {
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All Mods"
+      title="All ResourcePacks"
       totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
         updateFilter({
           categories: '',
-          environments: '',
-          loaders: '',
+          features: '',
+          resolutions: '',
           version: ''
         })
         setSearchQuery('')
@@ -159,4 +186,4 @@ function Modrinth() {
   )
 }
 
-export default Modrinth
+export default ResourcePackList

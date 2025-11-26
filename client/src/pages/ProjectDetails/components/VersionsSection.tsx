@@ -1,4 +1,4 @@
-import { getIcon } from '@/pages/ModList/constants/icons'
+import { getModIcon } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
@@ -11,10 +11,15 @@ import {
   WithQueryData
 } from 'lifeforge-ui'
 import { useState } from 'react'
-import { useParams } from 'shared'
+import { useTranslation } from 'react-i18next'
+import { useParams, usePersonalization } from 'shared'
 
 function VersionsSection() {
+  const { t } = useTranslation('apps.modrinth')
+
   const { projectId } = useParams<{ projectId: string }>()
+
+  const { language } = usePersonalization()
 
   const [page, setPage] = useState(1)
 
@@ -35,11 +40,21 @@ function VersionsSection() {
             <table className="my-6 hidden w-full table-auto border-collapse md:table">
               <thead>
                 <tr className="border-bg-200 dark:border-bg-800 border-b-2">
-                  <th className="px-4 py-2 text-left">Name</th>
-                  <th className="px-4 py-2 text-left">Game Versions</th>
-                  <th className="px-4 py-2 text-left">Platforms</th>
-                  <th className="px-4 py-2 text-left">Published</th>
-                  <th className="px-4 py-2 text-left">Downloads</th>
+                  <th className="px-4 py-2 text-left">
+                    {t('projectDetails.versions.name')}
+                  </th>
+                  <th className="px-4 py-2 text-left">
+                    {t('projectDetails.versions.gameVersions')}
+                  </th>
+                  <th className="px-4 py-2 text-left">
+                    {t('projectDetails.versions.platforms')}
+                  </th>
+                  <th className="px-4 py-2 text-left">
+                    {t('projectDetails.versions.published')}
+                  </th>
+                  <th className="px-4 py-2 text-left">
+                    {t('projectDetails.versions.downloads')}
+                  </th>
                   <th></th>
                 </tr>
               </thead>
@@ -67,14 +82,14 @@ function VersionsSection() {
                         {version.loaders.map(loader => (
                           <TagChip
                             key={loader}
-                            icon={`customHTML:${getIcon(loader)}`}
+                            icon={`customHTML:${getModIcon(loader)}`}
                             label={loader}
                           />
                         ))}
                       </div>
                     </td>
                     <td className="text-bg-600 dark:text-bg-400 px-4 py-3">
-                      {dayjs(version.date_published).fromNow()}
+                      {dayjs(version.date_published).locale(language).fromNow()}
                     </td>
                     <td className="text-bg-600 dark:text-bg-400 px-4 py-3">
                       {sizeFormatter({
@@ -116,7 +131,7 @@ function VersionsSection() {
                   </div>
                   <div className="mb-4">
                     <h4 className="text-bg-500 mb-2 text-sm font-medium">
-                      Game Versions
+                      {t('projectDetails.versions.gameVersions')}
                     </h4>
                     <div className="flex flex-wrap gap-1">
                       {version.game_versions.map(v => (
@@ -126,13 +141,13 @@ function VersionsSection() {
                   </div>
                   <div className="mb-6">
                     <h4 className="text-bg-500 mb-2 text-sm font-medium">
-                      Platforms
+                      {t('projectDetails.versions.platforms')}
                     </h4>
                     <div className="flex flex-wrap gap-1">
                       {version.loaders.map(loader => (
                         <TagChip
                           key={loader}
-                          icon={`customHTML:${getIcon(loader)}`}
+                          icon={`customHTML:${getModIcon(loader)}`}
                           label={loader}
                         />
                       ))}
@@ -141,7 +156,11 @@ function VersionsSection() {
                   <div className="text-bg-600 dark:text-bg-400 flex items-center gap-2 text-sm">
                     <div className="flex items-center gap-1">
                       <Icon className="size-4" icon="tabler:calendar" />
-                      <span>{dayjs(version.date_published).fromNow()}</span>
+                      <span>
+                        {dayjs(version.date_published)
+                          .locale(language)
+                          .fromNow()}
+                      </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Icon className="size-4" icon="tabler:download" />

@@ -2,7 +2,12 @@
   "title": "Modrinth",
   "description": "Satu modul klien LifeForge untuk salah satu komuniti modifikasi Minecraft terbesar.",
   "items": {
-    "entry": "Entri"
+    "mod": "Mod",
+    "resourcePack": "Pakej Sumber",
+    "datapack": "Pakej Data",
+    "shader": "Shader",
+    "modpack": "Pakej Mod",
+    "plugin": "Pemalam"
   },
   "subsections": {
     "mods": "Mod",
@@ -24,6 +29,69 @@
     "gameVersions": "Versi Permainan",
     "allMods": "Semua Mod",
     "myFavourites": "Kegemaran Saya",
-    "filteredMods": "Mod Ditapis"
+    "filteredMods": "Mod Ditapis",
+    "allResourcePacks": "Semua Pakej Sumber",
+    "filteredResourcePacks": "Pakej Sumber Ditapis",
+    "allDataPacks": "Semua Pakej Data",
+    "filteredDataPacks": "Pakej Data Ditapis",
+    "allShaders": "Semua Shader",
+    "filteredShaders": "Shader Ditapis",
+    "allModpacks": "Semua Pakej Mod",
+    "filteredModpacks": "Pakej Mod Ditapis",
+    "allPlugins": "Semua Pemalam",
+    "filteredPlugins": "Pemalam Ditapis"
+  },
+  "projectDetails": {
+    "projectNotFound": "Projek tidak ditemui",
+    "tabs": {
+      "description": "Penerangan",
+      "gallery": "Galeri",
+      "changelog": "Log Perubahan",
+      "versions": "Versi"
+    },
+    "changelog": {
+      "by": "oleh",
+      "on": "pada",
+      "noChangelog": "Tiada log perubahan disediakan.",
+      "unknown": "Tidak diketahui"
+    },
+    "gallery": {
+      "untitled": "Tanpa Tajuk",
+      "imageAlt": "Imej galeri"
+    },
+    "header": {
+      "downloads": "muat turun",
+      "follows": "pengikut",
+      "updated": "Dikemaskini",
+      "download": "Muat Turun"
+    },
+    "sidebar": {
+      "compatibility": "Keserasian",
+      "platforms": "Platform",
+      "links": "Pautan",
+      "reportIssue": "Lapor Isu",
+      "sourceCode": "Kod Sumber",
+      "discord": "Discord",
+      "creators": "Pencipta",
+      "organization": "Organisasi",
+      "details": "Butiran",
+      "license": "Lesen",
+      "published": "Diterbitkan",
+      "updated": "Dikemaskini"
+    },
+    "versions": {
+      "name": "Nama",
+      "gameVersions": "Versi Permainan",
+      "platforms": "Platform",
+      "published": "Diterbitkan",
+      "downloads": "Muat Turun"
+    },
+    "downloadModal": {
+      "title": "Muat Turun {{name}}",
+      "gameVersion": "Versi Permainan",
+      "platform": "Platform",
+      "selectPlatform": "Pilih platform",
+      "download": "Muat Turun"
+    }
   }
 }

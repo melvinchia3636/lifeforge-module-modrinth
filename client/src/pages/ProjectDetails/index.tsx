@@ -11,6 +11,7 @@ import {
   useModuleSidebarState
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type InferOutput, useNavigate, useParams } from 'shared'
 
@@ -26,6 +27,8 @@ export type ProjectDetails = InferOutput<
 >
 
 function ProjectDetails() {
+  const { t } = useTranslation('apps.modrinth')
+
   const navigate = useNavigate()
 
   const { projectId } = useParams<{ projectId: string }>()
@@ -52,9 +55,9 @@ function ProjectDetails() {
       dataQuery.error.message.toLowerCase().includes('not found')
     ) {
       navigate('/modrinth', { replace: true })
-      toast.error('Project not found')
+      toast.error(t('projectDetails.projectNotFound'))
     }
-  }, [dataQuery.isError, dataQuery.error, navigate])
+  }, [dataQuery.isError, dataQuery.error, navigate, t])
 
   return (
     <WithQuery query={dataQuery} showRetryButton={false}>
@@ -86,22 +89,22 @@ function ProjectDetails() {
                 items={[
                   {
                     id: 'description',
-                    name: 'Description',
+                    name: t('projectDetails.tabs.description'),
                     icon: 'tabler:file-description'
                   },
                   {
                     id: 'gallery',
-                    name: 'Gallery',
+                    name: t('projectDetails.tabs.gallery'),
                     icon: 'tabler:photo'
                   },
                   {
                     id: 'changelog',
-                    name: 'Changelog',
+                    name: t('projectDetails.tabs.changelog'),
                     icon: 'tabler:history'
                   },
                   {
                     id: 'versions',
-                    name: 'Versions',
+                    name: t('projectDetails.tabs.versions'),
                     icon: 'tabler:package'
                   }
                 ]}

@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next'
 import COLORS from 'tailwindcss/colors'
 
 import forgeAPI from '../../utils/forgeAPI'
-import { ICONS, getModIcon, getModKey } from './constants/icons'
+import { ICONS, getShaderIcon, getShaderKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
-function Modrinth() {
+function ShaderList() {
   const { t } = useTranslation('apps.modrinth')
 
   const {
@@ -25,7 +25,8 @@ function Modrinth() {
     version,
     loaders,
     categories,
-    environments,
+    features,
+    performanceImpact,
     updateFilter
   } = useFilter()
 
@@ -36,9 +37,10 @@ function Modrinth() {
         query: debouncedSearchQuery || undefined,
         version: version || undefined,
         loaders: loaders || undefined,
-        categories: categories || undefined,
-        environment: environments || undefined,
-        projectType: 'mod'
+        categories:
+          [categories, features, performanceImpact].filter(Boolean).join(',') ||
+          undefined,
+        projectType: 'shader'
       })
       .queryOptions()
   )
@@ -89,6 +91,38 @@ function Modrinth() {
         }))
       ],
       isColored: true
+    },
+    features: {
+      data: [
+        ...Object.keys(ICONS.features).map(feature => ({
+          id: _.kebabCase(feature.toLowerCase()),
+          name: feature,
+          icon: `customHTML:${ICONS.features[feature as keyof typeof ICONS.features]}`
+        })),
+        ...Object.keys(ICONS.features).map(feature => ({
+          id: `!${_.kebabCase(feature.toLowerCase())}`,
+          name: feature,
+          icon: `customHTML:${ICONS.features[feature as keyof typeof ICONS.features]}`,
+          color: COLORS.red[500]
+        }))
+      ],
+      isColored: true
+    },
+    performanceImpact: {
+      data: [
+        ...Object.keys(ICONS.performance_impact).map(impact => ({
+          id: _.kebabCase(impact.toLowerCase()),
+          name: impact,
+          icon: `customHTML:${ICONS.performance_impact[impact as keyof typeof ICONS.performance_impact]}`
+        })),
+        ...Object.keys(ICONS.performance_impact).map(impact => ({
+          id: `!${_.kebabCase(impact.toLowerCase())}`,
+          name: impact,
+          icon: `customHTML:${ICONS.performance_impact[impact as keyof typeof ICONS.performance_impact]}`,
+          color: COLORS.red[500]
+        }))
+      ],
+      isColored: true
     }
   }
 
@@ -102,15 +136,6 @@ function Modrinth() {
         onClick={() => {}}
       />
       <SidebarDivider />
-      <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
-      <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.loaders}
-        name="loaders"
-        selectedItem={loaders}
-        updateFilter={updateFilter}
-      />
-      <SidebarDivider />
       <GeneralSection
         icons={ICONS.categories}
         name="categories"
@@ -119,9 +144,25 @@ function Modrinth() {
       />
       <SidebarDivider />
       <GeneralSection
-        icons={ICONS.environments}
-        name="environments"
-        selectedItem={environments}
+        icons={ICONS.features}
+        name="features"
+        selectedItem={features}
+        updateFilter={updateFilter}
+      />
+      <SidebarDivider />
+      <GeneralSection
+        icons={ICONS.performance_impact}
+        name="performanceImpact"
+        selectedItem={performanceImpact}
+        updateFilter={updateFilter}
+      />
+      <SidebarDivider />
+      <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
+      <SidebarDivider />
+      <GeneralSection
+        icons={ICONS.loaders}
+        name="loaders"
+        selectedItem={loaders}
         updateFilter={updateFilter}
       />
     </>
@@ -129,10 +170,16 @@ function Modrinth() {
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredMods')}
-      filterValues={{ version, loaders, categories, environments }}
-      getIcon={getModIcon}
-      getKey={getModKey}
+      filteredTitle={t('sidebar.filteredShaders')}
+      filterValues={{
+        version,
+        loaders,
+        categories,
+        features,
+        performanceImpact
+      }}
+      getIcon={getShaderIcon}
+      getKey={getShaderKey}
       headerFilterItems={headerFilterItems}
       isLoading={entriesQuery.isLoading}
       items={entriesQuery.data?.items ?? []}
@@ -142,14 +189,15 @@ function Modrinth() {
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All Mods"
+      title="All Shaders"
       totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
         updateFilter({
           categories: '',
-          environments: '',
+          features: '',
           loaders: '',
+          performanceImpact: '',
           version: ''
         })
         setSearchQuery('')
@@ -159,4 +207,4 @@ function Modrinth() {
   )
 }
 
-export default Modrinth
+export default ShaderList

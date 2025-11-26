@@ -1,17 +1,17 @@
 import ProjectListPage from '@/components/ProjectListPage'
 import GeneralSection from '@/components/sidebarSections/GeneralSection'
-import VersionsSection from '@/components/sidebarSections/VersionsSection'
 import { useQuery } from '@tanstack/react-query'
 import { SidebarDivider, SidebarItem } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import COLORS from 'tailwindcss/colors'
 
+import VersionsSection from '../../components/sidebarSections/VersionsSection'
 import forgeAPI from '../../utils/forgeAPI'
-import { ICONS, getModIcon, getModKey } from './constants/icons'
+import { ICONS, getDataPackIcon, getDataPackKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
-function Modrinth() {
+function DataPackList() {
   const { t } = useTranslation('apps.modrinth')
 
   const {
@@ -23,9 +23,7 @@ function Modrinth() {
     setSearchQuery,
     debouncedSearchQuery,
     version,
-    loaders,
     categories,
-    environments,
     updateFilter
   } = useFilter()
 
@@ -35,10 +33,8 @@ function Modrinth() {
         page: page.toString(),
         query: debouncedSearchQuery || undefined,
         version: version || undefined,
-        loaders: loaders || undefined,
         categories: categories || undefined,
-        environment: environments || undefined,
-        projectType: 'mod'
+        projectType: 'datapack'
       })
       .queryOptions()
   )
@@ -55,24 +51,6 @@ function Modrinth() {
           name: e || 'Unknown',
           icon: 'tabler:device-gamepad'
         })) ?? []
-    },
-    loaders: {
-      data: [
-        ...Object.keys(ICONS.loaders).map(loader => ({
-          id: _.kebabCase(loader.toLowerCase()),
-          name: loader,
-          icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`
-        })),
-        ...Object.keys(ICONS.loaders)
-          .slice(0, 10)
-          .map(loader => ({
-            id: `!${_.kebabCase(loader.toLowerCase())}`,
-            name: loader,
-            icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`,
-            color: COLORS.red[500]
-          }))
-      ],
-      isColored: true
     },
     categories: {
       data: [
@@ -102,15 +80,6 @@ function Modrinth() {
         onClick={() => {}}
       />
       <SidebarDivider />
-      <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
-      <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.loaders}
-        name="loaders"
-        selectedItem={loaders}
-        updateFilter={updateFilter}
-      />
-      <SidebarDivider />
       <GeneralSection
         icons={ICONS.categories}
         name="categories"
@@ -118,21 +87,16 @@ function Modrinth() {
         updateFilter={updateFilter}
       />
       <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.environments}
-        name="environments"
-        selectedItem={environments}
-        updateFilter={updateFilter}
-      />
+      <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
     </>
   )
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredMods')}
-      filterValues={{ version, loaders, categories, environments }}
-      getIcon={getModIcon}
-      getKey={getModKey}
+      filteredTitle={t('sidebar.filteredDataPacks')}
+      filterValues={{ version, categories }}
+      getIcon={getDataPackIcon}
+      getKey={getDataPackKey}
       headerFilterItems={headerFilterItems}
       isLoading={entriesQuery.isLoading}
       items={entriesQuery.data?.items ?? []}
@@ -142,14 +106,12 @@ function Modrinth() {
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All Mods"
+      title="All DataPacks"
       totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
         updateFilter({
           categories: '',
-          environments: '',
-          loaders: '',
           version: ''
         })
         setSearchQuery('')
@@ -159,4 +121,4 @@ function Modrinth() {
   )
 }
 
-export default Modrinth
+export default DataPackList

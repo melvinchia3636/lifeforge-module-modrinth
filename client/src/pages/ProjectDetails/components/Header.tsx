@@ -1,13 +1,19 @@
-import { getIcon, getKey } from '@/pages/ModList/constants/icons'
+import { getModIcon, getModKey } from '@/pages/ModList/constants/icons'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
 import { Button, TagChip, useModalStore } from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+import { usePersonalization } from 'shared'
 
 import type { ProjectDetails } from '..'
 import DownloadModal from './DownloadModal'
 
 function Header({ data }: { data: ProjectDetails }) {
+  const { t } = useTranslation('apps.modrinth')
+
+  const { language } = usePersonalization()
+
   const open = useModalStore(state => state.open)
 
   return (
@@ -47,19 +53,21 @@ function Header({ data }: { data: ProjectDetails }) {
                     render: (literal, suffix) => `${literal}${suffix}`
                   })(data.downloads) as string
                 }{' '}
-                downloads
+                {t('projectDetails.header.downloads')}
               </span>
             </div>
             <div className="flex items-center gap-1">
               <Icon className="size-5" icon="tabler:users" />
               <span className="text-base">
-                {sizeFormatter()(data.followers) as string} follows
+                {sizeFormatter()(data.followers) as string}{' '}
+                {t('projectDetails.header.follows')}
               </span>
             </div>
             <div className="flex items-center gap-1">
               <Icon className="size-5" icon="tabler:history" />
               <span className="text-base">
-                Updated {dayjs(data.updated).fromNow()}
+                {t('projectDetails.header.updated')}{' '}
+                {dayjs(data.updated).locale(language).fromNow()}
               </span>
             </div>
           </div>
@@ -67,8 +75,8 @@ function Header({ data }: { data: ProjectDetails }) {
             {data.categories.map(category => (
               <TagChip
                 key={category}
-                icon={`customHTML:${getIcon(category)}`}
-                label={getKey(category) || category}
+                icon={`customHTML:${getModIcon(category)}`}
+                label={getModKey(category) || category}
               />
             ))}
           </div>
@@ -82,16 +90,14 @@ function Header({ data }: { data: ProjectDetails }) {
             open(DownloadModal, { slug: data.slug, name: data.title })
           }}
         >
-          Download
+          {t('projectDetails.header.download')}
         </Button>
         <Button
           className="w-full"
           icon="tabler:heart"
           variant="secondary"
           onClick={() => {}}
-        >
-          Add to Favourites
-        </Button>
+        />
       </div>
     </header>
   )

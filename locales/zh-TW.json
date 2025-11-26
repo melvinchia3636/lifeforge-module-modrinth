@@ -2,7 +2,12 @@
   "title": "Modrinth",
   "description": "一個LifeForge客戶端模組，用於最大的Minecraft模組社群之一。",
   "items": {
-    "entry": "條目"
+    "mod": "模組",
+    "resourcePack": "資源包",
+    "datapack": "資料包",
+    "shader": "光影",
+    "modpack": "模組包",
+    "plugin": "插件"
   },
   "subsections": {
     "mods": "模組",
@@ -21,9 +26,74 @@
   "sidebar": {
     "categories": "分類",
     "loaders": "載入器",
+    "features": "功能",
+    "resolutions": "解析度",
     "gameVersions": "遊戲版本",
     "allMods": "所有模組",
     "myFavourites": "我的收藏",
-    "filteredMods": "已篩選模組"
+    "filteredMods": "已篩選模組",
+    "allResourcePacks": "所有資源包",
+    "filteredResourcePacks": "已篩選資源包",
+    "allDataPacks": "所有資料包",
+    "filteredDataPacks": "已篩選資料包",
+    "allShaders": "所有光影",
+    "filteredShaders": "已篩選光影",
+    "allModpacks": "所有模組包",
+    "filteredModpacks": "已篩選模組包",
+    "allPlugins": "所有插件",
+    "filteredPlugins": "已篩選插件"
+  },
+  "projectDetails": {
+    "projectNotFound": "未找到專案",
+    "tabs": {
+      "description": "描述",
+      "gallery": "畫廊",
+      "changelog": "更新日誌",
+      "versions": "版本"
+    },
+    "changelog": {
+      "by": "由",
+      "on": "於",
+      "noChangelog": "未提供更新日誌。",
+      "unknown": "未知"
+    },
+    "gallery": {
+      "untitled": "無標題",
+      "imageAlt": "畫廊圖片"
+    },
+    "header": {
+      "downloads": "下載",
+      "follows": "關注",
+      "updated": "更新於",
+      "download": "下載"
+    },
+    "sidebar": {
+      "compatibility": "相容性",
+      "platforms": "平台",
+      "links": "連結",
+      "reportIssue": "回報問題",
+      "sourceCode": "原始碼",
+      "discord": "Discord",
+      "creators": "創作者",
+      "organization": "組織",
+      "details": "詳情",
+      "license": "授權條款",
+      "published": "發布於",
+      "updated": "更新於"
+    },
+    "versions": {
+      "name": "名稱",
+      "gameVersions": "遊戲版本",
+      "platforms": "平台",
+      "published": "發布於",
+      "downloads": "下載"
+    },
+    "downloadModal": {
+      "title": "下載 {{name}}",
+      "gameVersion": "遊戲版本",
+      "platform": "平台",
+      "selectPlatform": "選擇平台",
+      "download": "下載"
+    }
   }
 }

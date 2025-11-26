@@ -3,9 +3,9 @@ import { parseAsString } from 'shared'
 
 export default function useFilter() {
   return useProjectFilter({
+    categories: parseAsString.withDefault(''),
     version: parseAsString.withDefault(''),
     loaders: parseAsString.withDefault(''),
-    categories: parseAsString.withDefault(''),
-    environments: parseAsString.withDefault('')
+    platforms: parseAsString.withDefault('')
   })
 }
