@@ -63,7 +63,7 @@ function ProjectDetails() {
           <div className="flex-between flex">
             <GoBackButton onClick={() => navigate(-1)} />
             <Button
-              className="mb-2"
+              className="mb-2 xl:hidden"
               icon="tabler:info-circle"
               variant="plain"
               onClick={() => setIsSidebarOpen(true)}
