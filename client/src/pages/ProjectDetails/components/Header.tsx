@@ -123,7 +123,12 @@ function Header({
           className="w-full"
           icon="tabler:download"
           onClick={() => {
-            open(DownloadModal, { slug: data.slug, name: data.title })
+            open(DownloadModal, {
+              slug: data.slug,
+              name: data.title,
+              getIcon,
+              getKey
+            })
           }}
         >
           {t('projectDetails.header.download')}

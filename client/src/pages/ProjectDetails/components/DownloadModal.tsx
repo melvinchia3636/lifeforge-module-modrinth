@@ -1,4 +1,3 @@
-import { getModIcon, getModKey } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import {
@@ -12,10 +11,15 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 function DownloadModal({
-  data: { slug, name },
+  data: { slug, name, getIcon, getKey },
   onClose
 }: {
-  data: { slug: string; name: string }
+  data: {
+    slug: string
+    name: string
+    getIcon: (key: string) => string
+    getKey: (key: string) => string | undefined
+  }
   onClose: () => void
 }) {
   const { t } = useTranslation('apps.modrinth')
@@ -123,10 +127,10 @@ function DownloadModal({
                         <span
                           className="size-4"
                           dangerouslySetInnerHTML={{
-                            __html: getModIcon(selectedPlatform!) || ''
+                            __html: getIcon(selectedPlatform!) || ''
                           }}
                         />
-                        {getModKey(selectedPlatform!) || selectedPlatform}
+                        {getKey(selectedPlatform!) || selectedPlatform}
                       </>
                     ) : (
                       t('projectDetails.downloadModal.selectPlatform')
@@ -141,8 +145,8 @@ function DownloadModal({
                 {platformOptions.map(platform => (
                   <ListboxOption
                     key={platform}
-                    icon={`customHTML:${getModIcon(platform)}`}
-                    label={getModKey(platform) || platform}
+                    icon={`customHTML:${getIcon(platform)}`}
+                    label={getKey(platform) || platform}
                     value={platform}
                   />
                 ))}
