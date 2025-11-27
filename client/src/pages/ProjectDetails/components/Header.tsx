@@ -118,7 +118,7 @@ function Header({
           </div>
         </div>
       </div>
-      <div className="flex w-full flex-col items-center gap-2 sm:flex-row lg:w-auto">
+      <div className="flex w-full items-center gap-2 lg:w-auto">
         <Button
           className="w-full"
           icon="tabler:download"
