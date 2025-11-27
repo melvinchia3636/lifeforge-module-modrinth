@@ -1,10 +1,9 @@
 import ProjectListPage from '@/components/ProjectListPage'
 import GeneralSection from '@/components/sidebarSections/GeneralSection'
 import VersionsSection from '@/components/sidebarSections/VersionsSection'
+import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import { useQuery } from '@tanstack/react-query'
-import { SidebarDivider, SidebarItem } from 'lifeforge-ui'
-import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
+import { SidebarDivider } from 'lifeforge-ui'
 import COLORS from 'tailwindcss/colors'
 
 import forgeAPI from '../../utils/forgeAPI'
@@ -27,8 +26,6 @@ const RESOLUTIONS = [
 ]
 
 function ResourcePackList() {
-  const { t } = useTranslation('apps.modrinth')
-
   const {
     viewMode,
     setViewMode,
@@ -71,38 +68,8 @@ function ResourcePackList() {
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
-    categories: {
-      data: [
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: _.kebabCase(category.toLowerCase()),
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`
-        })),
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: `!${_.kebabCase(category.toLowerCase())}`,
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    },
-    features: {
-      data: [
-        ...Object.keys(ICONS.features).map(feature => ({
-          id: _.kebabCase(feature.toLowerCase()),
-          name: feature,
-          icon: `customHTML:${ICONS.features[feature as keyof typeof ICONS.features]}`
-        })),
-        ...Object.keys(ICONS.features).map(feature => ({
-          id: `!${_.kebabCase(feature.toLowerCase())}`,
-          name: feature,
-          icon: `customHTML:${ICONS.features[feature as keyof typeof ICONS.features]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    },
+    categories: constructHeaderFilterItems(ICONS.categories),
+    features: constructHeaderFilterItems(ICONS.features),
     resolutions: {
       data: [
         ...RESOLUTIONS.map(resolution => ({
@@ -126,14 +93,6 @@ function ResourcePackList() {
 
   const sidebarContent = (
     <>
-      <SidebarItem
-        active={false}
-        icon="tabler:star"
-        label="My Favourites"
-        namespace="apps.modrinth"
-        onClick={() => {}}
-      />
-      <SidebarDivider />
       <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
       <SidebarDivider />
       <GeneralSection
@@ -156,21 +115,18 @@ function ResourcePackList() {
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredResourcePacks')}
+      dataQuery={entriesQuery}
       filterValues={{ version, categories, features, resolutions }}
       getIcon={getResourcePackIcon}
       getKey={getResourcePackKey}
       headerFilterItems={headerFilterItems}
-      isLoading={entriesQuery.isLoading}
-      items={entriesQuery.data?.items ?? []}
       page={page}
+      projectType="resourcepack"
       searchQuery={searchQuery}
       setPage={setPage}
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All ResourcePacks"
-      totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
         updateFilter({

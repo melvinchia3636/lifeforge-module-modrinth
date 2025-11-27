@@ -1,20 +1,46 @@
 import type { ProjectViewItemProps } from '@/components/types'
+import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
-import { ItemWrapper, TagChip } from 'lifeforge-ui'
+import { Button, ItemWrapper, TagChip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, usePersonalization } from 'shared'
+import { toast } from 'react-toastify'
+import { useNavigate, usePersonalization, usePromiseLoading } from 'shared'
 
 dayjs.extend(relativeTime)
 
-function ListViewItem({ entry, getIcon, getKey }: ProjectViewItemProps) {
+function ListViewItem({
+  entry,
+  isFavourite,
+  getIcon,
+  getKey
+}: ProjectViewItemProps) {
+  const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.modrinth')
 
   const navigate = useNavigate()
 
   const { language } = usePersonalization()
+
+  async function toggleFavourite() {
+    const action = isFavourite ? 'remove' : 'add'
+
+    try {
+      await forgeAPI.modrinth.favourites[`${action}Item`].mutate({
+        projectId: entry.project_id
+      })
+
+      queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
+    } catch {
+      toast.error('Failed to update favourites. Please try again.')
+    }
+  }
+
+  const [loading, handleToggleFavourite] = usePromiseLoading(toggleFavourite)
 
   return (
     <ItemWrapper
@@ -37,8 +63,8 @@ function ListViewItem({ entry, getIcon, getKey }: ProjectViewItemProps) {
         )}
       </div>
       <div>
-        <h3 className="text-xl font-medium">{entry.title}</h3>
-        <p className="text-custom-500 mt-1.5 text-sm">
+        <h3 className="text-xl font-medium md:mr-12">{entry.title}</h3>
+        <p className="text-custom-500 mt-1.5 text-sm md:mr-12">
           {t('projectDetails.changelog.by')} {entry.author}
         </p>
         <p className="text-bg-500 mt-2">{entry.description}</p>
@@ -78,6 +104,21 @@ function ListViewItem({ entry, getIcon, getKey }: ProjectViewItemProps) {
             />
           ))}
         </div>
+        <Button
+          className="absolute top-2 right-2"
+          icon={isFavourite ? 'tabler:heart-filled' : 'tabler:heart'}
+          iconClassName={
+            isFavourite
+              ? 'text-red-500 group-hover:text-red-600! transition-all'
+              : undefined
+          }
+          loading={loading}
+          variant="plain"
+          onClick={e => {
+            e.stopPropagation()
+            handleToggleFavourite()
+          }}
+        />
       </div>
     </ItemWrapper>
   )

@@ -1,10 +1,8 @@
 import ProjectListPage from '@/components/ProjectListPage'
 import GeneralSection from '@/components/sidebarSections/GeneralSection'
+import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import { useQuery } from '@tanstack/react-query'
-import { SidebarDivider, SidebarItem } from 'lifeforge-ui'
-import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
-import COLORS from 'tailwindcss/colors'
+import { SidebarDivider } from 'lifeforge-ui'
 
 import VersionsSection from '../../components/sidebarSections/VersionsSection'
 import forgeAPI from '../../utils/forgeAPI'
@@ -12,8 +10,6 @@ import { ICONS, getDataPackIcon, getDataPackKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
 function DataPackList() {
-  const { t } = useTranslation('apps.modrinth')
-
   const {
     viewMode,
     setViewMode,
@@ -52,34 +48,11 @@ function DataPackList() {
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
-    categories: {
-      data: [
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: _.kebabCase(category.toLowerCase()),
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`
-        })),
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: `!${_.kebabCase(category.toLowerCase())}`,
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    }
+    categories: constructHeaderFilterItems(ICONS.categories)
   }
 
   const sidebarContent = (
     <>
-      <SidebarItem
-        active={false}
-        icon="tabler:star"
-        label="My Favourites"
-        namespace="apps.modrinth"
-        onClick={() => {}}
-      />
-      <SidebarDivider />
       <GeneralSection
         icons={ICONS.categories}
         name="categories"
@@ -93,21 +66,18 @@ function DataPackList() {
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredDataPacks')}
+      dataQuery={entriesQuery}
       filterValues={{ version, categories }}
       getIcon={getDataPackIcon}
       getKey={getDataPackKey}
       headerFilterItems={headerFilterItems}
-      isLoading={entriesQuery.isLoading}
-      items={entriesQuery.data?.items ?? []}
       page={page}
+      projectType="datapack"
       searchQuery={searchQuery}
       setPage={setPage}
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All DataPacks"
-      totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
         updateFilter({

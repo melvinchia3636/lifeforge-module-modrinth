@@ -1,19 +1,15 @@
 import ProjectListPage from '@/components/ProjectListPage'
 import GeneralSection from '@/components/sidebarSections/GeneralSection'
 import VersionsSection from '@/components/sidebarSections/VersionsSection'
+import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import { useQuery } from '@tanstack/react-query'
-import { SidebarDivider, SidebarItem } from 'lifeforge-ui'
-import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
-import COLORS from 'tailwindcss/colors'
+import { SidebarDivider } from 'lifeforge-ui'
 
 import forgeAPI from '../../utils/forgeAPI'
 import { ICONS, getShaderIcon, getShaderKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
 function ShaderList() {
-  const { t } = useTranslation('apps.modrinth')
-
   const {
     viewMode,
     setViewMode,
@@ -58,84 +54,14 @@ function ShaderList() {
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
-    loaders: {
-      data: [
-        ...Object.keys(ICONS.loaders).map(loader => ({
-          id: _.kebabCase(loader.toLowerCase()),
-          name: loader,
-          icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`
-        })),
-        ...Object.keys(ICONS.loaders)
-          .slice(0, 10)
-          .map(loader => ({
-            id: `!${_.kebabCase(loader.toLowerCase())}`,
-            name: loader,
-            icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`,
-            color: COLORS.red[500]
-          }))
-      ],
-      isColored: true
-    },
-    categories: {
-      data: [
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: _.kebabCase(category.toLowerCase()),
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`
-        })),
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: `!${_.kebabCase(category.toLowerCase())}`,
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    },
-    features: {
-      data: [
-        ...Object.keys(ICONS.features).map(feature => ({
-          id: _.kebabCase(feature.toLowerCase()),
-          name: feature,
-          icon: `customHTML:${ICONS.features[feature as keyof typeof ICONS.features]}`
-        })),
-        ...Object.keys(ICONS.features).map(feature => ({
-          id: `!${_.kebabCase(feature.toLowerCase())}`,
-          name: feature,
-          icon: `customHTML:${ICONS.features[feature as keyof typeof ICONS.features]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    },
-    performanceImpact: {
-      data: [
-        ...Object.keys(ICONS.performance_impact).map(impact => ({
-          id: _.kebabCase(impact.toLowerCase()),
-          name: impact,
-          icon: `customHTML:${ICONS.performance_impact[impact as keyof typeof ICONS.performance_impact]}`
-        })),
-        ...Object.keys(ICONS.performance_impact).map(impact => ({
-          id: `!${_.kebabCase(impact.toLowerCase())}`,
-          name: impact,
-          icon: `customHTML:${ICONS.performance_impact[impact as keyof typeof ICONS.performance_impact]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    }
+    loaders: constructHeaderFilterItems(ICONS.loaders),
+    categories: constructHeaderFilterItems(ICONS.categories),
+    features: constructHeaderFilterItems(ICONS.features),
+    performanceImpact: constructHeaderFilterItems(ICONS.performance_impact)
   }
 
   const sidebarContent = (
     <>
-      <SidebarItem
-        active={false}
-        icon="tabler:star"
-        label="My Favourites"
-        namespace="apps.modrinth"
-        onClick={() => {}}
-      />
-      <SidebarDivider />
       <GeneralSection
         icons={ICONS.categories}
         name="categories"
@@ -170,7 +96,7 @@ function ShaderList() {
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredShaders')}
+      dataQuery={entriesQuery}
       filterValues={{
         version,
         loaders,
@@ -181,16 +107,13 @@ function ShaderList() {
       getIcon={getShaderIcon}
       getKey={getShaderKey}
       headerFilterItems={headerFilterItems}
-      isLoading={entriesQuery.isLoading}
-      items={entriesQuery.data?.items ?? []}
       page={page}
+      projectType="shader"
       searchQuery={searchQuery}
       setPage={setPage}
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All Shaders"
-      totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
         updateFilter({

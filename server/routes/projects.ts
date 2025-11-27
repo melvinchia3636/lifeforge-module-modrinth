@@ -1,8 +1,8 @@
 import { forgeController } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
 import z from 'zod'
 
-import { API_ENDPOINT_V2, API_ENDPOINT_V3 } from '../constants/constants'
+import { API_ENDPOINT_V2 } from '../constants/constants'
+import callModrinthAPI from '../functions/modrinthAPI'
 import {
   Hit,
   Organization,
@@ -52,8 +52,6 @@ export const list = forgeController
         facets: additionalFacets
       }
     }) => {
-      console.log(categories)
-
       const facets: string[][] = [[`project_type:${projectType}`]]
 
       if (versions) {
@@ -153,21 +151,9 @@ export const getDetails = forgeController
       projectId: z.string()
     })
   })
-  .callback(async ({ query: { projectId } }) => {
-    const response = await fetch(`${API_ENDPOINT_V2}/project/${projectId}`)
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new ClientError('Project not found', 404)
-      }
-
-      throw new Error('Failed to fetch project details')
-    }
-
-    const data = await response.json()
-
-    return data as ProjectDetails
-  })
+  .callback(({ query: { projectId } }) =>
+    callModrinthAPI<ProjectDetails>(`project/${projectId}`)
+  )
 
 export const listMembers = forgeController
   .query()
@@ -177,22 +163,9 @@ export const listMembers = forgeController
       projectId: z.string()
     })
   })
-  .callback(async ({ query: { projectId } }) => {
-    const response = await fetch(
-      `${API_ENDPOINT_V2}/project/${projectId}/members`
-    )
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new ClientError('Project not found', 404)
-      }
-      throw new Error('Failed to fetch project members')
-    }
-
-    const data = await response.json()
-
-    return data as ProjectMember[]
-  })
+  .callback(({ query: { projectId } }) =>
+    callModrinthAPI<ProjectMember[]>(`project/${projectId}/members`)
+  )
 
 export const getOrganization = forgeController
   .query()
@@ -203,18 +176,10 @@ export const getOrganization = forgeController
     })
   })
   .callback(async ({ query: { projectId } }) => {
-    const response = await fetch(
-      `${API_ENDPOINT_V3}/project/${projectId}/organization`
+    const data = await callModrinthAPI<Organization>(
+      `project/${projectId}/organization`,
+      'v3'
     )
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new ClientError('Organization not found', 404)
-      }
-      throw new Error('Failed to fetch project organization')
-    }
-
-    const data = (await response.json()) as Organization
 
     return {
       slug: data.slug,
@@ -232,19 +197,6 @@ export const getVersions = forgeController
       projectId: z.string()
     })
   })
-  .callback(async ({ query: { projectId } }) => {
-    const response = await fetch(
-      `${API_ENDPOINT_V2}/project/${projectId}/version`
-    )
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new ClientError('Project not found', 404)
-      }
-      throw new Error('Failed to fetch project versions')
-    }
-
-    const data = await response.json()
-
-    return data as ProjectVersion[]
-  })
+  .callback(({ query: { projectId } }) =>
+    callModrinthAPI<ProjectVersion[]>(`project/${projectId}/version`)
+  )

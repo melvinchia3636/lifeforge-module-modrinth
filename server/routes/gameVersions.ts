@@ -10,10 +10,14 @@ export const list = forgeController
 
     const virtualConsole = new VirtualConsole()
 
-    // @ts-ignore
-    const dom = new JSDOM(raw, { virtualConsole, contentType: "text/html;charset=UTF-8", verbose: false })
+    const dom = new JSDOM(raw, {
+      virtualConsole,
+      contentType: 'text/html;charset=UTF-8',
+      // @ts-expect-error -- lazy to fix for now
+      verbose: false
+    })
 
-    virtualConsole.on("error", (e: any) => {
+    virtualConsole.on('error', (e: any) => {
       console.error(e)
     })
 

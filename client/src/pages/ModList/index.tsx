@@ -1,19 +1,15 @@
 import ProjectListPage from '@/components/ProjectListPage'
 import GeneralSection from '@/components/sidebarSections/GeneralSection'
 import VersionsSection from '@/components/sidebarSections/VersionsSection'
+import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import { useQuery } from '@tanstack/react-query'
-import { SidebarDivider, SidebarItem } from 'lifeforge-ui'
-import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
-import COLORS from 'tailwindcss/colors'
+import { SidebarDivider } from 'lifeforge-ui'
 
 import forgeAPI from '../../utils/forgeAPI'
 import { ICONS, getModIcon, getModKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
 function Modrinth() {
-  const { t } = useTranslation('apps.modrinth')
-
   const {
     viewMode,
     setViewMode,
@@ -56,52 +52,13 @@ function Modrinth() {
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
-    loaders: {
-      data: [
-        ...Object.keys(ICONS.loaders).map(loader => ({
-          id: _.kebabCase(loader.toLowerCase()),
-          name: loader,
-          icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`
-        })),
-        ...Object.keys(ICONS.loaders)
-          .slice(0, 10)
-          .map(loader => ({
-            id: `!${_.kebabCase(loader.toLowerCase())}`,
-            name: loader,
-            icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`,
-            color: COLORS.red[500]
-          }))
-      ],
-      isColored: true
-    },
-    categories: {
-      data: [
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: _.kebabCase(category.toLowerCase()),
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`
-        })),
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: `!${_.kebabCase(category.toLowerCase())}`,
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    }
+    loaders: constructHeaderFilterItems(ICONS.loaders),
+    categories: constructHeaderFilterItems(ICONS.categories),
+    environments: constructHeaderFilterItems(ICONS.environments)
   }
 
   const sidebarContent = (
     <>
-      <SidebarItem
-        active={false}
-        icon="tabler:star"
-        label="My Favourites"
-        namespace="apps.modrinth"
-        onClick={() => {}}
-      />
-      <SidebarDivider />
       <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
       <SidebarDivider />
       <GeneralSection
@@ -129,21 +86,18 @@ function Modrinth() {
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredMods')}
+      dataQuery={entriesQuery}
       filterValues={{ version, loaders, categories, environments }}
       getIcon={getModIcon}
       getKey={getModKey}
       headerFilterItems={headerFilterItems}
-      isLoading={entriesQuery.isLoading}
-      items={entriesQuery.data?.items ?? []}
       page={page}
+      projectType="mod"
       searchQuery={searchQuery}
       setPage={setPage}
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All Mods"
-      totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
         updateFilter({

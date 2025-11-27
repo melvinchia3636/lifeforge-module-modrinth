@@ -2,20 +2,16 @@ import ProjectListPage from '@/components/ProjectListPage'
 import GeneralSection from '@/components/sidebarSections/GeneralSection'
 import VersionsSection from '@/components/sidebarSections/VersionsSection'
 import forgeAPI from '@/utils/forgeAPI'
+import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { SidebarDivider, SidebarItem } from 'lifeforge-ui'
-import _ from 'lodash'
+import { SidebarDivider } from 'lifeforge-ui'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import COLORS from 'tailwindcss/colors'
 
 import { ICONS, getPluginIcon, getPluginKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
 function PluginList() {
-  const { t } = useTranslation('apps.modrinth')
-
   const {
     viewMode,
     setViewMode,
@@ -52,14 +48,6 @@ function PluginList() {
 
   const sidebarContent = (
     <>
-      <SidebarItem
-        active={false}
-        icon="tabler:star"
-        label="My Favourites"
-        namespace="apps.modrinth"
-        onClick={() => {}}
-      />
-      <SidebarDivider />
       <GeneralSection
         icons={ICONS.categories}
         name="categories"
@@ -94,73 +82,25 @@ function PluginList() {
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
-    categories: {
-      data: [
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: _.kebabCase(category.toLowerCase()),
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`
-        })),
-        ...Object.keys(ICONS.categories).map(category => ({
-          id: `!${_.kebabCase(category.toLowerCase())}`,
-          name: category,
-          icon: `customHTML:${ICONS.categories[category as keyof typeof ICONS.categories]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    },
-    loaders: {
-      data: [
-        ...Object.keys(ICONS.loaders).map(loader => ({
-          id: _.kebabCase(loader.toLowerCase()),
-          name: loader,
-          icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`
-        })),
-        ...Object.keys(ICONS.loaders).map(loader => ({
-          id: `!${_.kebabCase(loader.toLowerCase())}`,
-          name: loader,
-          icon: `customHTML:${ICONS.loaders[loader as keyof typeof ICONS.loaders]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    },
-    platforms: {
-      data: [
-        ...Object.keys(ICONS.platforms).map(platform => ({
-          id: _.kebabCase(platform.toLowerCase()),
-          name: platform,
-          icon: `customHTML:${ICONS.platforms[platform as keyof typeof ICONS.platforms]}`
-        })),
-        ...Object.keys(ICONS.platforms).map(platform => ({
-          id: `!${_.kebabCase(platform.toLowerCase())}`,
-          name: platform,
-          icon: `customHTML:${ICONS.platforms[platform as keyof typeof ICONS.platforms]}`,
-          color: COLORS.red[500]
-        }))
-      ],
-      isColored: true
-    }
+    categories: constructHeaderFilterItems(ICONS.categories),
+    loaders: constructHeaderFilterItems(ICONS.loaders),
+    platforms: constructHeaderFilterItems(ICONS.platforms)
   }
 
   return (
     <ProjectListPage
-      filteredTitle={t('sidebar.filteredPlugins')}
+      dataQuery={entriesQuery}
       filterValues={{ version, categories, loaders, platforms }}
       getIcon={getPluginIcon}
       getKey={getPluginKey}
       headerFilterItems={headerFilterItems}
-      isLoading={entriesQuery.isLoading}
-      items={entriesQuery.data?.items ?? []}
       page={page}
+      projectType="plugin"
       searchQuery={searchQuery}
       setPage={setPage}
       setSearchQuery={setSearchQuery}
       setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      title="All Plugins"
-      totalItems={entriesQuery.data?.total ?? 0}
       viewMode={viewMode}
       onResetFilter={() => {
         updateFilter({

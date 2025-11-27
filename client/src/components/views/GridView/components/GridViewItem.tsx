@@ -1,14 +1,40 @@
 import type { ProjectViewItemProps } from '@/components/types'
+import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { sizeFormatter } from 'human-readable'
-import { ItemWrapper, TagChip } from 'lifeforge-ui'
+import { Button, ItemWrapper, TagChip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'shared'
+import { toast } from 'react-toastify'
+import { useNavigate, usePromiseLoading } from 'shared'
 
-function GridViewItem({ entry, getIcon, getKey }: ProjectViewItemProps) {
+function GridViewItem({
+  entry,
+  isFavourite,
+  getIcon,
+  getKey
+}: ProjectViewItemProps) {
+  const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.modrinth')
 
   const navigate = useNavigate()
+
+  async function toggleFavourite() {
+    const action = isFavourite ? 'remove' : 'add'
+
+    try {
+      await forgeAPI.modrinth.favourites[`${action}Item`].mutate({
+        projectId: entry.project_id
+      })
+
+      queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
+    } catch {
+      toast.error('Failed to update favourites. Please try again.')
+    }
+  }
+
+  const [loading, handleToggleFavourite] = usePromiseLoading(toggleFavourite)
 
   return (
     <ItemWrapper
@@ -32,8 +58,8 @@ function GridViewItem({ entry, getIcon, getKey }: ProjectViewItemProps) {
           )}
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-lg font-medium">{entry.title}</h3>
-          <p className="text-custom-500 text-sm">
+          <h3 className="mr-12 truncate text-lg font-medium">{entry.title}</h3>
+          <p className="text-custom-500 mr-12 text-sm">
             {t('projectDetails.changelog.by')} {entry.author}
           </p>
           <div className="text-bg-500 mt-2 flex items-center gap-3 text-sm">
@@ -75,6 +101,21 @@ function GridViewItem({ entry, getIcon, getKey }: ProjectViewItemProps) {
           <TagChip label={`+${entry.categories.length - 3}`} />
         )}
       </div>
+      <Button
+        className="absolute top-2 right-2"
+        icon={isFavourite ? 'tabler:heart-filled' : 'tabler:heart'}
+        iconClassName={
+          isFavourite
+            ? 'text-red-500 group-hover:text-red-600! transition-all'
+            : undefined
+        }
+        loading={loading}
+        variant="plain"
+        onClick={e => {
+          e.stopPropagation()
+          handleToggleFavourite()
+        }}
+      />
     </ItemWrapper>
   )
 }

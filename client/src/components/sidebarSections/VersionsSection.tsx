@@ -16,7 +16,7 @@ function VersionsSection({
   return (
     <>
       <SidebarTitle label="Game Versions" namespace="apps.modrinth" />
-      <Scrollbar className="min-h-[400px]">
+      <Scrollbar className="min-h-[300px]">
         <WithQueryData controller={forgeAPI.modrinth.gameVersions.list}>
           {versions => (
             <>

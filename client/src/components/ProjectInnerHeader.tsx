@@ -5,12 +5,13 @@ import {
   ViewModeSelector,
   useModuleSidebarState
 } from 'lifeforge-ui'
+import _ from 'lodash'
 import { type ComponentProps } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface ProjectInnerHeaderProps {
   totalItemsCount: number
   title: string
-  filteredTitle: string
   filterItems: ComponentProps<typeof HeaderFilter>['items']
   filterValues: Record<string, any>
   onUpdateFilter: (updates: Record<string, any>) => void
@@ -23,7 +24,6 @@ interface ProjectInnerHeaderProps {
 function ProjectInnerHeader({
   totalItemsCount,
   title,
-  filteredTitle,
   filterItems,
   filterValues,
   onUpdateFilter,
@@ -32,6 +32,8 @@ function ProjectInnerHeader({
   viewMode,
   setViewMode
 }: ProjectInnerHeaderProps) {
+  const { t } = useTranslation('apps.modrinth')
+
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   const hasActiveFilters =
@@ -39,10 +41,9 @@ function ProjectInnerHeader({
       Array.isArray(v) ? v.length > 0 : !!v
     ) || !!searchQuery
 
-  // Create setValues object for HeaderFilter
   const setValues = Object.keys(filterItems).reduce(
     (acc, key) => {
-      acc[key] = (value: any) => {
+      acc[key] = value => {
         onUpdateFilter({
           [key]: Array.isArray(value) ? value.join(',') : value
         })
@@ -58,7 +59,9 @@ function ProjectInnerHeader({
       <header className="flex-between flex w-full">
         <div className="flex min-w-0 items-end">
           <h1 className="truncate text-2xl font-semibold lg:text-3xl">
-            {hasActiveFilters ? filteredTitle : title}
+            {t(
+              `sidebar.${_.camelCase(hasActiveFilters ? 'filtered' : 'all')}${_.capitalize(title)}`
+            )}
           </h1>
           <span className="text-bg-500 mr-8 ml-2 text-base">
             ({totalItemsCount.toLocaleString()})
@@ -76,12 +79,17 @@ function ProjectInnerHeader({
       <HeaderFilter
         items={filterItems}
         setValues={setValues}
-        values={filterValues}
+        values={Object.fromEntries(
+          Object.entries(filterValues).map(([key, value]) => [
+            key,
+            value?.includes(',') ? value.split(',') : value
+          ])
+        )}
       />
       <div className="mt-4 mb-6 flex gap-2 xl:mt-6">
         <SearchInput
           namespace="apps.modrinth"
-          searchTarget={title}
+          searchTarget={title.replace('All ', '').toLowerCase()}
           setValue={setSearchQuery}
           value={searchQuery}
         />

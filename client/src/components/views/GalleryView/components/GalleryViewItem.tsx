@@ -1,17 +1,43 @@
 import type { ProjectViewItemProps } from '@/components/types'
+import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
-import { ItemWrapper, TagChip } from 'lifeforge-ui'
+import { Button, ItemWrapper, TagChip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, usePersonalization } from 'shared'
+import { toast } from 'react-toastify'
+import { useNavigate, usePersonalization, usePromiseLoading } from 'shared'
 
-function GalleryViewItem({ entry, getIcon, getKey }: ProjectViewItemProps) {
+function GalleryViewItem({
+  entry,
+  isFavourite,
+  getIcon,
+  getKey
+}: ProjectViewItemProps) {
   const { t } = useTranslation('apps.modrinth')
 
   const navigate = useNavigate()
 
   const { language } = usePersonalization()
+
+  const queryClient = useQueryClient()
+
+  async function toggleFavourite() {
+    const action = isFavourite ? 'remove' : 'add'
+
+    try {
+      await forgeAPI.modrinth.favourites[`${action}Item`].mutate({
+        projectId: entry.project_id
+      })
+
+      queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
+    } catch {
+      toast.error('Failed to update favourites. Please try again.')
+    }
+  }
+
+  const [loading, handleToggleFavourite] = usePromiseLoading(toggleFavourite)
 
   return (
     <ItemWrapper
@@ -55,13 +81,28 @@ function GalleryViewItem({ entry, getIcon, getKey }: ProjectViewItemProps) {
             />
           )}
         </div>
-        <div className="-mt-16 min-w-0">
+        <div className="relative -mt-16 w-full min-w-0 pr-16">
           <h3 className="min-w-0 truncate text-xl font-medium">
             {entry.title}
           </h3>
           <p className="text-custom-500 mt-1.5 min-w-0 truncate text-sm">
             {t('projectDetails.changelog.by')} {entry.author}
           </p>
+          <Button
+            className="absolute top-0 right-0"
+            icon={isFavourite ? 'tabler:heart-filled' : 'tabler:heart'}
+            iconClassName={
+              isFavourite
+                ? 'text-red-500 group-hover:text-red-600! transition-all'
+                : undefined
+            }
+            loading={loading}
+            variant="plain"
+            onClick={e => {
+              e.stopPropagation()
+              handleToggleFavourite()
+            }}
+          />
         </div>
       </div>
       <div className="-mt-16 flex flex-1 flex-col p-4">
