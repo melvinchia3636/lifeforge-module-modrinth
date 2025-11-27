@@ -1,9 +1,8 @@
 import ProjectListPage from '@/components/ProjectListPage'
-import GeneralSection from '@/components/sidebarSections/GeneralSection'
-import VersionsSection from '@/components/sidebarSections/VersionsSection'
+import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
+import constructSidebar from '@/utils/sidebarUtils'
 import { useQuery } from '@tanstack/react-query'
-import { SidebarDivider } from 'lifeforge-ui'
 import COLORS from 'tailwindcss/colors'
 
 import forgeAPI from '../../utils/forgeAPI'
@@ -26,32 +25,11 @@ const RESOLUTIONS = [
 ]
 
 function ResourcePackList() {
-  const {
-    viewMode,
-    setViewMode,
-    page,
-    setPage,
-    searchQuery,
-    setSearchQuery,
-    debouncedSearchQuery,
-    version,
-    categories,
-    features,
-    resolutions,
-    updateFilter
-  } = useFilter()
+  const filters = useFilter()
 
   const entriesQuery = useQuery(
     forgeAPI.modrinth.projects.list
-      .input({
-        page: page.toString(),
-        query: debouncedSearchQuery || undefined,
-        version: version || undefined,
-        categories:
-          [categories, features, resolutions].filter(Boolean).join(',') ||
-          undefined,
-        projectType: 'resourcepack'
-      })
+      .input(constructSearchParamsFromFilter(filters, 'resourcepack'))
       .queryOptions()
   )
 
@@ -91,53 +69,26 @@ function ResourcePackList() {
     }
   }
 
-  const sidebarContent = (
-    <>
-      <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
-      <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.categories}
-        name="categories"
-        selectedItem={categories}
-        updateFilter={updateFilter}
-      />
-      <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.features}
-        name="features"
-        selectedItem={features}
-        updateFilter={updateFilter}
-      />
-      <SidebarDivider />
-      <ResolutionsSection />
-    </>
+  const sidebarContent = constructSidebar(
+    [
+      ['version', 'version'],
+      ['categories', 'general'],
+      ['features', 'general'],
+      ['resolutions', ResolutionsSection]
+    ],
+    ICONS,
+    filters
   )
 
   return (
     <ProjectListPage
       dataQuery={entriesQuery}
-      filterValues={{ version, categories, features, resolutions }}
+      filters={filters}
       getIcon={getResourcePackIcon}
       getKey={getResourcePackKey}
       headerFilterItems={headerFilterItems}
-      page={page}
       projectType="resourcepack"
-      searchQuery={searchQuery}
-      setPage={setPage}
-      setSearchQuery={setSearchQuery}
-      setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      viewMode={viewMode}
-      onResetFilter={() => {
-        updateFilter({
-          categories: '',
-          features: '',
-          resolutions: '',
-          version: ''
-        })
-        setSearchQuery('')
-      }}
-      onUpdateFilter={updateFilter}
     />
   )
 }

@@ -1,41 +1,19 @@
 import ProjectListPage from '@/components/ProjectListPage'
-import GeneralSection from '@/components/sidebarSections/GeneralSection'
-import VersionsSection from '@/components/sidebarSections/VersionsSection'
+import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
+import constructSidebar from '@/utils/sidebarUtils'
 import { useQuery } from '@tanstack/react-query'
-import { SidebarDivider } from 'lifeforge-ui'
 
 import forgeAPI from '../../utils/forgeAPI'
 import { ICONS, getModIcon, getModKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
 function Modrinth() {
-  const {
-    viewMode,
-    setViewMode,
-    page,
-    setPage,
-    searchQuery,
-    setSearchQuery,
-    debouncedSearchQuery,
-    version,
-    loaders,
-    categories,
-    environments,
-    updateFilter
-  } = useFilter()
+  const filters = useFilter()
 
   const entriesQuery = useQuery(
     forgeAPI.modrinth.projects.list
-      .input({
-        page: page.toString(),
-        query: debouncedSearchQuery || undefined,
-        version: version || undefined,
-        loaders: loaders || undefined,
-        categories: categories || undefined,
-        environment: environments || undefined,
-        projectType: 'mod'
-      })
+      .input(constructSearchParamsFromFilter(filters, 'mod'))
       .queryOptions()
   )
 
@@ -57,58 +35,26 @@ function Modrinth() {
     environments: constructHeaderFilterItems(ICONS.environments)
   }
 
-  const sidebarContent = (
-    <>
-      <VersionsSection selectedVersion={version} updateFilter={updateFilter} />
-      <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.loaders}
-        name="loaders"
-        selectedItem={loaders}
-        updateFilter={updateFilter}
-      />
-      <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.categories}
-        name="categories"
-        selectedItem={categories}
-        updateFilter={updateFilter}
-      />
-      <SidebarDivider />
-      <GeneralSection
-        icons={ICONS.environments}
-        name="environments"
-        selectedItem={environments}
-        updateFilter={updateFilter}
-      />
-    </>
+  const sidebarContent = constructSidebar(
+    [
+      ['categories', 'general'],
+      ['environments', 'general'],
+      ['version', 'version'],
+      ['loaders', 'general']
+    ],
+    ICONS,
+    filters
   )
 
   return (
     <ProjectListPage
       dataQuery={entriesQuery}
-      filterValues={{ version, loaders, categories, environments }}
+      filters={filters}
       getIcon={getModIcon}
       getKey={getModKey}
       headerFilterItems={headerFilterItems}
-      page={page}
       projectType="mod"
-      searchQuery={searchQuery}
-      setPage={setPage}
-      setSearchQuery={setSearchQuery}
-      setViewMode={setViewMode as (mode: string) => void}
       sidebarContent={sidebarContent}
-      viewMode={viewMode}
-      onResetFilter={() => {
-        updateFilter({
-          categories: '',
-          environments: '',
-          loaders: '',
-          version: ''
-        })
-        setSearchQuery('')
-      }}
-      onUpdateFilter={updateFilter}
     />
   )
 }

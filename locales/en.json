@@ -23,6 +23,9 @@
       "description": "Try adjusting your search or filter to find what you're looking for."
     }
   },
+  "buttons": {
+    "favourited": "Favourited"
+  },
   "sidebar": {
     "environments": "Environments",
     "categories": "Categories",

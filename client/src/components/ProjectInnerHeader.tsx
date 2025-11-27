@@ -17,8 +17,8 @@ interface ProjectInnerHeaderProps {
   onUpdateFilter: (updates: Record<string, any>) => void
   searchQuery: string
   setSearchQuery: (query: string) => void
-  viewMode: string
-  setViewMode: (mode: string) => void
+  viewMode: 'grid' | 'list' | 'gallery'
+  setViewMode: (mode: 'grid' | 'list' | 'gallery') => void
 }
 
 function ProjectInnerHeader({

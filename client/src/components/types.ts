@@ -1,3 +1,4 @@
+import type { ProjectDetails } from '@/pages/ProjectDetails'
 import forgeAPI from '@/utils/forgeAPI'
 import { type InferOutput } from 'shared'
 
@@ -6,14 +7,14 @@ export type Hit = InferOutput<
 >['items'][number]
 
 export interface ProjectViewProps {
-  entries: Hit[]
+  entries: (Hit | ProjectDetails)[]
   favouritesIds: string[]
   getIcon: (id: string) => string | null
   getKey: (id: string) => string | undefined
 }
 
 export interface ProjectViewItemProps {
-  entry: Hit
+  entry: Hit | ProjectDetails
   isFavourite: boolean
   getIcon: (id: string) => string | null
   getKey: (id: string) => string | undefined

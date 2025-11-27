@@ -12,11 +12,13 @@ function ListView({
     <div className="space-y-3">
       {entries.map(entry => (
         <ListViewItem
-          key={entry.project_id}
+          key={'project_id' in entry ? entry.project_id : entry.id}
           entry={entry}
           getIcon={getIcon}
           getKey={getKey}
-          isFavourite={favouritesIds.includes(entry.project_id)}
+          isFavourite={favouritesIds.includes(
+            'project_id' in entry ? entry.project_id : entry.id
+          )}
         />
       ))}
     </div>

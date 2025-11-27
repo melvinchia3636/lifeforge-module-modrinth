@@ -7,6 +7,8 @@ interface ProjectSidebarProps {
   isAllActive: boolean
   totalCount: number
   favouritesCount: number
+  isFavouritesShowing: boolean
+  setShowFavourites: (value: boolean) => void
   children: ReactNode
 }
 
@@ -16,6 +18,8 @@ function ProjectSidebar({
   isAllActive,
   totalCount,
   favouritesCount,
+  isFavouritesShowing,
+  setShowFavourites,
   children
 }: ProjectSidebarProps) {
   return (
@@ -26,15 +30,20 @@ function ProjectSidebar({
         label={`All ${title}`}
         namespace="apps.modrinth"
         number={isAllActive ? totalCount : undefined}
-        onClick={onReset}
+        onClick={() => {
+          setShowFavourites(false)
+          onReset()
+        }}
       />
       <SidebarItem
-        active={false}
+        active={isFavouritesShowing}
         icon="tabler:star"
         label="My Favourites"
         namespace="apps.modrinth"
         number={favouritesCount}
-        onClick={() => {}}
+        onClick={() => {
+          setShowFavourites(true)
+        }}
       />
       <SidebarDivider />
       {children}

@@ -23,6 +23,9 @@
       "description": "尝试调整您的搜索或过滤器以找到您要查找的内容。"
     }
   },
+  "buttons": {
+    "favourited": "已收藏"
+  },
   "sidebar": {
     "environments": "环境",
     "categories": "分类",

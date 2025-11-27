@@ -1,20 +1,56 @@
-import { getModIcon, getModKey } from '@/pages/ModList/constants/icons'
+import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
 import { Button, TagChip, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+import { toast } from 'react-toastify'
+import { usePersonalization, usePromiseLoading } from 'shared'
 
 import type { ProjectDetails } from '..'
 import DownloadModal from './DownloadModal'
 
-function Header({ data }: { data: ProjectDetails }) {
+function Header({
+  data,
+  getIcon,
+  getKey
+}: {
+  data: ProjectDetails
+  getIcon: (key: string) => string
+  getKey: (key: string) => string | undefined
+}) {
+  const queryClient = useQueryClient()
+
   const { t } = useTranslation('apps.modrinth')
 
   const { language } = usePersonalization()
 
   const open = useModalStore(state => state.open)
+
+  const isFavouriteQuery = useQuery(
+    forgeAPI.modrinth.favourites.checkItem
+      .input({
+        projectId: data.id
+      })
+      .queryOptions()
+  )
+
+  async function toggleFavourite() {
+    const action = isFavouriteQuery.data ? 'remove' : 'add'
+
+    try {
+      await forgeAPI.modrinth.favourites[`${action}Item`].mutate({
+        projectId: data.id
+      })
+
+      queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
+    } catch {
+      toast.error('Failed to update favourites. Please try again.')
+    }
+  }
+
+  const [loading, handleToggleFavourite] = usePromiseLoading(toggleFavourite)
 
   return (
     <header className="border-bg-200 dark:border-bg-700/50 mt-2 mb-6 flex flex-col items-start justify-between gap-6 border-b pb-6 lg:flex-row lg:items-center lg:gap-12">
@@ -75,8 +111,8 @@ function Header({ data }: { data: ProjectDetails }) {
             {data.categories.map(category => (
               <TagChip
                 key={category}
-                icon={`customHTML:${getModIcon(category)}`}
-                label={getModKey(category) || category}
+                icon={`customHTML:${getIcon(category)}`}
+                label={getKey(category) || category}
               />
             ))}
           </div>
@@ -93,11 +129,15 @@ function Header({ data }: { data: ProjectDetails }) {
           {t('projectDetails.header.download')}
         </Button>
         <Button
-          className="w-full"
-          icon="tabler:heart"
-          variant="secondary"
-          onClick={() => {}}
-        />
+          dangerous={isFavouriteQuery.data}
+          icon={isFavouriteQuery.data ? 'tabler:heart-filled' : 'tabler:heart'}
+          loading={isFavouriteQuery.isLoading || loading}
+          namespace="apps.modrinth"
+          variant={isFavouriteQuery.data ? 'plain' : 'secondary'}
+          onClick={handleToggleFavourite}
+        >
+          {isFavouriteQuery.data && t('buttons.favourited')}
+        </Button>
       </div>
     </header>
   )

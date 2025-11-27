@@ -23,6 +23,9 @@
       "description": "Cuba laraskan carian atau penapis anda untuk mencari apa yang anda cari."
     }
   },
+  "buttons": {
+    "favourited": "Telah Dijadikan Kegemaran"
+  },
   "sidebar": {
     "environments": "Persekitaran",
     "categories": "Kategori",

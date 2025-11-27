@@ -22,9 +22,8 @@ export const list = forgeController
         .default(1),
       query: z.string().optional(),
       version: z.string().optional(),
-      loaders: z.string().optional(),
       categories: z.string().optional(),
-      environment: z.string().optional(),
+      environments: z.string().optional(),
       projectType: z
         .enum([
           'mod',
@@ -41,39 +40,12 @@ export const list = forgeController
   })
   .callback(
     async ({
-      query: {
-        page,
-        query,
-        version: versions,
-        loaders,
-        categories,
-        environment,
-        projectType,
-        facets: additionalFacets
-      }
+      query: { page, query, version, categories, environments, projectType }
     }) => {
       const facets: string[][] = [[`project_type:${projectType}`]]
 
-      if (versions) {
-        const versionArray = versions.split(',').filter(Boolean)
-
-        facets.push(versionArray.map(v => `versions:${v}`))
-      }
-
-      if (loaders) {
-        const loaderArray = loaders.split(',').filter(Boolean)
-
-        const positiveFilter = loaderArray
-          .filter(l => !l.startsWith('!'))
-          .map(l => `categories:${l}`)
-
-        if (positiveFilter.length > 0) {
-          facets.push(positiveFilter)
-        }
-
-        for (const l of loaderArray.filter(l => l.startsWith('!'))) {
-          facets.push([`categories!=${l.replace('!', '')}`])
-        }
+      if (version) {
+        facets.push([`versions:${version}`])
       }
 
       if (categories) {
@@ -92,8 +64,8 @@ export const list = forgeController
         }
       }
 
-      if (environment) {
-        const envArray = environment.split(',').filter(Boolean)
+      if (environments) {
+        const envArray = environments.split(',').filter(Boolean)
 
         const hasClient = envArray.includes('client')
 
@@ -108,17 +80,6 @@ export const list = forgeController
         } else if (hasClient && hasServer) {
           facets.push(['client_side:required'])
           facets.push(['server_side:required'])
-        }
-      }
-
-      // Parse and merge additional facets if provided
-      if (additionalFacets) {
-        try {
-          const parsedFacets = JSON.parse(additionalFacets) as string[][]
-
-          facets.push(...parsedFacets)
-        } catch {
-          // Ignore invalid JSON facets
         }
       }
 

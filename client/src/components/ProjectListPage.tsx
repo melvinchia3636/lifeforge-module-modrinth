@@ -1,4 +1,6 @@
 import type { Hit } from '@/components/types'
+import type { FilterReturnType } from '@/hooks/useProjectFilter'
+import type { ProjectDetails } from '@/pages/ProjectDetails'
 import forgeAPI from '@/utils/forgeAPI'
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
@@ -32,15 +34,7 @@ interface ProjectListPageProps {
     | 'resourcepack'
     | 'shader'
     | 'plugin'
-  viewMode: string
-  setViewMode: (mode: string) => void
-  searchQuery: string
-  setSearchQuery: (query: string) => void
-  page: number
-  setPage: (page: number) => void
-  filterValues: Record<string, any>
-  onUpdateFilter: (updates: Record<string, any>) => void
-  onResetFilter: () => void
+  filters: FilterReturnType
   headerFilterItems: ComponentProps<typeof HeaderFilter>['items']
   sidebarContent: ReactNode
   dataQuery: UseQueryResult<{
@@ -51,25 +45,32 @@ interface ProjectListPageProps {
   getKey: (id: string) => string | undefined
 }
 
-function ProjectListPage({
+function ProjectListPage<TFilterKeys extends string[]>({
   projectType,
   dataQuery,
-  viewMode,
-  setViewMode,
-  searchQuery,
-  setSearchQuery,
-  page,
-  setPage,
-  filterValues,
-  onUpdateFilter,
-  onResetFilter,
   headerFilterItems,
   sidebarContent,
+  filters,
   getIcon,
   getKey
 }: ProjectListPageProps) {
+  const {
+    page,
+    setPage,
+    isFavouritesShowing,
+    setShowFavourites,
+    searchQuery,
+    setSearchQuery,
+    viewMode,
+    setViewMode,
+    updateFilter,
+    ...filterValues
+  } = filters
+
   const isAllActive =
-    !Object.values(filterValues).some(v => !!v) && !searchQuery
+    !Object.values(filterValues).some(v => !!v) &&
+    !searchQuery &&
+    !isFavouritesShowing
 
   const favouriteIdsQuery = useQuery(
     forgeAPI.modrinth.favourites.listItemIds
@@ -79,6 +80,28 @@ function ProjectListPage({
       .queryOptions()
   )
 
+  const favouriteItemsQuery = useQuery(
+    forgeAPI.modrinth.favourites.listItems
+      .input({
+        projectType,
+        query: searchQuery || undefined,
+        page: page.toString()
+      })
+      .queryOptions()
+  )
+
+  const finalQuery = isFavouritesShowing ? favouriteItemsQuery : dataQuery
+
+  const onResetFilter = () => {
+    const resetValues = Object.keys(filterValues).reduce(
+      (acc, key) => ({ ...acc, [key]: '' }),
+      {}
+    ) as Record<TFilterKeys[number], string>
+
+    updateFilter(resetValues)
+    setSearchQuery('')
+  }
+
   return (
     <>
       <ModuleHeader />
@@ -86,6 +109,8 @@ function ProjectListPage({
         <ProjectSidebar
           favouritesCount={favouriteIdsQuery.data?.length ?? 0}
           isAllActive={isAllActive}
+          isFavouritesShowing={isFavouritesShowing}
+          setShowFavourites={setShowFavourites}
           title={projectType}
           totalCount={dataQuery.data?.total ?? 0}
           onReset={onResetFilter}
@@ -100,13 +125,20 @@ function ProjectListPage({
             setSearchQuery={setSearchQuery}
             setViewMode={setViewMode}
             title={projectType}
-            totalItemsCount={dataQuery.data?.total ?? 0}
+            totalItemsCount={finalQuery.data?.total ?? 0}
             viewMode={viewMode}
-            onUpdateFilter={onUpdateFilter}
+            onUpdateFilter={updateFilter}
           />
           <WithQuery query={favouriteIdsQuery}>
             {favIds => (
-              <WithQuery query={dataQuery}>
+              <WithQuery
+                query={
+                  finalQuery as UseQueryResult<{
+                    items: (Hit | ProjectDetails)[]
+                    total: number
+                  }>
+                }
+              >
                 {({ items, total }) =>
                   items.length > 0 ? (
                     <Scrollbar>

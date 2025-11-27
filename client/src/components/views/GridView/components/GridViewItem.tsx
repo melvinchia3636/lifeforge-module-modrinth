@@ -1,12 +1,12 @@
 import type { ProjectViewItemProps } from '@/components/types'
-import forgeAPI from '@/utils/forgeAPI'
-import { Icon } from '@iconify/react'
-import { useQueryClient } from '@tanstack/react-query'
-import { sizeFormatter } from 'human-readable'
-import { Button, ItemWrapper, TagChip } from 'lifeforge-ui'
+import { ItemWrapper } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { useNavigate, usePromiseLoading } from 'shared'
+import { useNavigate } from 'shared'
+
+import FavouriteButton from '../../components/FavouriteButton'
+import ItemIcon from '../../components/ItemIcon'
+import ItemMetadata from '../../components/ItemMetadata'
+import ItemTags from '../../components/ItemTags'
 
 function GridViewItem({
   entry,
@@ -14,27 +14,9 @@ function GridViewItem({
   getIcon,
   getKey
 }: ProjectViewItemProps) {
-  const queryClient = useQueryClient()
-
   const { t } = useTranslation('apps.modrinth')
 
   const navigate = useNavigate()
-
-  async function toggleFavourite() {
-    const action = isFavourite ? 'remove' : 'add'
-
-    try {
-      await forgeAPI.modrinth.favourites[`${action}Item`].mutate({
-        projectId: entry.project_id
-      })
-
-      queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
-    } catch {
-      toast.error('Failed to update favourites. Please try again.')
-    }
-  }
-
-  const [loading, handleToggleFavourite] = usePromiseLoading(toggleFavourite)
 
   return (
     <ItemWrapper
@@ -43,78 +25,29 @@ function GridViewItem({
       onClick={() => navigate(`/modrinth/project/${entry.slug}`)}
     >
       <div className="flex items-start gap-4">
-        <div className="bg-bg-100 border-bg-200 dark:border-bg-700/50 shadow-custom dark:bg-bg-800/70 relative isolate size-24 shrink-0 overflow-hidden rounded-lg border">
-          {entry.icon_url ? (
-            <img
-              alt={`${entry.title} icon`}
-              className="absolute inset-0 h-full w-full object-cover"
-              src={entry.icon_url}
-            />
-          ) : (
-            <Icon
-              className="text-bg-200 dark:text-bg-700 absolute bottom-1/2 left-1/2 z-[-1] size-12 -translate-x-1/2 translate-y-1/2"
-              icon="simple-icons:modrinth"
-            />
-          )}
-        </div>
+        <ItemIcon className="size-24" iconUrl={entry.icon_url} />
         <div className="min-w-0 flex-1">
           <h3 className="mr-12 truncate text-lg font-medium">{entry.title}</h3>
-          <p className="text-custom-500 mr-12 text-sm">
-            {t('projectDetails.changelog.by')} {entry.author}
-          </p>
-          <div className="text-bg-500 mt-2 flex items-center gap-3 text-sm">
-            <div className="flex items-center gap-1">
-              <Icon className="size-4" icon="tabler:download" />
-              <span>
-                {
-                  sizeFormatter({
-                    render: (literal, suffix) => `${literal}${suffix}`
-                  })(entry.downloads) as string
-                }
-              </span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Icon className="size-4" icon="tabler:users" />
-              <span>
-                {
-                  sizeFormatter({
-                    render: (literal, suffix) => `${literal}${suffix}`
-                  })(entry.follows) as string
-                }
-              </span>
-            </div>
-          </div>
+          {'author' in entry && (
+            <p className="text-custom-500 mr-16 text-sm">
+              {t('projectDetails.changelog.by')} {entry.author}
+            </p>
+          )}
+          <ItemMetadata className="mr-16" entry={entry} />
         </div>
       </div>
-      <p className="text-bg-500 mt-4 line-clamp-2 flex-1 text-sm">
+      <p className="text-bg-500 mt-4 line-clamp-2 flex-1">
         {entry.description}
       </p>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {entry.categories.slice(0, 3).map(category => (
-          <TagChip
-            key={category}
-            icon={`customHTML:${getIcon(category)}`}
-            label={getKey(category) || category}
-          />
-        ))}
-        {entry.categories.length > 3 && (
-          <TagChip label={`+${entry.categories.length - 3}`} />
-        )}
-      </div>
-      <Button
-        className="absolute top-2 right-2"
-        icon={isFavourite ? 'tabler:heart-filled' : 'tabler:heart'}
-        iconClassName={
-          isFavourite
-            ? 'text-red-500 group-hover:text-red-600! transition-all'
-            : undefined
-        }
-        loading={loading}
-        variant="plain"
-        onClick={e => {
-          e.stopPropagation()
-          handleToggleFavourite()
-        }}
+      <ItemTags
+        categories={entry.categories}
+        getIcon={getIcon}
+        getKey={getKey}
+      />
+      <FavouriteButton
+        className="top-2 right-2"
+        isFavourite={isFavourite}
+        projectId={'project_id' in entry ? entry.project_id : entry.id}
       />
     </ItemWrapper>
   )

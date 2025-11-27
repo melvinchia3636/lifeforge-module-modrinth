@@ -3,7 +3,7 @@ import _ from 'lodash'
 export function getIcon(
   iconRegistry: Record<string, Record<string, string>>,
   id: string
-): string | null {
+): string {
   const key = getKey(iconRegistry, id)
 
   if (!key) return ''

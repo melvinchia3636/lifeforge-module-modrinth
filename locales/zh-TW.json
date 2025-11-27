@@ -23,6 +23,9 @@
       "description": "嘗試調整您的搜尋或篩選器以找到您要查找的內容。"
     }
   },
+  "buttons": {
+    "favourited": "已收藏"
+  },
   "sidebar": {
     "environments": "環境",
     "categories": "分類",

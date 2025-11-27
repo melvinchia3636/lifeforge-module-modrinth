@@ -12,11 +12,13 @@ function GalleryView({
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-[repeat(auto-fill,minmax(360px,1fr))]">
       {entries.map(entry => (
         <GalleryViewItem
-          key={entry.project_id}
+          key={'project_id' in entry ? entry.project_id : entry.id}
           entry={entry}
           getIcon={getIcon}
           getKey={getKey}
-          isFavourite={favouritesIds.includes(entry.project_id)}
+          isFavourite={favouritesIds.includes(
+            'project_id' in entry ? entry.project_id : entry.id
+          )}
         />
       ))}
     </div>

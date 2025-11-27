@@ -1,4 +1,3 @@
-import { getModIcon } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
@@ -28,7 +27,9 @@ function Sidebar({
   hasOrganization,
   published,
   updated,
-  license
+  license,
+  getIcon,
+  getKey
 }: Pick<
   ProjectDetails,
   | 'versions'
@@ -41,6 +42,8 @@ function Sidebar({
   | 'updated'
 > & {
   hasOrganization: boolean
+  getIcon: (key: string) => string
+  getKey: (key: string) => string | undefined
 }) {
   const { t } = useTranslation('apps.modrinth')
 
@@ -145,7 +148,7 @@ function Sidebar({
         {loaders.map(loader => (
           <TagChip
             key={loader}
-            icon={`customHTML:${getModIcon(loader)}`}
+            icon={`customHTML:${getIcon(loader)}`}
             label={loader}
           />
         ))}

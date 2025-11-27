@@ -76,28 +76,52 @@ export const listItems = forgeController
   .description('List all favourite projects')
   .input({
     query: z.object({
-      projectType: z
-        .enum([
-          'mod',
-          'modpack',
-          'resourcepack',
-          'shader',
-          'datapack',
-          'plugin'
-        ])
+      projectType: z.enum([
+        'mod',
+        'modpack',
+        'resourcepack',
+        'shader',
+        'datapack',
+        'plugin'
+      ]),
+      query: z.string().optional(),
+      page: z
+        .string()
         .optional()
+        .transform(val => (val ? parseInt(val) : 1))
     })
   })
-  .callback(async ({ query: { projectType } }) => {
+  .callback(async ({ query: { projectType, page, query } }) => {
     const tempFileManager = new TempFileManager(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 
-    if (projectType) {
-      return tempFileContent.filter(item => item.project_type === projectType)
-    }
+    const allItems = tempFileContent.filter(
+      item =>
+        item.project_type === projectType &&
+        (!query || item.title.toLowerCase().includes(query.toLowerCase()))
+    )
 
-    return tempFileContent
+    return {
+      items: allItems.slice(page * 20 - 20, page * 20),
+      total: allItems.length
+    }
+  })
+
+export const checkItem = forgeController
+  .query()
+  .description('Check if a project is in favourites')
+  .input({
+    query: z.object({
+      projectId: z.string()
+    })
+  })
+  .callback(async ({ query: { projectId } }) => {
+    const tempFileManager = new TempFileManager(TEMP_FILE_NAME)
+
+    const tempFileContent = tempFileManager.read<ProjectDetails[]>()
+
+    return tempFileContent.some(item => item.id === projectId)
   })
 
 export const removeItem = forgeController

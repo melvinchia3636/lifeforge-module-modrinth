@@ -65,10 +65,12 @@ function VersionsSection() {
                     className="border-bg-200 dark:border-bg-800 border-b"
                   >
                     <td className="px-4 py-3">
-                      <p className="text-lg font-medium">
+                      <p className="text-lg font-medium whitespace-nowrap">
                         {version.version_number}
                       </p>
-                      <p className="text-bg-500 text-sm">{version.name}</p>
+                      <p className="text-bg-500 text-sm whitespace-nowrap">
+                        {version.name}
+                      </p>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-1">

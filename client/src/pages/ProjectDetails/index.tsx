@@ -1,3 +1,18 @@
+import {
+  getDataPackIcon,
+  getDataPackKey
+} from '@/pages/DataPackList/constants/icons'
+import { getModIcon, getModKey } from '@/pages/ModList/constants/icons'
+import {
+  getModpackIcon,
+  getModpackKey
+} from '@/pages/ModpackList/constants/icons'
+import { getPluginIcon, getPluginKey } from '@/pages/PluginList/constants/icons'
+import {
+  getResourcePackIcon,
+  getResourcePackKey
+} from '@/pages/ResourcePackList/constants/icons'
+import { getShaderIcon, getShaderKey } from '@/pages/ShaderList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import {
@@ -26,6 +41,15 @@ export type ProjectDetails = InferOutput<
   typeof forgeAPI.modrinth.projects.getDetails
 >
 
+const ALL_ICONS_UTILS = {
+  mod: { getIcon: getModIcon, getKey: getModKey },
+  modpack: { getIcon: getModpackIcon, getKey: getModpackKey },
+  datapack: { getIcon: getDataPackIcon, getKey: getDataPackKey },
+  resourcepack: { getIcon: getResourcePackIcon, getKey: getResourcePackKey },
+  shader: { getIcon: getShaderIcon, getKey: getShaderKey },
+  plugin: { getIcon: getPluginIcon, getKey: getPluginKey }
+}
+
 function ProjectDetails() {
   const { t } = useTranslation('apps.modrinth')
 
@@ -48,6 +72,11 @@ function ProjectDetails() {
         retry: false
       })
   )
+
+  const { getIcon, getKey } =
+    ALL_ICONS_UTILS[
+      (dataQuery.data?.project_type || 'mod') as keyof typeof ALL_ICONS_UTILS
+    ]
 
   useEffect(() => {
     if (
@@ -72,7 +101,7 @@ function ProjectDetails() {
               onClick={() => setIsSidebarOpen(true)}
             />
           </div>
-          <Header data={data} />
+          <Header data={data} getIcon={getIcon} getKey={getKey} />
           <LayoutWithSidebar>
             <ContentWrapperWithSidebar>
               <Tabs
@@ -137,6 +166,8 @@ function ProjectDetails() {
             </ContentWrapperWithSidebar>
             <Sidebar
               discord_url={data.discord_url}
+              getIcon={getIcon}
+              getKey={getKey}
               hasOrganization={!!data.organization}
               issues_url={data.issues_url}
               license={data.license}
