@@ -167,7 +167,6 @@ function ProjectDetails() {
             <Sidebar
               discord_url={data.discord_url}
               getIcon={getIcon}
-              getKey={getKey}
               hasOrganization={!!data.organization}
               issues_url={data.issues_url}
               license={data.license}

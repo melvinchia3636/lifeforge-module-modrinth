@@ -28,8 +28,7 @@ function Sidebar({
   published,
   updated,
   license,
-  getIcon,
-  getKey
+  getIcon
 }: Pick<
   ProjectDetails,
   | 'versions'
@@ -43,7 +42,6 @@ function Sidebar({
 > & {
   hasOrganization: boolean
   getIcon: (key: string) => string
-  getKey: (key: string) => string | undefined
 }) {
   const { t } = useTranslation('apps.modrinth')
 
