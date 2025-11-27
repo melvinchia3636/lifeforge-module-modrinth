@@ -29,6 +29,11 @@ export const addItem = forgeController
       `project/${projectId}`
     )
 
+    // @ts-expect-error - lazy to fix
+    delete project['versions']
+    // @ts-expect-error - lazy to fix
+    delete project['game_versions']
+
     tempFileContent.push(project)
 
     tempFileManager.write(JSON.stringify(tempFileContent, null, 2))
