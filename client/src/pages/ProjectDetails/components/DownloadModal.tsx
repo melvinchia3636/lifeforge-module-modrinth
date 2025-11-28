@@ -9,6 +9,7 @@ import {
 } from 'lifeforge-ui'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 function DownloadModal({
   data: { slug, name, getIcon, getKey },
@@ -89,9 +90,14 @@ function DownloadModal({
         version.loaders.includes(selectedPlatform)
     )
 
-    if (targetVersion) {
-      window.open(targetVersion.files[0].url, '_blank')
+    if (!targetVersion) {
+      toast.error("Couldn't find a matching version to download.")
+
+      return
     }
+
+    window.open(targetVersion.files[0].url, '_blank')
+    onClose()
   }
 
   return (
@@ -108,11 +114,11 @@ function DownloadModal({
               buttonContent={<>{selectedVersion}</>}
               icon="tabler:device-gamepad"
               label={t('projectDetails.downloadModal.gameVersion')}
+              value={selectedVersion}
               onChange={value => {
                 setSelectedVersion(value)
                 setSelectedPlatform(null)
               }}
-              value={selectedVersion}
             >
               {versionOptions.map(version => (
                 <ListboxOption key={version} label={version} value={version} />
@@ -139,8 +145,8 @@ function DownloadModal({
                 }
                 icon="tabler:device-desktop"
                 label={t('projectDetails.downloadModal.platform')}
-                onChange={setSelectedPlatform}
                 value={selectedPlatform}
+                onChange={setSelectedPlatform}
               >
                 {platformOptions.map(platform => (
                   <ListboxOption
