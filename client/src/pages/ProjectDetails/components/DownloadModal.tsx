@@ -108,7 +108,7 @@ function DownloadModal({
               buttonContent={<>{selectedVersion}</>}
               icon="tabler:device-gamepad"
               label={t('projectDetails.downloadModal.gameVersion')}
-              setValue={value => {
+              onChange={value => {
                 setSelectedVersion(value)
                 setSelectedPlatform(null)
               }}
@@ -139,7 +139,7 @@ function DownloadModal({
                 }
                 icon="tabler:device-desktop"
                 label={t('projectDetails.downloadModal.platform')}
-                setValue={setSelectedPlatform}
+                onChange={setSelectedPlatform}
                 value={selectedPlatform}
               >
                 {platformOptions.map(platform => (

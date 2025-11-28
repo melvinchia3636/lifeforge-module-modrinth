@@ -48,7 +48,7 @@ function ProjectInnerHeader({
       Array.isArray(v) ? v.length > 0 : !!v
     ) || !!searchQuery
 
-  const setValues = Object.keys(filterItems).reduce(
+  const onChanges = Object.keys(filterItems).reduce(
     (acc, key) => {
       acc[key] = value => {
         onUpdateFilter({
@@ -85,7 +85,7 @@ function ProjectInnerHeader({
       </header>
       <HeaderFilter
         items={filterItems}
-        setValues={setValues}
+        onChanges={onChanges}
         values={Object.fromEntries(
           Object.entries(filterValues).map(([key, value]) => [
             key,
@@ -98,7 +98,7 @@ function ProjectInnerHeader({
         <SearchInput
           namespace="apps.modrinth"
           searchTarget={title.replace('All ', '').toLowerCase()}
-          setValue={setSearchQuery}
+          onChange={setSearchQuery}
           value={searchQuery}
         />
         <ViewModeSelector
