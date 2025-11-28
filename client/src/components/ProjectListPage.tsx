@@ -26,10 +26,10 @@ import { useTranslation } from 'react-i18next'
 
 import ProjectInnerHeader from './ProjectInnerHeader'
 import ProjectSidebar from './ProjectSidebar'
+import { SORT_TYPES } from './SortBySelector'
 import GalleryView from './views/GalleryView'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
-import { SORT_TYPES } from './SortBySelector'
 
 interface ProjectListPageProps {
   projectType:
@@ -137,7 +137,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
                   />
                 ))}
               </ContextMenuGroup>
-              <SidebarDivider />
+              <SidebarDivider noMargin />
               <ContextMenuGroup
                 icon="tabler:arrows-up-down"
                 label={t('hamburgerMenu.sortBy')}
