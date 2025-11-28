@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDebounce } from '@uidotdev/usehooks'
-import { useEffect } from 'react'
+import { type SetStateAction, useMemo } from 'react'
 import {
   parseAsBoolean,
   parseAsInteger,
   parseAsString,
   parseAsStringEnum,
-  useQueryState,
   useQueryStates
 } from 'shared'
 
@@ -41,72 +40,89 @@ export default function useProjectFilter<T extends Record<string, any>>(
 ): FilterReturnType & {
   [key in keyof T]: T[key] extends { defaultValue: infer V } ? V : never
 } {
-  const [searchQuery, setSearchQuery] = useQueryState(
-    'q',
-    parseAsString.withDefault('')
-  )
-
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
-
-  const [viewMode, setViewMode] = useQueryState(
-    'view',
-    parseAsStringEnum(['grid', 'list', 'gallery']).withDefault('list')
-  )
-
-  const [sortBy, setSortBy] = useQueryState(
-    'sort',
-    parseAsStringEnum([
+  const [coreFilters, setCoreFilters] = useQueryStates({
+    q: parseAsString.withDefault(''),
+    page: parseAsInteger.withDefault(1),
+    view: parseAsStringEnum(['grid', 'list', 'gallery']).withDefault('list'),
+    sort: parseAsStringEnum([
       'relevance',
       'downloads',
       'follows',
       'newest',
       'updated'
-    ]).withDefault('relevance')
-  )
+    ]).withDefault('relevance'),
+    favourites: parseAsBoolean.withDefault(false)
+  })
 
-  const [isFavouritesShowing, setShowFavourites] = useQueryState(
-    'favourites',
-    parseAsBoolean.withDefault(false)
-  )
-
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const debouncedSearchQuery = useDebounce(coreFilters.q, 500)
 
   const [filter, setFilter] = useQueryStates(filterConfig)
 
   const updateFilter = (
-    newValues:
-      | Partial<Record<keyof typeof filter, any>>
-      | ((
-          prev: Record<keyof typeof filter, any>
-        ) => Partial<Record<keyof typeof filter, any>>)
+    newValues: SetStateAction<Partial<Record<keyof typeof filter, any>>>
   ) => {
     setFilter(prev => ({
       ...prev,
       ...(typeof newValues === 'function' ? newValues(prev) : newValues)
     }))
+    setCoreFilters({ page: 1 })
   }
 
-  useEffect(() => {
-    setPage(1)
-  }, [filter, debouncedSearchQuery, setPage, sortBy, isFavouritesShowing])
-
-  return {
-    page,
-    setPage,
-    viewMode,
-    setViewMode,
-    sortBy,
-    setSortBy,
-    isFavouritesShowing,
-    setShowFavourites,
-    searchQuery,
+  const memoizedValues = useMemo(() => {
+    return {
+      page: coreFilters.page,
+      setPage: (page: SetStateAction<number>) => {
+        setCoreFilters({
+          page: typeof page === 'function' ? page(coreFilters.page) : page
+        })
+      },
+      viewMode: coreFilters.view,
+      setViewMode: (mode: SetStateAction<'grid' | 'list' | 'gallery'>) => {
+        setCoreFilters({
+          view: typeof mode === 'function' ? mode(coreFilters.view) : mode
+        })
+      },
+      sortBy: coreFilters.sort,
+      setSortBy: (sort: SetStateAction<SortTypes>) => {
+        setCoreFilters({
+          sort: typeof sort === 'function' ? sort(coreFilters.sort) : sort,
+          page: 1
+        })
+      },
+      isFavouritesShowing: coreFilters.favourites,
+      setShowFavourites: (show: SetStateAction<boolean>) => {
+        setCoreFilters({
+          favourites:
+            typeof show === 'function' ? show(coreFilters.favourites) : show,
+          page: 1
+        })
+      },
+      searchQuery: coreFilters.q,
+      debouncedSearchQuery,
+      setSearchQuery: (query: SetStateAction<string>) => {
+        setCoreFilters({
+          q: typeof query === 'function' ? query(coreFilters.q) : query,
+          page: 1
+        })
+      },
+      ...filter,
+      updateFilter
+    } as FilterReturnType & {
+      [key in keyof T]: T[key] extends { defaultValue: infer V } ? V : never
+    }
+  }, [
+    coreFilters.page,
+    coreFilters.view,
+    coreFilters.sort,
+    coreFilters.favourites,
+    coreFilters.q,
     debouncedSearchQuery,
-    setSearchQuery,
-    ...filter,
-    updateFilter
-  } as FilterReturnType & {
-    [key in keyof T]: T[key] extends { defaultValue: infer V } ? V : never
-  }
+    filter,
+    setCoreFilters,
+    setFilter
+  ])
+
+  return memoizedValues
 }
 
 export function findInFilterList(
@@ -198,7 +214,6 @@ export function constructSearchParamsFromFilter(
         'sortBy'
       ].includes(key)
     ) {
-      console.log(key, value)
       params['categories'] = [
         ...(params['categories'] || '').split(',').filter(Boolean),
         value.split(',').filter(Boolean)
