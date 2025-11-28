@@ -85,24 +85,25 @@ function ProjectInnerHeader({
       </header>
       <HeaderFilter
         items={filterItems}
-        onChanges={onChanges}
         values={Object.fromEntries(
           Object.entries(filterValues).map(([key, value]) => [
             key,
             value?.includes(',') ? value.split(',') : value
           ])
         )}
+        onChange={onChanges}
       />
       <div className="mt-2 mb-6 flex gap-2 md:mt-4 xl:mt-6">
         <SortBySelector setSortBy={setSortBy} sortBy={sortBy} />
         <SearchInput
           namespace="apps.modrinth"
           searchTarget={title.replace('All ', '').toLowerCase()}
-          onChange={setSearchQuery}
           value={searchQuery}
+          onChange={setSearchQuery}
         />
         <ViewModeSelector
           className="hidden md:flex"
+          currentMode={viewMode}
           options={[
             {
               icon: 'tabler:list',
@@ -117,8 +118,7 @@ function ProjectInnerHeader({
               value: 'gallery'
             }
           ]}
-          setViewMode={setViewMode}
-          viewMode={viewMode}
+          onModeChange={setViewMode}
         />
       </div>
     </>

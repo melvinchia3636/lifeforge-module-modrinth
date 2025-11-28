@@ -105,8 +105,8 @@ function ProjectDetails() {
           <LayoutWithSidebar>
             <ContentWrapperWithSidebar>
               <Tabs
-                active={currentSection}
                 className="mb-6"
+                currentTab={currentSection}
                 enabled={
                   [
                     'description',
@@ -137,7 +137,7 @@ function ProjectDetails() {
                     icon: 'tabler:package'
                   }
                 ]}
-                onNavClick={(id: string) => {
+                onTabChange={(id: string) => {
                   setCurrentSection(
                     id as 'description' | 'gallery' | 'changelog' | 'versions'
                   )

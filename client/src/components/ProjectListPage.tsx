@@ -200,7 +200,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
                       <div className="space-y-3">
                         <Pagination
                           className="mb-6"
-                          currentPage={page}
+                          page={page}
                           totalPages={Math.ceil(total / 20)}
                           onPageChange={
                             setPage as Dispatch<SetStateAction<number>>
@@ -233,7 +233,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
 
                         <Pagination
                           className="my-6"
-                          currentPage={page}
+                          page={page}
                           totalPages={Math.ceil(total / 20)}
                           onPageChange={
                             setPage as Dispatch<SetStateAction<number>>

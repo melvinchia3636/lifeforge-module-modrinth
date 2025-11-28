@@ -27,7 +27,7 @@ function ChangelogSection() {
         {data => (
           <>
             <Pagination
-              currentPage={page}
+              page={page}
               totalPages={Math.ceil(data.length / 20)}
               onPageChange={setPage}
             />
@@ -92,7 +92,7 @@ function ChangelogSection() {
             </WithQueryData>
             <Pagination
               className="mb-8"
-              currentPage={page}
+              page={page}
               totalPages={Math.ceil(data.length / 20)}
               onPageChange={setPage}
             />

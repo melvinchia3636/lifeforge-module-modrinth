@@ -33,7 +33,7 @@ function VersionsSection() {
         {data => (
           <>
             <Pagination
-              currentPage={page}
+              page={page}
               totalPages={Math.ceil(data.length / 20)}
               onPageChange={setPage}
             />
@@ -178,7 +178,7 @@ function VersionsSection() {
             </div>
             <Pagination
               className="mb-8"
-              currentPage={page}
+              page={page}
               totalPages={Math.ceil(data.length / 20)}
               onPageChange={setPage}
             />
