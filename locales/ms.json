@@ -23,8 +23,24 @@
       "description": "Cuba laraskan carian atau penapis anda untuk mencari apa yang anda cari."
     }
   },
+  "viewTypes": {
+    "grid": "Grid",
+    "list": "Senarai",
+    "gallery": "Galeri"
+  },
+  "sortTypes": {
+    "relevance": "Kepentingan",
+    "downloads": "Muat Turun",
+    "follows": "Pengikut",
+    "newest": "Tarikh Diterbitkan",
+    "updated": "Tarikh Dikemaskini"
+  },
   "buttons": {
     "favourited": "Telah Dijadikan Kegemaran"
+  },
+  "hamburgerMenu": {
+    "viewAs": "Lihat Sebagai",
+    "sortBy": "Susun Mengikut"
   },
   "sidebar": {
     "environments": "Persekitaran",

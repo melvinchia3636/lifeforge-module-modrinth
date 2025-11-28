@@ -20,6 +20,9 @@ export const list = forgeController
         .string()
         .transform(val => parseInt(val, 10))
         .default(1),
+      sort: z
+        .enum(['relevance', 'downloads', 'follows', 'newest', 'updated'])
+        .default('relevance'),
       query: z.string().optional(),
       version: z.string().optional(),
       categories: z.string().optional(),
@@ -40,7 +43,15 @@ export const list = forgeController
   })
   .callback(
     async ({
-      query: { page, query, version, categories, environments, projectType }
+      query: {
+        page,
+        query,
+        version,
+        categories,
+        environments,
+        projectType,
+        sort
+      }
     }) => {
       const facets: string[][] = [[`project_type:${projectType}`]]
 
@@ -86,7 +97,7 @@ export const list = forgeController
       const queryParams = new URLSearchParams({
         limit: '20',
         offset: `${(page - 1) * 20}`,
-        index: 'relevance',
+        index: sort,
         query: query ?? '',
         facets: JSON.stringify(facets)
       })

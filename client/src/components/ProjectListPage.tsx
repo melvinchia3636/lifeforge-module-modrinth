@@ -5,12 +5,15 @@ import forgeAPI from '@/utils/forgeAPI'
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
   ContentWrapperWithSidebar,
+  ContextMenuGroup,
+  ContextMenuItem,
   EmptyStateScreen,
   HeaderFilter,
   LayoutWithSidebar,
   ModuleHeader,
   Pagination,
   Scrollbar,
+  SidebarDivider,
   WithQuery
 } from 'lifeforge-ui'
 import {
@@ -19,12 +22,14 @@ import {
   type ReactNode,
   type SetStateAction
 } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import ProjectInnerHeader from './ProjectInnerHeader'
 import ProjectSidebar from './ProjectSidebar'
 import GalleryView from './views/GalleryView'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
+import { SORT_TYPES } from './SortBySelector'
 
 interface ProjectListPageProps {
   projectType:
@@ -54,6 +59,8 @@ function ProjectListPage<TFilterKeys extends string[]>({
   getIcon,
   getKey
 }: ProjectListPageProps) {
+  const { t } = useTranslation('apps.modrinth')
+
   const {
     page,
     setPage,
@@ -64,6 +71,8 @@ function ProjectListPage<TFilterKeys extends string[]>({
     viewMode,
     setViewMode,
     updateFilter,
+    sortBy,
+    setSortBy,
     ...filterValues
   } = filters
 
@@ -104,7 +113,51 @@ function ProjectListPage<TFilterKeys extends string[]>({
 
   return (
     <>
-      <ModuleHeader />
+      <ModuleHeader
+        contextMenuProps={{
+          classNames: {
+            wrapper: 'md:hidden flex',
+            menu: 'min-w-64'
+          },
+          children: (
+            <>
+              <ContextMenuGroup
+                icon="tabler:eye"
+                label={t('hamburgerMenu.viewAs')}
+              >
+                {(['grid', 'list', 'gallery'] as const).map(type => (
+                  <ContextMenuItem
+                    key={type}
+                    checked={viewMode === type}
+                    icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
+                    label={t(`viewTypes.${type}`)}
+                    onClick={() => {
+                      setViewMode(type)
+                    }}
+                  />
+                ))}
+              </ContextMenuGroup>
+              <SidebarDivider />
+              <ContextMenuGroup
+                icon="tabler:arrows-up-down"
+                label={t('hamburgerMenu.sortBy')}
+              >
+                {SORT_TYPES.map(([type, icon]) => (
+                  <ContextMenuItem
+                    key={type}
+                    checked={sortBy === type}
+                    icon={icon}
+                    label={t(`sortTypes.${type}`)}
+                    onClick={() => {
+                      setSortBy(type)
+                    }}
+                  />
+                ))}
+              </ContextMenuGroup>
+            </>
+          )
+        }}
+      />
       <LayoutWithSidebar>
         <ProjectSidebar
           favouritesCount={favouriteIdsQuery.data?.length ?? 0}
@@ -123,7 +176,9 @@ function ProjectListPage<TFilterKeys extends string[]>({
             filterValues={filterValues}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            setSortBy={setSortBy}
             setViewMode={setViewMode}
+            sortBy={sortBy}
             title={projectType}
             totalItemsCount={finalQuery.data?.total ?? 0}
             viewMode={viewMode}
@@ -140,7 +195,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
                 }
               >
                 {({ items, total }) =>
-                  items.length > 0 ? (
+                  items?.length > 0 ? (
                     <Scrollbar>
                       <div className="space-y-3">
                         <Pagination

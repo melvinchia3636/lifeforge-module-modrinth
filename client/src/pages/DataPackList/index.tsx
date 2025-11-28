@@ -1,4 +1,5 @@
 import ProjectListPage from '@/components/ProjectListPage'
+import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 import { useQuery } from '@tanstack/react-query'
@@ -12,13 +13,7 @@ function DataPackList() {
 
   const entriesQuery = useQuery(
     forgeAPI.modrinth.projects.list
-      .input({
-        page: filters.page.toString(),
-        query: filters.debouncedSearchQuery || undefined,
-        version: filters.version || undefined,
-        categories: filters.categories || undefined,
-        projectType: 'datapack'
-      })
+      .input(constructSearchParamsFromFilter(filters, 'datapack'))
       .queryOptions()
   )
 

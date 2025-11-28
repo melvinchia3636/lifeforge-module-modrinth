@@ -26,6 +26,22 @@
   "buttons": {
     "favourited": "Favourited"
   },
+  "viewTypes": {
+    "grid": "Grid",
+    "list": "List",
+    "gallery": "Gallery"
+  },
+  "sortTypes": {
+    "relevance": "Relevance",
+    "downloads": "Downloads",
+    "follows": "Followers",
+    "newest": "Date Published",
+    "updated": "Date Updated"
+  },
+  "hamburgerMenu": {
+    "viewAs": "View As",
+    "sortBy": "Sort By"
+  },
   "sidebar": {
     "environments": "Environments",
     "categories": "Categories",

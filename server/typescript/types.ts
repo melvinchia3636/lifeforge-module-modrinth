@@ -13,7 +13,7 @@ export interface Hit {
   icon_url: string
   date_created: Date
   date_modified: Date
-  latest_version: string
+  newest_version: string
   license: string
   client_side: 'optional' | 'required' | 'unsupported' | 'unknown'
   server_side: 'optional' | 'required' | 'unsupported' | 'unknown'

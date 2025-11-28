@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 import {
@@ -9,11 +10,20 @@ import {
   useQueryStates
 } from 'shared'
 
+export type SortTypes =
+  | 'relevance'
+  | 'downloads'
+  | 'follows'
+  | 'newest'
+  | 'updated'
+
 export type FilterReturnType = {
   page: number
   setPage: (page: number) => void
   viewMode: 'grid' | 'list' | 'gallery'
   setViewMode: (mode: 'grid' | 'list' | 'gallery') => void
+  sortBy: SortTypes
+  setSortBy: (sort: SortTypes) => void
   isFavouritesShowing: boolean
   setShowFavourites: (show: boolean) => void
   searchQuery: string
@@ -43,6 +53,17 @@ export default function useProjectFilter<T extends Record<string, any>>(
     parseAsStringEnum(['grid', 'list', 'gallery']).withDefault('list')
   )
 
+  const [sortBy, setSortBy] = useQueryState(
+    'sort',
+    parseAsStringEnum([
+      'relevance',
+      'downloads',
+      'follows',
+      'newest',
+      'updated'
+    ]).withDefault('relevance')
+  )
+
   const [isFavouritesShowing, setShowFavourites] = useQueryState(
     'favourites',
     parseAsBoolean.withDefault(false)
@@ -67,13 +88,15 @@ export default function useProjectFilter<T extends Record<string, any>>(
 
   useEffect(() => {
     setPage(1)
-  }, [filter, debouncedSearchQuery, setPage])
+  }, [filter, debouncedSearchQuery, setPage, sortBy, isFavouritesShowing])
 
   return {
     page,
     setPage,
     viewMode,
     setViewMode,
+    sortBy,
+    setSortBy,
     isFavouritesShowing,
     setShowFavourites,
     searchQuery,
@@ -153,6 +176,7 @@ export function constructSearchParamsFromFilter(
     page: String(filter.page),
     query: filter.debouncedSearchQuery || '',
     version: filter.version || '',
+    sort: filter.sortBy,
     projectType,
     environments: filter.environments || ''
   }
@@ -170,7 +194,8 @@ export function constructSearchParamsFromFilter(
         'version',
         'environments',
         'projectType',
-        'viewMode'
+        'viewMode',
+        'sortBy'
       ].includes(key)
     ) {
       console.log(key, value)

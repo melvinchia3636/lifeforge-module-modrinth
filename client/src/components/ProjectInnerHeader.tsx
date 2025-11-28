@@ -1,3 +1,4 @@
+import type { SortTypes } from '@/hooks/useProjectFilter'
 import {
   Button,
   HeaderFilter,
@@ -9,6 +10,8 @@ import _ from 'lodash'
 import { type ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import SortBySelector from './SortBySelector'
+
 interface ProjectInnerHeaderProps {
   totalItemsCount: number
   title: string
@@ -19,6 +22,8 @@ interface ProjectInnerHeaderProps {
   setSearchQuery: (query: string) => void
   viewMode: 'grid' | 'list' | 'gallery'
   setViewMode: (mode: 'grid' | 'list' | 'gallery') => void
+  sortBy: SortTypes
+  setSortBy: (sort: SortTypes) => void
 }
 
 function ProjectInnerHeader({
@@ -30,7 +35,9 @@ function ProjectInnerHeader({
   searchQuery,
   setSearchQuery,
   viewMode,
-  setViewMode
+  setViewMode,
+  sortBy,
+  setSortBy
 }: ProjectInnerHeaderProps) {
   const { t } = useTranslation('apps.modrinth')
 
@@ -86,7 +93,8 @@ function ProjectInnerHeader({
           ])
         )}
       />
-      <div className="mt-4 mb-6 flex gap-2 xl:mt-6">
+      <div className="mt-2 mb-6 flex gap-2 md:mt-4 xl:mt-6">
+        <SortBySelector setSortBy={setSortBy} sortBy={sortBy} />
         <SearchInput
           namespace="apps.modrinth"
           searchTarget={title.replace('All ', '').toLowerCase()}
@@ -94,6 +102,7 @@ function ProjectInnerHeader({
           value={searchQuery}
         />
         <ViewModeSelector
+          className="hidden md:flex"
           options={[
             {
               icon: 'tabler:list',

@@ -26,6 +26,22 @@
   "buttons": {
     "favourited": "已收藏"
   },
+  "viewTypes": {
+    "grid": "網格",
+    "list": "列表",
+    "gallery": "畫廊"
+  },
+  "sortTypes": {
+    "relevance": "相關性",
+    "downloads": "下載量",
+    "follows": "關注者",
+    "newest": "發布日期",
+    "updated": "更新日期"
+  },
+  "hamburgerMenu": {
+    "viewAs": "查看方式",
+    "sortBy": "排序依據"
+  },
   "sidebar": {
     "environments": "環境",
     "categories": "分類",
