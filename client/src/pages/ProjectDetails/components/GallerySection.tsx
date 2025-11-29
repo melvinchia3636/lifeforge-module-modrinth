@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
-import { ItemWrapper } from 'lifeforge-ui'
+import { Card } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
@@ -16,7 +16,7 @@ function GallerySection({ gallery }: { gallery: ProjectDetails['gallery'] }) {
       {gallery
         .sort((a, b) => a.ordering - b.ordering)
         .map(image => (
-          <ItemWrapper key={image.url} className="flex flex-col p-0!">
+          <Card key={image.url} className="flex flex-col p-0!">
             <img
               alt={t('projectDetails.gallery.imageAlt')}
               className="aspect-video w-full object-cover"
@@ -34,7 +34,7 @@ function GallerySection({ gallery }: { gallery: ProjectDetails['gallery'] }) {
                 </span>
               </p>
             </div>
-          </ItemWrapper>
+          </Card>
         ))}
     </div>
   )

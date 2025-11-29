@@ -21,7 +21,18 @@ function ResolutionsSection() {
       {RESOLUTIONS.map(resolution => (
         <SidebarItem
           key={resolution}
-          actionButtonIcon="tabler:ban"
+          actionButtonProps={{
+            icon: 'tabler:ban',
+            onClick: () => {
+              updateFilter(prev => ({
+                resolutions: toggleInFilterList(prev.resolutions, resolution, {
+                  isNegation: true,
+                  transformString: str =>
+                    str.replace(' or higher', '+').replace(' or lower', '-')
+                })
+              }))
+            }
+          }}
           active={
             findInFilterList(selectedResolutions, resolution, {
               isNegation: undefined,
@@ -29,7 +40,7 @@ function ResolutionsSection() {
                 str.replace(' or higher', '+').replace(' or lower', '-')
             }) !== null
           }
-          activeClassNames={
+          classNames={
             findInFilterList(selectedResolutions, resolution, {
               isNegation: true,
               transformString: str =>
@@ -43,15 +54,6 @@ function ResolutionsSection() {
           }
           icon="tabler:aspect-ratio"
           label={resolution}
-          onActionButtonClick={() => {
-            updateFilter(prev => ({
-              resolutions: toggleInFilterList(prev.resolutions, resolution, {
-                isNegation: true,
-                transformString: str =>
-                  str.replace(' or higher', '+').replace(' or lower', '-')
-              })
-            }))
-          }}
           onClick={() => {
             updateFilter(prev => ({
               resolutions: toggleInFilterList(prev.resolutions, resolution, {

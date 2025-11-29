@@ -1,8 +1,8 @@
 import type { SortTypes } from '@/hooks/useProjectFilter'
 import {
   Button,
-  HeaderFilter,
   SearchInput,
+  TagsFilter,
   ViewModeSelector,
   useModuleSidebarState
 } from 'lifeforge-ui'
@@ -15,7 +15,7 @@ import SortBySelector from './SortBySelector'
 interface ProjectInnerHeaderProps {
   totalItemsCount: number
   title: string
-  filterItems: ComponentProps<typeof HeaderFilter>['items']
+  filterItems: ComponentProps<typeof TagsFilter>['availableFilters']
   filterValues: Record<string, any>
   onUpdateFilter: (updates: Record<string, any>) => void
   searchQuery: string
@@ -83,8 +83,8 @@ function ProjectInnerHeader({
           }}
         />
       </header>
-      <HeaderFilter
-        items={filterItems}
+      <TagsFilter
+        availableFilters={filterItems}
         values={Object.fromEntries(
           Object.entries(filterValues).map(([key, value]) => [
             key,

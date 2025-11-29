@@ -1,5 +1,5 @@
 import type { ProjectViewItemProps } from '@/components/types'
-import { ItemWrapper } from 'lifeforge-ui'
+import { Card } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'shared'
 
@@ -19,7 +19,7 @@ function GridViewItem({
   const navigate = useNavigate()
 
   return (
-    <ItemWrapper
+    <Card
       isInteractive
       className="flex h-full flex-col"
       onClick={() => navigate(`/modrinth/project/${entry.slug}`)}
@@ -49,7 +49,7 @@ function GridViewItem({
         isFavourite={isFavourite}
         projectId={'project_id' in entry ? entry.project_id : entry.id}
       />
-    </ItemWrapper>
+    </Card>
   )
 }
 

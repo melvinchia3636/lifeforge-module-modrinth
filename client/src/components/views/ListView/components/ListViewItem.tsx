@@ -1,7 +1,7 @@
 import type { ProjectViewItemProps } from '@/components/types'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { ItemWrapper } from 'lifeforge-ui'
+import { Card } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'shared'
 
@@ -23,7 +23,7 @@ function ListViewItem({
   const navigate = useNavigate()
 
   return (
-    <ItemWrapper
+    <Card
       isInteractive
       className="flex flex-col gap-4 md:flex-row"
       onClick={() => navigate(`/modrinth/project/${entry.slug}`)}
@@ -49,7 +49,7 @@ function ListViewItem({
           projectId={'project_id' in entry ? entry.project_id : entry.id}
         />
       </div>
-    </ItemWrapper>
+    </Card>
   )
 }
 

@@ -8,12 +8,12 @@ import {
   ContextMenuGroup,
   ContextMenuItem,
   EmptyStateScreen,
-  HeaderFilter,
   LayoutWithSidebar,
   ModuleHeader,
   Pagination,
   Scrollbar,
   SidebarDivider,
+  TagsFilter,
   WithQuery
 } from 'lifeforge-ui'
 import {
@@ -40,7 +40,7 @@ interface ProjectListPageProps {
     | 'shader'
     | 'plugin'
   filters: FilterReturnType
-  headerFilterItems: ComponentProps<typeof HeaderFilter>['items']
+  headerFilterItems: ComponentProps<typeof TagsFilter>['availableFilters']
   sidebarContent: ReactNode
   dataQuery: UseQueryResult<{
     total: number
@@ -244,8 +244,10 @@ function ProjectListPage<TFilterKeys extends string[]>({
                   ) : (
                     <EmptyStateScreen
                       icon="tabler:search-off"
-                      name="search"
-                      namespace="apps.modrinth"
+                      message={{
+                        id: 'search',
+                        namespace: 'apps.modrinth'
+                      }}
                     />
                   )
                 }

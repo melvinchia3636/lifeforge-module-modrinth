@@ -1,5 +1,5 @@
 import type { ProjectViewItemProps } from '@/components/types'
-import { ItemWrapper } from 'lifeforge-ui'
+import { Card } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'shared'
 
@@ -19,7 +19,7 @@ function GalleryViewItem({
   const navigate = useNavigate()
 
   return (
-    <ItemWrapper
+    <Card
       isInteractive
       className="flex flex-col gap-4 p-0!"
       onClick={() => {
@@ -85,7 +85,7 @@ function GalleryViewItem({
           getKey={getKey}
         />
       </div>
-    </ItemWrapper>
+    </Card>
   )
 }
 

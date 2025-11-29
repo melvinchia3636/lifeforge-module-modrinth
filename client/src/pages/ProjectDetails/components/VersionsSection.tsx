@@ -3,13 +3,7 @@ import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
-import {
-  Button,
-  ItemWrapper,
-  Pagination,
-  TagChip,
-  WithQueryData
-} from 'lifeforge-ui'
+import { Button, Card, Pagination, TagChip, WithQueryData } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, usePersonalization } from 'shared'
@@ -114,7 +108,7 @@ function VersionsSection() {
             </table>
             <div className="my-6 space-y-3 md:hidden">
               {data.slice((page - 1) * 20, page * 20).map(version => (
-                <ItemWrapper key={version.version_number}>
+                <Card key={version.version_number}>
                   <div className="flex-between mb-4">
                     <div>
                       <h3 className="text-xl font-medium">
@@ -173,7 +167,7 @@ function VersionsSection() {
                       </span>
                     </div>
                   </div>
-                </ItemWrapper>
+                </Card>
               ))}
             </div>
             <Pagination
