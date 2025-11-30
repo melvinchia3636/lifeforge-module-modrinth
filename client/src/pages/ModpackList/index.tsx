@@ -26,7 +26,7 @@ function ModpackList() {
       data:
         versionsQuery.data?.map(e => ({
           id: e,
-          name: e || 'Unknown',
+          label: e || 'Unknown',
           icon: 'tabler:device-gamepad'
         })) ?? []
     },

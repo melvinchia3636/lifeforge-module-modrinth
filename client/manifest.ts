@@ -16,7 +16,7 @@ export default {
   },
   subsection: [
     { icon: 'tabler:cube', label: 'Mods', path: 'mods' },
-    { icon: 'tabler:box', label: 'Resource Packs', path: 'resource-packs' },
+    { icon: 'tabler:texture', label: 'Resource Packs', path: 'resource-packs' },
     { icon: 'tabler:database', label: 'Datapacks', path: 'datapacks' },
     { icon: 'tabler:sun', label: 'Shaders', path: 'shaders' },
     { icon: 'uil:box', label: 'Modpacks', path: 'modpacks' },

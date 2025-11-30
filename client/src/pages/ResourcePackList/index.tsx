@@ -42,7 +42,7 @@ function ResourcePackList() {
       data:
         versionsQuery.data?.map(e => ({
           id: e,
-          name: e || 'Unknown',
+          label: e || 'Unknown',
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
@@ -55,12 +55,12 @@ function ResourcePackList() {
             .replace(' or higher', '+')
             .replace(' or lower', '-')
             .toLowerCase(),
-          name: resolution,
+          label: resolution,
           icon: 'tabler:aspect-ratio'
         })),
         ...RESOLUTIONS.map(resolution => ({
           id: `!${resolution.replace(' or higher', '+').replace(' or lower', '-').toLowerCase()}`,
-          name: resolution,
+          label: resolution,
           icon: 'tabler:aspect-ratio',
           color: COLORS.red[500]
         }))

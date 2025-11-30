@@ -6,7 +6,7 @@ export default function constructHeaderFilterItems(
 ) {
   const baseItems = Object.keys(icons).map(item => ({
     id: _.kebabCase(item.toLowerCase()),
-    name: item,
+    label: item,
     icon: `customHTML:${icons[item]}`
   }))
 
