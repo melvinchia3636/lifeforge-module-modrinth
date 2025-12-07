@@ -52,16 +52,18 @@ function ChangelogSection() {
                     >
                       <div className="flex-between w-full min-w-0 gap-12">
                         <h3 className="mb-2 flex min-w-0 flex-col text-2xl font-bold sm:flex-row sm:items-end sm:gap-2">
-                          {version.version_number}
+                          <span className="truncate">
+                            {version.version_number}
+                          </span>
                           <span className="text-bg-500 w-full min-w-0 truncate text-base font-normal">
                             <span>{t('projectDetails.changelog.by')}</span>
-                            <span className="text-custom-500 ml-1.5 text-base font-medium">
+                            <span className="text-custom-500 ml-1 text-base font-medium">
                               {members.find(
                                 member => member.user.id === version.author_id
                               )?.user.username ||
                                 t('projectDetails.changelog.unknown')}
                             </span>
-                            <span className="ml-2">
+                            <span className="ml-1">
                               {t('projectDetails.changelog.on')}{' '}
                               {dayjs(version.date_published)
                                 .locale(language)

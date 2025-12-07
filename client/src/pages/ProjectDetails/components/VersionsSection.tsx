@@ -33,7 +33,7 @@ function VersionsSection() {
             />
             <table className="my-6 hidden w-full table-auto border-collapse md:table">
               <thead>
-                <tr className="border-bg-200 dark:border-bg-800 border-b-2">
+                <tr className="border-bg-200 text-bg-800 dark:text-bg-100 dark:border-bg-800 border-b-2">
                   <th className="px-4 py-2 text-left">
                     {t('projectDetails.versions.name')}
                   </th>
