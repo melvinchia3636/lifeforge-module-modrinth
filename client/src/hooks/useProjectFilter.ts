@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useDebounce } from '@uidotdev/usehooks'
 import { type SetStateAction, useMemo } from 'react'
 import {
   parseAsBoolean,
@@ -26,7 +25,6 @@ export type FilterReturnType = {
   isFavouritesShowing: boolean
   setShowFavourites: (show: boolean) => void
   searchQuery: string
-  debouncedSearchQuery: string
   setSearchQuery: (query: string) => void
   updateFilter: (
     newValues:
@@ -53,8 +51,6 @@ export default function useProjectFilter<T extends Record<string, any>>(
     ]).withDefault('relevance'),
     favourites: parseAsBoolean.withDefault(false)
   })
-
-  const debouncedSearchQuery = useDebounce(coreFilters.q, 500)
 
   const [filter, setFilter] = useQueryStates(filterConfig)
 
@@ -98,7 +94,6 @@ export default function useProjectFilter<T extends Record<string, any>>(
         })
       },
       searchQuery: coreFilters.q,
-      debouncedSearchQuery,
       setSearchQuery: (query: SetStateAction<string>) => {
         setCoreFilters({
           q: typeof query === 'function' ? query(coreFilters.q) : query,
@@ -116,7 +111,6 @@ export default function useProjectFilter<T extends Record<string, any>>(
     coreFilters.sort,
     coreFilters.favourites,
     coreFilters.q,
-    debouncedSearchQuery,
     filter,
     setCoreFilters,
     setFilter
@@ -190,7 +184,7 @@ export function constructSearchParamsFromFilter(
 ): Record<string, string> {
   const params: Record<string, string> = {
     page: String(filter.page),
-    query: filter.debouncedSearchQuery || '',
+    query: filter.searchQuery || '',
     version: filter.version || '',
     sort: filter.sortBy,
     projectType,
@@ -206,7 +200,6 @@ export function constructSearchParamsFromFilter(
       ![
         'page',
         'searchQuery',
-        'debouncedSearchQuery',
         'version',
         'environments',
         'projectType',

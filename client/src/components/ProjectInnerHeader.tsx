@@ -96,6 +96,7 @@ function ProjectInnerHeader({
       <div className="mt-2 mb-6 flex gap-2 md:mt-4 xl:mt-6">
         <SortBySelector setSortBy={setSortBy} sortBy={sortBy} />
         <SearchInput
+          debounceMs={500}
           namespace="apps.modrinth"
           searchTarget={title.replace('All ', '').toLowerCase()}
           value={searchQuery}
