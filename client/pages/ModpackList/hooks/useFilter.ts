@@ -1,5 +1,6 @@
-import useProjectFilter from '@/hooks/useProjectFilter'
 import { parseAsString } from 'shared'
+
+import useProjectFilter from '../../../hooks/useProjectFilter'
 
 export default function useFilter() {
   return useProjectFilter({

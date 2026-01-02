@@ -1,6 +1,10 @@
-import { findInFilterList, toggleInFilterList } from '@/hooks/useProjectFilter'
 import { SidebarItem, SidebarTitle } from 'lifeforge-ui'
 import _ from 'lodash'
+
+import {
+  findInFilterList,
+  toggleInFilterList
+} from '../../hooks/useProjectFilter'
 
 function GeneralSection({
   name,

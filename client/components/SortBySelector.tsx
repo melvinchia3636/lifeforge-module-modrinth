@@ -1,7 +1,8 @@
-import type { SortTypes } from '@/hooks/useProjectFilter'
 import { Icon } from '@iconify/react'
 import { Listbox, ListboxOption } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+
+import type { SortTypes } from '../hooks/useProjectFilter'
 
 export const SORT_TYPES: [id: SortTypes, icon: string][] = [
   ['relevance', 'tabler:search'],

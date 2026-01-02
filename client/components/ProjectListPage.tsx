@@ -1,7 +1,3 @@
-import type { Hit } from '@/components/types'
-import type { FilterReturnType } from '@/hooks/useProjectFilter'
-import type { ProjectDetails } from '@/pages/ProjectDetails'
-import forgeAPI from '@/utils/forgeAPI'
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
   ContentWrapperWithSidebar,
@@ -24,6 +20,11 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import type { Hit } from '@/components/types'
+
+import type { FilterReturnType } from '../hooks/useProjectFilter'
+import type { ProjectDetails } from '../pages/ProjectDetails'
+import forgeAPI from '../utils/forgeAPI'
 import ProjectInnerHeader from './ProjectInnerHeader'
 import ProjectSidebar from './ProjectSidebar'
 import { SORT_TYPES } from './SortBySelector'

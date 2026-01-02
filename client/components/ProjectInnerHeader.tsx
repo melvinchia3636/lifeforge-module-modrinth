@@ -1,4 +1,3 @@
-import type { SortTypes } from '@/hooks/useProjectFilter'
 import {
   Button,
   SearchInput,
@@ -10,6 +9,7 @@ import _ from 'lodash'
 import { type ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import type { SortTypes } from '../hooks/useProjectFilter'
 import SortBySelector from './SortBySelector'
 
 interface ProjectInnerHeaderProps {
