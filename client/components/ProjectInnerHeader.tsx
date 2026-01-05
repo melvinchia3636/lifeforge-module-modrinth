@@ -39,7 +39,7 @@ function ProjectInnerHeader({
   sortBy,
   setSortBy
 }: ProjectInnerHeaderProps) {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const { setIsSidebarOpen } = useModuleSidebarState()
 
@@ -97,7 +97,7 @@ function ProjectInnerHeader({
         <SortBySelector setSortBy={setSortBy} sortBy={sortBy} />
         <SearchInput
           debounceMs={500}
-          namespace="apps.modrinth"
+          namespace="apps.melvinchia3636$modrinth"
           searchTarget={title.replace('All ', '').toLowerCase()}
           value={searchQuery}
           onChange={setSearchQuery}

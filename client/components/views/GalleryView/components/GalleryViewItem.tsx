@@ -1,7 +1,8 @@
-import type { ProjectViewItemProps } from '@/components/types'
 import { Card } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'shared'
+
+import type { ProjectViewItemProps } from '@/components/types'
 
 import FavouriteButton from '../../components/FavouriteButton'
 import ItemIcon from '../../components/ItemIcon'
@@ -14,7 +15,7 @@ function GalleryViewItem({
   getIcon,
   getKey
 }: ProjectViewItemProps) {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const navigate = useNavigate()
 

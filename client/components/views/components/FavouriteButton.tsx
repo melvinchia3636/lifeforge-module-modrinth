@@ -1,9 +1,10 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { Button } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 function FavouriteButton({
   isFavourite,
@@ -20,9 +21,11 @@ function FavouriteButton({
     const action = isFavourite ? 'remove' : 'add'
 
     try {
-      await forgeAPI.modrinth.favourites[`${action}Item`].mutate({
-        projectId
-      })
+      await forgeAPI.melvinchia3636$modrinth.favourites[`${action}Item`].mutate(
+        {
+          projectId
+        }
+      )
 
       queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
     } catch {

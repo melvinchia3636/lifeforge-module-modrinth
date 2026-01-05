@@ -7,7 +7,7 @@ import { usePersonalization } from 'shared'
 import type { ProjectDetails } from '..'
 
 function GallerySection({ gallery }: { gallery: ProjectDetails['gallery'] }) {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const { language } = usePersonalization()
 

@@ -60,7 +60,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
   getIcon,
   getKey
 }: ProjectListPageProps) {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const {
     page,
@@ -83,7 +83,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
     !isFavouritesShowing
 
   const favouriteIdsQuery = useQuery(
-    forgeAPI.modrinth.favourites.listItemIds
+    forgeAPI.melvinchia3636$modrinth.favourites.listItemIds
       .input({
         projectType
       })
@@ -91,7 +91,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
   )
 
   const favouriteItemsQuery = useQuery(
-    forgeAPI.modrinth.favourites.listItems
+    forgeAPI.melvinchia3636$modrinth.favourites.listItems
       .input({
         projectType,
         query: searchQuery || undefined,
@@ -247,7 +247,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
                       icon="tabler:search-off"
                       message={{
                         id: 'search',
-                        namespace: 'apps.modrinth'
+                        namespace: 'apps.melvinchia3636$modrinth'
                       }}
                     />
                   )

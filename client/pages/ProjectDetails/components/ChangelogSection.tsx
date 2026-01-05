@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { Button, Pagination, WithQueryData } from 'lifeforge-ui'
@@ -8,8 +7,10 @@ import Markdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import { useParams, usePersonalization } from 'shared'
 
+import forgeAPI from '@/utils/forgeAPI'
+
 function ChangelogSection() {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const { projectId } = useParams<{ projectId: string }>()
 
@@ -20,9 +21,11 @@ function ChangelogSection() {
   return (
     <>
       <WithQueryData
-        controller={forgeAPI.modrinth.projects.getVersions.input({
-          projectId: projectId!
-        })}
+        controller={forgeAPI.melvinchia3636$modrinth.projects.getVersions.input(
+          {
+            projectId: projectId!
+          }
+        )}
       >
         {data => (
           <>
@@ -32,9 +35,11 @@ function ChangelogSection() {
               onPageChange={setPage}
             />
             <WithQueryData
-              controller={forgeAPI.modrinth.projects.listMembers.input({
-                projectId: projectId!
-              })}
+              controller={forgeAPI.melvinchia3636$modrinth.projects.listMembers.input(
+                {
+                  projectId: projectId!
+                }
+              )}
             >
               {members => (
                 <div className="my-6 space-y-6">

@@ -1,10 +1,11 @@
-import forgeAPI from '@/utils/forgeAPI'
 import {
   Scrollbar,
   SidebarItem,
   SidebarTitle,
   WithQueryData
 } from 'lifeforge-ui'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 function VersionsSection({
   selectedVersion,
@@ -15,9 +16,14 @@ function VersionsSection({
 }) {
   return (
     <>
-      <SidebarTitle label="Game Versions" namespace="apps.modrinth" />
+      <SidebarTitle
+        label="Game Versions"
+        namespace="apps.melvinchia3636$modrinth"
+      />
       <Scrollbar className="min-h-[300px]">
-        <WithQueryData controller={forgeAPI.modrinth.gameVersions.list}>
+        <WithQueryData
+          controller={forgeAPI.melvinchia3636$modrinth.gameVersions.list}
+        >
           {versions => (
             <>
               {versions.map(version => (

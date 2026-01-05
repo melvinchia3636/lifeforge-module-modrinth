@@ -1,19 +1,3 @@
-import {
-  getDataPackIcon,
-  getDataPackKey
-} from '@/pages/DataPackList/constants/icons'
-import { getModIcon, getModKey } from '@/pages/ModList/constants/icons'
-import {
-  getModpackIcon,
-  getModpackKey
-} from '@/pages/ModpackList/constants/icons'
-import { getPluginIcon, getPluginKey } from '@/pages/PluginList/constants/icons'
-import {
-  getResourcePackIcon,
-  getResourcePackKey
-} from '@/pages/ResourcePackList/constants/icons'
-import { getShaderIcon, getShaderKey } from '@/pages/ShaderList/constants/icons'
-import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import {
   Button,
@@ -30,6 +14,23 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type InferOutput, useNavigate, useParams } from 'shared'
 
+import {
+  getDataPackIcon,
+  getDataPackKey
+} from '@/pages/DataPackList/constants/icons'
+import { getModIcon, getModKey } from '@/pages/ModList/constants/icons'
+import {
+  getModpackIcon,
+  getModpackKey
+} from '@/pages/ModpackList/constants/icons'
+import { getPluginIcon, getPluginKey } from '@/pages/PluginList/constants/icons'
+import {
+  getResourcePackIcon,
+  getResourcePackKey
+} from '@/pages/ResourcePackList/constants/icons'
+import { getShaderIcon, getShaderKey } from '@/pages/ShaderList/constants/icons'
+import forgeAPI from '@/utils/forgeAPI'
+
 import ChangelogSection from './components/ChangelogSection'
 import DescriptionSection from './components/DescriptionSection'
 import GallerySection from './components/GallerySection'
@@ -38,7 +39,7 @@ import Sidebar from './components/Sidebar'
 import VersionsSection from './components/VersionsSection'
 
 export type ProjectDetails = InferOutput<
-  typeof forgeAPI.modrinth.projects.getDetails
+  typeof forgeAPI.melvinchia3636$modrinth.projects.getDetails
 >
 
 const ALL_ICONS_UTILS = {
@@ -51,7 +52,7 @@ const ALL_ICONS_UTILS = {
 }
 
 function ProjectDetails() {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const navigate = useNavigate()
 
@@ -64,7 +65,7 @@ function ProjectDetails() {
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   const dataQuery = useQuery(
-    forgeAPI.modrinth.projects.getDetails
+    forgeAPI.melvinchia3636$modrinth.projects.getDetails
       .input({
         projectId: projectId!
       })

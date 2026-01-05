@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
@@ -7,6 +6,8 @@ import { Button, TagChip, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePersonalization, usePromiseLoading } from 'shared'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 import type { ProjectDetails } from '..'
 import DownloadModal from './DownloadModal'
@@ -22,14 +23,14 @@ function Header({
 }) {
   const queryClient = useQueryClient()
 
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const { language } = usePersonalization()
 
   const open = useModalStore(state => state.open)
 
   const isFavouriteQuery = useQuery(
-    forgeAPI.modrinth.favourites.checkItem
+    forgeAPI.melvinchia3636$modrinth.favourites.checkItem
       .input({
         projectId: data.id
       })
@@ -40,9 +41,11 @@ function Header({
     const action = isFavouriteQuery.data ? 'remove' : 'add'
 
     try {
-      await forgeAPI.modrinth.favourites[`${action}Item`].mutate({
-        projectId: data.id
-      })
+      await forgeAPI.melvinchia3636$modrinth.favourites[`${action}Item`].mutate(
+        {
+          projectId: data.id
+        }
+      )
 
       queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
     } catch {
@@ -137,7 +140,7 @@ function Header({
           dangerous={isFavouriteQuery.data}
           icon={isFavouriteQuery.data ? 'tabler:heart-filled' : 'tabler:heart'}
           loading={isFavouriteQuery.isLoading || loading}
-          namespace="apps.modrinth"
+          namespace="apps.melvinchia3636$modrinth"
           variant={isFavouriteQuery.data ? 'plain' : 'secondary'}
           onClick={handleToggleFavourite}
         >

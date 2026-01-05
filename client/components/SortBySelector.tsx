@@ -19,7 +19,7 @@ function SortBySelector({
   sortBy: SortTypes
   setSortBy: (sort: SortTypes) => void
 }) {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   return (
     <Listbox

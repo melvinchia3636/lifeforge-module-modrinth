@@ -1,9 +1,10 @@
+import { useQuery } from '@tanstack/react-query'
+import COLORS from 'tailwindcss/colors'
+
 import ProjectListPage from '@/components/ProjectListPage'
 import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
-import { useQuery } from '@tanstack/react-query'
-import COLORS from 'tailwindcss/colors'
 
 import forgeAPI from '../../utils/forgeAPI'
 import ResolutionsSection from './components/ResolutionsSection'
@@ -28,13 +29,13 @@ function ResourcePackList() {
   const filters = useFilter()
 
   const entriesQuery = useQuery(
-    forgeAPI.modrinth.projects.list
+    forgeAPI.melvinchia3636$modrinth.projects.list
       .input(constructSearchParamsFromFilter(filters, 'resourcepack'))
       .queryOptions()
   )
 
   const versionsQuery = useQuery(
-    forgeAPI.modrinth.gameVersions.list.queryOptions()
+    forgeAPI.melvinchia3636$modrinth.gameVersions.list.queryOptions()
   )
 
   const headerFilterItems = {

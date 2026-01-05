@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import {
   Button,
@@ -10,6 +9,8 @@ import {
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 function DownloadModal({
   data: { slug, name, getIcon, getKey },
@@ -23,10 +24,10 @@ function DownloadModal({
   }
   onClose: () => void
 }) {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const versionsQuery = useQuery(
-    forgeAPI.modrinth.projects.getVersions
+    forgeAPI.melvinchia3636$modrinth.projects.getVersions
       .input({ projectId: slug })
       .queryOptions()
   )

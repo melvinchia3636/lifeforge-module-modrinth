@@ -1,5 +1,3 @@
-import { getModIcon } from '@/pages/ModList/constants/icons'
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
@@ -8,8 +6,11 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, usePersonalization } from 'shared'
 
+import { getModIcon } from '@/pages/ModList/constants/icons'
+import forgeAPI from '@/utils/forgeAPI'
+
 function VersionsSection() {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const { projectId } = useParams<{ projectId: string }>()
 
@@ -20,9 +21,11 @@ function VersionsSection() {
   return (
     <>
       <WithQueryData
-        controller={forgeAPI.modrinth.projects.getVersions.input({
-          projectId: projectId!
-        })}
+        controller={forgeAPI.melvinchia3636$modrinth.projects.getVersions.input(
+          {
+            projectId: projectId!
+          }
+        )}
       >
         {data => (
           <>

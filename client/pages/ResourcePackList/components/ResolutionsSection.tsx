@@ -1,6 +1,7 @@
+import { SidebarItem, SidebarTitle } from 'lifeforge-ui'
+
 import { findInFilterList, toggleInFilterList } from '@/hooks/useProjectFilter'
 import useFilter from '@/pages/ResourcePackList/hooks/useFilter'
-import { SidebarItem, SidebarTitle } from 'lifeforge-ui'
 
 const RESOLUTIONS = [
   '8x or lower',
@@ -17,7 +18,10 @@ function ResolutionsSection() {
 
   return (
     <>
-      <SidebarTitle label="Resolutions" namespace="apps.modrinth" />
+      <SidebarTitle
+        label="Resolutions"
+        namespace="apps.melvinchia3636$modrinth"
+      />
       {RESOLUTIONS.map(resolution => (
         <SidebarItem
           key={resolution}

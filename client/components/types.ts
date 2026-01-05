@@ -1,9 +1,10 @@
-import type { ProjectDetails } from '@/pages/ProjectDetails'
-import forgeAPI from '@/utils/forgeAPI'
 import { type InferOutput } from 'shared'
 
+import type { ProjectDetails } from '@/pages/ProjectDetails'
+import forgeAPI from '@/utils/forgeAPI'
+
 export type Hit = InferOutput<
-  typeof forgeAPI.modrinth.projects.list
+  typeof forgeAPI.melvinchia3636$modrinth.projects.list
 >['items'][number]
 
 export interface ProjectViewProps {

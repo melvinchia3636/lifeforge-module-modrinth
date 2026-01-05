@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
+
 import ProjectListPage from '@/components/ProjectListPage'
 import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
-import { useQuery } from '@tanstack/react-query'
 
 import forgeAPI from '../../utils/forgeAPI'
 import { ICONS, getModpackIcon, getModpackKey } from './constants/icons'
@@ -12,13 +13,13 @@ function ModpackList() {
   const filters = useFilter()
 
   const entriesQuery = useQuery(
-    forgeAPI.modrinth.projects.list
+    forgeAPI.melvinchia3636$modrinth.projects.list
       .input(constructSearchParamsFromFilter(filters, 'modpack'))
       .queryOptions()
   )
 
   const versionsQuery = useQuery(
-    forgeAPI.modrinth.gameVersions.list.queryOptions()
+    forgeAPI.melvinchia3636$modrinth.gameVersions.list.queryOptions()
   )
 
   const headerFilterItems = {

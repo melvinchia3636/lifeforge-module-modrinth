@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
@@ -15,6 +14,8 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 import type { ProjectDetails } from '..'
 
@@ -43,7 +44,7 @@ function Sidebar({
   hasOrganization: boolean
   getIcon: (key: string) => string
 }) {
-  const { t } = useTranslation('apps.modrinth')
+  const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const { bgTempPalette } = usePersonalization()
 
@@ -52,7 +53,7 @@ function Sidebar({
   const { language } = usePersonalization()
 
   const gameVersionsQuery = useQuery(
-    forgeAPI.modrinth.gameVersions.list.queryOptions()
+    forgeAPI.melvinchia3636$modrinth.gameVersions.list.queryOptions()
   )
 
   const allVersionsGrouped = useMemo(() => {
@@ -190,9 +191,11 @@ function Sidebar({
       <div className="px-8">
         {hasOrganization && (
           <WithQueryData
-            controller={forgeAPI.modrinth.projects.getOrganization.input({
-              projectId: projectId!
-            })}
+            controller={forgeAPI.melvinchia3636$modrinth.projects.getOrganization.input(
+              {
+                projectId: projectId!
+              }
+            )}
           >
             {data => (
               <div className="mb-4 flex items-center gap-3">
@@ -241,9 +244,11 @@ function Sidebar({
           </WithQueryData>
         )}
         <WithQueryData
-          controller={forgeAPI.modrinth.projects.listMembers.input({
-            projectId: projectId!
-          })}
+          controller={forgeAPI.melvinchia3636$modrinth.projects.listMembers.input(
+            {
+              projectId: projectId!
+            }
+          )}
         >
           {data => (
             <div className="space-y-3">
