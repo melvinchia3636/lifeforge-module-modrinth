@@ -5,16 +5,17 @@ import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 
+import '../../index.css'
 import forgeAPI from '../../utils/forgeAPI'
-import { ICONS, getModpackIcon, getModpackKey } from './constants/icons'
+import { ICONS, getDataPackIcon, getDataPackKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
-function ModpackList() {
+function DataPackList() {
   const filters = useFilter()
 
   const entriesQuery = useQuery(
     forgeAPI.melvinchia3636$modrinth.projects.list
-      .input(constructSearchParamsFromFilter(filters, 'modpack'))
+      .input(constructSearchParamsFromFilter(filters, 'datapack'))
       .queryOptions()
   )
 
@@ -31,17 +32,13 @@ function ModpackList() {
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
-    loaders: constructHeaderFilterItems(ICONS.loaders),
-    categories: constructHeaderFilterItems(ICONS.categories),
-    environments: constructHeaderFilterItems(ICONS.environments)
+    categories: constructHeaderFilterItems(ICONS.categories)
   }
 
   const sidebarContent = constructSidebar(
     [
       ['categories', 'general'],
-      ['environments', 'general'],
-      ['version', 'version'],
-      ['loaders', 'general']
+      ['version', 'version']
     ],
     ICONS,
     filters
@@ -51,13 +48,13 @@ function ModpackList() {
     <ProjectListPage
       dataQuery={entriesQuery}
       filters={filters}
-      getIcon={getModpackIcon}
-      getKey={getModpackKey}
+      getIcon={getDataPackIcon}
+      getKey={getDataPackKey}
       headerFilterItems={headerFilterItems}
-      projectType="modpack"
+      projectType="datapack"
       sidebarContent={sidebarContent}
     />
   )
 }
 
-export default ModpackList
+export default DataPackList

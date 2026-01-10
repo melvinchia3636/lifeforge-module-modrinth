@@ -31,6 +31,7 @@ import {
 import { getShaderIcon, getShaderKey } from '@/pages/ShaderList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'
 
+import '../../index.css'
 import ChangelogSection from './components/ChangelogSection'
 import DescriptionSection from './components/DescriptionSection'
 import GallerySection from './components/GallerySection'

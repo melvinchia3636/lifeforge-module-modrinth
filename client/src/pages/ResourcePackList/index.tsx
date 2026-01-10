@@ -6,6 +6,7 @@ import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 
+import '../../index.css'
 import forgeAPI from '../../utils/forgeAPI'
 import ResolutionsSection from './components/ResolutionsSection'
 import {

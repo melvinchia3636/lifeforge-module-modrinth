@@ -2,7 +2,6 @@ import { lazy } from 'react'
 import type { ModuleConfig } from 'shared'
 
 export default {
-  icon: 'simple-icons:modrinth',
   routes: {
     '/': lazy(() => import('@')),
     '/project/:projectId': lazy(() => import('@/pages/ProjectDetails')),
@@ -20,6 +19,5 @@ export default {
     { icon: 'tabler:sun', label: 'Shaders', path: 'shaders' },
     { icon: 'uil:box', label: 'Modpacks', path: 'modpacks' },
     { icon: 'tabler:plug', label: 'Plugins', path: 'plugins' }
-  ],
-  category: 'Information'
+  ]
 } satisfies ModuleConfig

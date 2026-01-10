@@ -5,16 +5,17 @@ import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 
+import '../../index.css'
 import forgeAPI from '../../utils/forgeAPI'
-import { ICONS, getShaderIcon, getShaderKey } from './constants/icons'
+import { ICONS, getModIcon, getModKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
-function ShaderList() {
+function Modrinth() {
   const filters = useFilter()
 
   const entriesQuery = useQuery(
     forgeAPI.melvinchia3636$modrinth.projects.list
-      .input(constructSearchParamsFromFilter(filters, 'shader'))
+      .input(constructSearchParamsFromFilter(filters, 'mod'))
       .queryOptions()
   )
 
@@ -33,15 +34,13 @@ function ShaderList() {
     },
     loaders: constructHeaderFilterItems(ICONS.loaders),
     categories: constructHeaderFilterItems(ICONS.categories),
-    features: constructHeaderFilterItems(ICONS.features),
-    performanceImpact: constructHeaderFilterItems(ICONS.performanceImpact)
+    environments: constructHeaderFilterItems(ICONS.environments)
   }
 
   const sidebarContent = constructSidebar(
     [
       ['categories', 'general'],
-      ['features', 'general'],
-      ['performanceImpact', 'general'],
+      ['environments', 'general'],
       ['version', 'version'],
       ['loaders', 'general']
     ],
@@ -53,13 +52,13 @@ function ShaderList() {
     <ProjectListPage
       dataQuery={entriesQuery}
       filters={filters}
-      getIcon={getShaderIcon}
-      getKey={getShaderKey}
+      getIcon={getModIcon}
+      getKey={getModKey}
       headerFilterItems={headerFilterItems}
-      projectType="shader"
+      projectType="mod"
       sidebarContent={sidebarContent}
     />
   )
 }
 
-export default ShaderList
+export default Modrinth

@@ -27,7 +27,7 @@ function Header({
 
   const { language } = usePersonalization()
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const isFavouriteQuery = useQuery(
     forgeAPI.melvinchia3636$modrinth.favourites.checkItem

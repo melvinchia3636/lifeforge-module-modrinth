@@ -2,24 +2,36 @@ import { useQuery } from '@tanstack/react-query'
 
 import ProjectListPage from '@/components/ProjectListPage'
 import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
+import forgeAPI from '@/utils/forgeAPI'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 
-import forgeAPI from '../../utils/forgeAPI'
-import { ICONS, getDataPackIcon, getDataPackKey } from './constants/icons'
+import '../../index.css'
+import { ICONS, getPluginIcon, getPluginKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 
-function DataPackList() {
+function PluginList() {
   const filters = useFilter()
 
   const entriesQuery = useQuery(
     forgeAPI.melvinchia3636$modrinth.projects.list
-      .input(constructSearchParamsFromFilter(filters, 'datapack'))
+      .input(constructSearchParamsFromFilter(filters, 'plugin'))
       .queryOptions()
   )
 
   const versionsQuery = useQuery(
     forgeAPI.melvinchia3636$modrinth.gameVersions.list.queryOptions()
+  )
+
+  const sidebarContent = constructSidebar(
+    [
+      ['categories', 'general'],
+      ['version', 'version'],
+      ['loaders', 'general'],
+      ['platforms', 'general']
+    ],
+    ICONS,
+    filters
   )
 
   const headerFilterItems = {
@@ -31,29 +43,22 @@ function DataPackList() {
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
-    categories: constructHeaderFilterItems(ICONS.categories)
+    categories: constructHeaderFilterItems(ICONS.categories),
+    loaders: constructHeaderFilterItems(ICONS.loaders),
+    platforms: constructHeaderFilterItems(ICONS.platforms)
   }
-
-  const sidebarContent = constructSidebar(
-    [
-      ['categories', 'general'],
-      ['version', 'version']
-    ],
-    ICONS,
-    filters
-  )
 
   return (
     <ProjectListPage
       dataQuery={entriesQuery}
       filters={filters}
-      getIcon={getDataPackIcon}
-      getKey={getDataPackKey}
+      getIcon={getPluginIcon}
+      getKey={getPluginKey}
       headerFilterItems={headerFilterItems}
-      projectType="datapack"
+      projectType="plugin"
       sidebarContent={sidebarContent}
     />
   )
 }
 
-export default DataPackList
+export default PluginList
