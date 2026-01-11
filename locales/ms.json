@@ -1,6 +1,6 @@
 {
   "title": "Modrinth",
-  "description": "Satu modul klien LifeForge untuk salah satu komuniti modifikasi Minecraft terbesar.",
+  "description": "Layari dan muat turun mod Minecraft dari Modrinth.",
   "items": {
     "mod": "Mod",
     "resourcepack": "Pakej Sumber",

@@ -2,7 +2,7 @@
   "name": "@lifeforge/melvinchia3636--modrinth",
   "displayName": "Modrinth",
   "version": "0.0.2",
-  "description": "A LifeForge client module for one of the largest Minecraft modding community",
+  "description": "Browse and download Minecraft mods from Modrinth.",
   "author": "melvinchia3636 <melvinchia623600@gmail.com>",
   "repository": {
     "type": "git",

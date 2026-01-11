@@ -1,6 +1,6 @@
 {
   "title": "Modrinth",
-  "description": "A LifeForge client module for one of the largest Minecraft modding community",
+  "description": "Browse and download Minecraft mods from Modrinth.",
   "items": {
     "mod": "Mod",
     "resourcepack": "Resource Pack",

@@ -1,6 +1,6 @@
 {
   "title": "Modrinth",
-  "description": "一个LifeForge客户端模块，用于最大的Minecraft modding社区之一。",
+  "description": "浏览并下载 Modrinth 上的 Minecraft 模组。",
   "items": {
     "mod": "模组",
     "resourcepack": "资源包",
