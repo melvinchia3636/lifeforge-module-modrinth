@@ -1,7 +1,7 @@
 {
   "name": "@lifeforge/melvinchia3636--modrinth",
   "displayName": "Modrinth",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Browse and download Minecraft mods from Modrinth.",
   "author": "melvinchia3636 <melvinchia623600@gmail.com>",
   "repository": {
