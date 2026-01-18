@@ -1,14 +1,13 @@
-import { forgeController } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
-import TempFileManager from '@functions/utils/tempFileManager'
+import { ClientError } from '@lifeforge/server-utils'
 import z from 'zod'
 
+import forge from '../forge'
 import callModrinthAPI from '../functions/modrinthAPI'
-import { ProjectDetails } from '../typescript/types'
+import type { ProjectDetails } from '../typescript/types'
 
 const TEMP_FILE_NAME = 'modrinth_favourites.json'
 
-export const addItem = forgeController
+export const addItem = forge
   .mutation()
   .description('Add a favourite project')
   .input({
@@ -16,8 +15,8 @@ export const addItem = forgeController
       projectId: z.string()
     })
   })
-  .callback(async ({ body: { projectId } }) => {
-    const tempFileManager = new TempFileManager(TEMP_FILE_NAME)
+  .callback(async ({ body: { projectId }, core: { tempFile } }) => {
+    const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 
@@ -43,7 +42,7 @@ export const addItem = forgeController
     )
   })
 
-export const listItemIds = forgeController
+export const listItemIds = forge
   .query()
   .description('List all favourite project IDs')
   .input({
@@ -60,8 +59,8 @@ export const listItemIds = forgeController
         .optional()
     })
   })
-  .callback(async ({ query: { projectType } }) => {
-    const tempFileManager = new TempFileManager(TEMP_FILE_NAME)
+  .callback(async ({ query: { projectType }, core: { tempFile } }) => {
+    const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 
@@ -76,7 +75,7 @@ export const listItemIds = forgeController
     return filteredContent.map(item => item.id)
   })
 
-export const listItems = forgeController
+export const listItems = forge
   .query()
   .description('List all favourite projects')
   .input({
@@ -96,24 +95,26 @@ export const listItems = forgeController
         .transform(val => (val ? parseInt(val) : 1))
     })
   })
-  .callback(async ({ query: { projectType, page, query } }) => {
-    const tempFileManager = new TempFileManager(TEMP_FILE_NAME)
+  .callback(
+    async ({ query: { projectType, page, query }, core: { tempFile } }) => {
+      const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
-    const tempFileContent = tempFileManager.read<ProjectDetails[]>()
+      const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 
-    const allItems = tempFileContent.filter(
-      item =>
-        item.project_type === projectType &&
-        (!query || item.title.toLowerCase().includes(query.toLowerCase()))
-    )
+      const allItems = tempFileContent.filter(
+        item =>
+          item.project_type === projectType &&
+          (!query || item.title.toLowerCase().includes(query.toLowerCase()))
+      )
 
-    return {
-      items: allItems.slice(page * 20 - 20, page * 20),
-      total: allItems.length
+      return {
+        items: allItems.slice(page * 20 - 20, page * 20),
+        total: allItems.length
+      }
     }
-  })
+  )
 
-export const checkItem = forgeController
+export const checkItem = forge
   .query()
   .description('Check if a project is in favourites')
   .input({
@@ -121,15 +122,15 @@ export const checkItem = forgeController
       projectId: z.string()
     })
   })
-  .callback(async ({ query: { projectId } }) => {
-    const tempFileManager = new TempFileManager(TEMP_FILE_NAME)
+  .callback(async ({ query: { projectId }, core: { tempFile } }) => {
+    const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 
     return tempFileContent.some(item => item.id === projectId)
   })
 
-export const removeItem = forgeController
+export const removeItem = forge
   .mutation()
   .description('Remove a favourite project')
   .input({
@@ -137,8 +138,8 @@ export const removeItem = forgeController
       projectId: z.string()
     })
   })
-  .callback(async ({ body: { projectId } }) => {
-    const tempFileManager = new TempFileManager(TEMP_FILE_NAME)
+  .callback(async ({ body: { projectId }, core: { tempFile } }) => {
+    const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 

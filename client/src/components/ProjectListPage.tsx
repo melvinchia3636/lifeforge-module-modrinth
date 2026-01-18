@@ -83,7 +83,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
     !isFavouritesShowing
 
   const favouriteIdsQuery = useQuery(
-    forgeAPI.melvinchia3636$modrinth.favourites.listItemIds
+    forgeAPI.favourites.listItemIds
       .input({
         projectType
       })
@@ -91,7 +91,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
   )
 
   const favouriteItemsQuery = useQuery(
-    forgeAPI.melvinchia3636$modrinth.favourites.listItems
+    forgeAPI.favourites.listItems
       .input({
         projectType,
         query: searchQuery || undefined,

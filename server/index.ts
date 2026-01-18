@@ -1,4 +1,4 @@
-import { forgeRouter } from '@functions/routes'
+import { forgeRouter } from '@lifeforge/server-utils'
 
 import * as favouritesRoutes from './routes/favourites'
 import * as gameVersionsRoutes from './routes/gameVersions'

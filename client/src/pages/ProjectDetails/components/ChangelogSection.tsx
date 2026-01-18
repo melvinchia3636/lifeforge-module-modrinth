@@ -21,11 +21,9 @@ function ChangelogSection() {
   return (
     <>
       <WithQueryData
-        controller={forgeAPI.melvinchia3636$modrinth.projects.getVersions.input(
-          {
-            projectId: projectId!
-          }
-        )}
+        controller={forgeAPI.projects.getVersions.input({
+          projectId: projectId!
+        })}
       >
         {data => (
           <>
@@ -35,11 +33,9 @@ function ChangelogSection() {
               onPageChange={setPage}
             />
             <WithQueryData
-              controller={forgeAPI.melvinchia3636$modrinth.projects.listMembers.input(
-                {
-                  projectId: projectId!
-                }
-              )}
+              controller={forgeAPI.projects.listMembers.input({
+                projectId: projectId!
+              })}
             >
               {members => (
                 <div className="my-6 space-y-6">

@@ -21,11 +21,9 @@ function VersionsSection() {
   return (
     <>
       <WithQueryData
-        controller={forgeAPI.melvinchia3636$modrinth.projects.getVersions.input(
-          {
-            projectId: projectId!
-          }
-        )}
+        controller={forgeAPI.projects.getVersions.input({
+          projectId: projectId!
+        })}
       >
         {data => (
           <>

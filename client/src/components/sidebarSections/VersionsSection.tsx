@@ -21,9 +21,7 @@ function VersionsSection({
         namespace="apps.melvinchia3636$modrinth"
       />
       <Scrollbar className="min-h-[300px]">
-        <WithQueryData
-          controller={forgeAPI.melvinchia3636$modrinth.gameVersions.list}
-        >
+        <WithQueryData controller={forgeAPI.gameVersions.list}>
           {versions => (
             <>
               {versions.map(version => (

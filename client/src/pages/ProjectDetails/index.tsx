@@ -39,9 +39,7 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import VersionsSection from './components/VersionsSection'
 
-export type ProjectDetails = InferOutput<
-  typeof forgeAPI.melvinchia3636$modrinth.projects.getDetails
->
+export type ProjectDetails = InferOutput<typeof forgeAPI.projects.getDetails>
 
 const ALL_ICONS_UTILS = {
   mod: { getIcon: getModIcon, getKey: getModKey },
@@ -66,7 +64,7 @@ function ProjectDetails() {
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   const dataQuery = useQuery(
-    forgeAPI.melvinchia3636$modrinth.projects.getDetails
+    forgeAPI.projects.getDetails
       .input({
         projectId: projectId!
       })

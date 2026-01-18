@@ -1,7 +1,8 @@
-import { forgeController } from '@functions/routes'
 import { JSDOM, VirtualConsole } from 'jsdom'
 
-export const list = forgeController
+import forge from '../forge'
+
+export const list = forge
   .query()
   .description('List all versions for Minecraft')
   .input({})

@@ -30,7 +30,7 @@ function Header({
   const { open } = useModalStore()
 
   const isFavouriteQuery = useQuery(
-    forgeAPI.melvinchia3636$modrinth.favourites.checkItem
+    forgeAPI.favourites.checkItem
       .input({
         projectId: data.id
       })
@@ -41,11 +41,9 @@ function Header({
     const action = isFavouriteQuery.data ? 'remove' : 'add'
 
     try {
-      await forgeAPI.melvinchia3636$modrinth.favourites[`${action}Item`].mutate(
-        {
-          projectId: data.id
-        }
-      )
+      await forgeAPI.favourites[`${action}Item`].mutate({
+        projectId: data.id
+      })
 
       queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
     } catch {

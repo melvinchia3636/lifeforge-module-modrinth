@@ -52,9 +52,7 @@ function Sidebar({
 
   const { language } = usePersonalization()
 
-  const gameVersionsQuery = useQuery(
-    forgeAPI.melvinchia3636$modrinth.gameVersions.list.queryOptions()
-  )
+  const gameVersionsQuery = useQuery(forgeAPI.gameVersions.list.queryOptions())
 
   const allVersionsGrouped = useMemo(() => {
     const allGrouped: Record<string, Set<string>> = {}
@@ -191,11 +189,9 @@ function Sidebar({
       <div className="px-8">
         {hasOrganization && (
           <WithQueryData
-            controller={forgeAPI.melvinchia3636$modrinth.projects.getOrganization.input(
-              {
-                projectId: projectId!
-              }
-            )}
+            controller={forgeAPI.projects.getOrganization.input({
+              projectId: projectId!
+            })}
           >
             {data => (
               <div className="mb-4 flex items-center gap-3">
@@ -244,11 +240,9 @@ function Sidebar({
           </WithQueryData>
         )}
         <WithQueryData
-          controller={forgeAPI.melvinchia3636$modrinth.projects.listMembers.input(
-            {
-              projectId: projectId!
-            }
-          )}
+          controller={forgeAPI.projects.listMembers.input({
+            projectId: projectId!
+          })}
         >
           {data => (
             <div className="space-y-3">

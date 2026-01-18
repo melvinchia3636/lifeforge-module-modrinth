@@ -14,14 +14,12 @@ function ShaderList() {
   const filters = useFilter()
 
   const entriesQuery = useQuery(
-    forgeAPI.melvinchia3636$modrinth.projects.list
+    forgeAPI.projects.list
       .input(constructSearchParamsFromFilter(filters, 'shader'))
       .queryOptions()
   )
 
-  const versionsQuery = useQuery(
-    forgeAPI.melvinchia3636$modrinth.gameVersions.list.queryOptions()
-  )
+  const versionsQuery = useQuery(forgeAPI.gameVersions.list.queryOptions())
 
   const headerFilterItems = {
     version: {

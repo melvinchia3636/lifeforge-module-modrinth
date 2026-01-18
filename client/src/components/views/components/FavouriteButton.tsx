@@ -21,11 +21,9 @@ function FavouriteButton({
     const action = isFavourite ? 'remove' : 'add'
 
     try {
-      await forgeAPI.melvinchia3636$modrinth.favourites[`${action}Item`].mutate(
-        {
-          projectId
-        }
-      )
+      await forgeAPI.favourites[`${action}Item`].mutate({
+        projectId
+      })
 
       queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
     } catch {

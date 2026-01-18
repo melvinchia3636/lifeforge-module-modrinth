@@ -27,9 +27,7 @@ function DownloadModal({
   const { t } = useTranslation('apps.melvinchia3636$modrinth')
 
   const versionsQuery = useQuery(
-    forgeAPI.melvinchia3636$modrinth.projects.getVersions
-      .input({ projectId: slug })
-      .queryOptions()
+    forgeAPI.projects.getVersions.input({ projectId: slug }).queryOptions()
   )
 
   const [selectedVersion, setSelectedVersion] = useState<string | null>(null)

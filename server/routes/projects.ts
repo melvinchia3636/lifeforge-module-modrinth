@@ -1,17 +1,17 @@
-import { forgeController } from '@functions/routes'
 import z from 'zod'
 
 import { API_ENDPOINT_V2 } from '../constants/constants'
+import forge from '../forge'
 import callModrinthAPI from '../functions/modrinthAPI'
 import {
-  Hit,
-  Organization,
-  ProjectDetails,
-  ProjectMember,
-  ProjectVersion
+  type Hit,
+  type Organization,
+  type ProjectDetails,
+  type ProjectMember,
+  type ProjectVersion
 } from '../typescript/types'
 
-export const list = forgeController
+export const list = forge
   .query()
   .description('List all Modrinth entries')
   .input({
@@ -115,7 +115,7 @@ export const list = forgeController
     }
   )
 
-export const getDetails = forgeController
+export const getDetails = forge
   .query()
   .description('Get Modrinth project details')
   .input({
@@ -127,7 +127,7 @@ export const getDetails = forgeController
     callModrinthAPI<ProjectDetails>(`project/${projectId}`)
   )
 
-export const listMembers = forgeController
+export const listMembers = forge
   .query()
   .description('List all members of a Modrinth project team')
   .input({
@@ -139,7 +139,7 @@ export const listMembers = forgeController
     callModrinthAPI<ProjectMember[]>(`project/${projectId}/members`)
   )
 
-export const getOrganization = forgeController
+export const getOrganization = forge
   .query()
   .description('Get the organization of a Modrinth project')
   .input({
@@ -161,7 +161,7 @@ export const getOrganization = forgeController
     }
   })
 
-export const getVersions = forgeController
+export const getVersions = forge
   .query()
   .description('List all versions for a Modrinth project')
   .input({

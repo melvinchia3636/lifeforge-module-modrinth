@@ -1,4 +1,4 @@
-import { ClientError } from '@functions/routes/utils/response'
+import { ClientError } from '@lifeforge/server-utils'
 
 import { API_ENDPOINT_V2, API_ENDPOINT_V3 } from '../constants/constants'
 
