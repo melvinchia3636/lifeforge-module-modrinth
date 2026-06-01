@@ -1,12 +1,16 @@
 import { JSDOM, VirtualConsole } from 'jsdom'
+import z from 'zod'
 
 import forge from '../forge'
 
 export const list = forge
-  .query()
-  .description('List all versions for Minecraft')
-  .input({})
-  .callback(async () => {
+  .query({
+    description: 'List all versions for Minecraft',
+    output: {
+      OK: z.array(z.string())
+    }
+  })
+  .callback(async ({ response }) => {
     const raw = await fetch('https://modrinth.com/mods').then(res => res.text())
 
     const virtualConsole = new VirtualConsole()
@@ -24,11 +28,13 @@ export const list = forge
 
     const document = dom.window.document
 
-    return Array.from(
-      document
-        .querySelector('.normal-page__sidebar .card-shadow')
-        ?.querySelectorAll('button') || []
+    return response.ok(
+      Array.from(
+        document
+          .querySelector('.normal-page__sidebar .card-shadow')
+          ?.querySelectorAll('button') || []
+      )
+        .map(e => e.textContent)
+        .slice(1, -1)
     )
-      .map(e => e.textContent)
-      .slice(1, -1)
   })

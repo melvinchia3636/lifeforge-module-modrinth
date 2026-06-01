@@ -1,4 +1,3 @@
-import { ClientError } from '@lifeforge/server-utils'
 import z from 'zod'
 
 import forge from '../forge'
@@ -8,20 +7,25 @@ import type { ProjectDetails } from '../typescript/types'
 const TEMP_FILE_NAME = 'modrinth_favourites.json'
 
 export const addItem = forge
-  .mutation()
-  .description('Add a favourite project')
-  .input({
-    body: z.object({
-      projectId: z.string()
-    })
+  .mutation({
+    description: 'Add a favourite project',
+    input: {
+      body: z.object({
+        projectId: z.string()
+      })
+    },
+    output: {
+      OK: z.any(),
+      CONFLICT: true
+    }
   })
-  .callback(async ({ body: { projectId }, core: { tempFile } }) => {
+  .callback(async ({ body: { projectId }, core: { tempFile }, response }) => {
     const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 
     if (tempFileContent.find(item => item.id === projectId)) {
-      throw new ClientError('Project is already in favourites')
+      return response.conflict()
     }
 
     const project = await callModrinthAPI<ProjectDetails>(
@@ -37,29 +41,35 @@ export const addItem = forge
 
     tempFileManager.write(JSON.stringify(tempFileContent, null, 2))
 
-    return tempFileContent.filter(
-      item => item.project_type === project.project_type
+    return response.ok(
+      tempFileContent.filter(
+        item => item.project_type === project.project_type
+      )
     )
   })
 
 export const listItemIds = forge
-  .query()
-  .description('List all favourite project IDs')
-  .input({
-    query: z.object({
-      projectType: z
-        .enum([
-          'mod',
-          'modpack',
-          'resourcepack',
-          'shader',
-          'datapack',
-          'plugin'
-        ])
-        .optional()
-    })
+  .query({
+    description: 'List all favourite project IDs',
+    input: {
+      query: z.object({
+        projectType: z
+          .enum([
+            'mod',
+            'modpack',
+            'resourcepack',
+            'shader',
+            'datapack',
+            'plugin'
+          ])
+          .optional()
+      })
+    },
+    output: {
+      OK: z.array(z.string())
+    }
   })
-  .callback(async ({ query: { projectType }, core: { tempFile } }) => {
+  .callback(async ({ query: { projectType }, core: { tempFile }, response }) => {
     const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
@@ -72,31 +82,32 @@ export const listItemIds = forge
       )
     }
 
-    return filteredContent.map(item => item.id)
+    return response.ok(filteredContent.map(item => item.id))
   })
 
 export const listItems = forge
-  .query()
-  .description('List all favourite projects')
-  .input({
-    query: z.object({
-      projectType: z.enum([
-        'mod',
-        'modpack',
-        'resourcepack',
-        'shader',
-        'datapack',
-        'plugin'
-      ]),
-      query: z.string().optional(),
-      page: z
-        .string()
-        .optional()
-        .transform(val => (val ? parseInt(val) : 1))
-    })
+  .query({
+    description: 'List all favourite projects',
+    input: {
+      query: z.object({
+        projectType: z.enum([
+          'mod',
+          'modpack',
+          'resourcepack',
+          'shader',
+          'datapack',
+          'plugin'
+        ]),
+        query: z.string().optional(),
+        page: z.string().optional()
+      })
+    },
+    output: {
+      OK: z.any()
+    }
   })
   .callback(
-    async ({ query: { projectType, page, query }, core: { tempFile } }) => {
+    async ({ query: { projectType, page, query }, core: { tempFile }, response }) => {
       const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
       const tempFileContent = tempFileManager.read<ProjectDetails[]>()
@@ -107,38 +118,48 @@ export const listItems = forge
           (!query || item.title.toLowerCase().includes(query.toLowerCase()))
       )
 
-      return {
-        items: allItems.slice(page * 20 - 20, page * 20),
+      const parsedPage = page ? parseInt(page) : 1
+
+      return response.ok({
+        items: allItems.slice(parsedPage * 20 - 20, parsedPage * 20),
         total: allItems.length
-      }
+      })
     }
   )
 
 export const checkItem = forge
-  .query()
-  .description('Check if a project is in favourites')
-  .input({
-    query: z.object({
-      projectId: z.string()
-    })
+  .query({
+    description: 'Check if a project is in favourites',
+    input: {
+      query: z.object({
+        projectId: z.string()
+      })
+    },
+    output: {
+      OK: z.boolean()
+    }
   })
-  .callback(async ({ query: { projectId }, core: { tempFile } }) => {
+  .callback(async ({ query: { projectId }, core: { tempFile }, response }) => {
     const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 
-    return tempFileContent.some(item => item.id === projectId)
+    return response.ok(tempFileContent.some(item => item.id === projectId))
   })
 
 export const removeItem = forge
-  .mutation()
-  .description('Remove a favourite project')
-  .input({
-    body: z.object({
-      projectId: z.string()
-    })
+  .mutation({
+    description: 'Remove a favourite project',
+    input: {
+      body: z.object({
+        projectId: z.string()
+      })
+    },
+    output: {
+      OK: z.any()
+    }
   })
-  .callback(async ({ body: { projectId }, core: { tempFile } }) => {
+  .callback(async ({ body: { projectId }, core: { tempFile }, response }) => {
     const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
     const tempFileContent = tempFileManager.read<ProjectDetails[]>()
@@ -147,5 +168,5 @@ export const removeItem = forge
 
     tempFileManager.write(JSON.stringify(updatedContent, null, 2))
 
-    return updatedContent
+    return response.ok(updatedContent)
   })

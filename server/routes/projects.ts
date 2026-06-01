@@ -12,34 +12,35 @@ import {
 } from '../typescript/types'
 
 export const list = forge
-  .query()
-  .description('List all Modrinth entries')
-  .input({
-    query: z.object({
-      page: z
-        .string()
-        .transform(val => parseInt(val, 10))
-        .default(1),
-      sort: z
-        .enum(['relevance', 'downloads', 'follows', 'newest', 'updated'])
-        .default('relevance'),
-      query: z.string().optional(),
-      version: z.string().optional(),
-      categories: z.string().optional(),
-      environments: z.string().optional(),
-      projectType: z
-        .enum([
-          'mod',
-          'modpack',
-          'resourcepack',
-          'shader',
-          'datapack',
-          'plugin'
-        ])
-        .optional()
-        .default('mod'),
-      facets: z.string().optional() // Additional facets as JSON string
-    })
+  .query({
+    description: 'List all Modrinth entries',
+    input: {
+      query: z.object({
+        page: z.string().default('1'),
+        sort: z
+          .enum(['relevance', 'downloads', 'follows', 'newest', 'updated'])
+          .default('relevance'),
+        query: z.string().optional(),
+        version: z.string().optional(),
+        categories: z.string().optional(),
+        environments: z.string().optional(),
+        projectType: z
+          .enum([
+            'mod',
+            'modpack',
+            'resourcepack',
+            'shader',
+            'datapack',
+            'plugin'
+          ])
+          .optional()
+          .default('mod'),
+        facets: z.string().optional()
+      })
+    },
+    output: {
+      OK: z.any()
+    }
   })
   .callback(
     async ({
@@ -51,8 +52,11 @@ export const list = forge
         environments,
         projectType,
         sort
-      }
+      },
+      response
     }) => {
+      const parsedPage = parseInt(page, 10)
+
       const facets: string[][] = [[`project_type:${projectType}`]]
 
       if (version) {
@@ -96,79 +100,99 @@ export const list = forge
 
       const queryParams = new URLSearchParams({
         limit: '20',
-        offset: `${(page - 1) * 20}`,
+        offset: `${(parsedPage - 1) * 20}`,
         index: sort,
         query: query ?? '',
         facets: JSON.stringify(facets)
       })
 
-      const response = await fetch(
+      const res = await fetch(
         `${API_ENDPOINT_V2}/search?${queryParams.toString()}`
       )
 
-      const data = await response.json()
+      const data = await res.json()
 
-      return {
+      return response.ok({
         items: data.hits as Hit[],
         total: data.total_hits
-      }
+      })
     }
   )
 
 export const getDetails = forge
-  .query()
-  .description('Get Modrinth project details')
-  .input({
-    query: z.object({
-      projectId: z.string()
-    })
+  .query({
+    description: 'Get Modrinth project details',
+    input: {
+      query: z.object({
+        projectId: z.string()
+      })
+    },
+    output: {
+      OK: z.any()
+    }
   })
-  .callback(({ query: { projectId } }) =>
-    callModrinthAPI<ProjectDetails>(`project/${projectId}`)
+  .callback(async ({ query: { projectId }, response }) =>
+    response.ok(await callModrinthAPI<ProjectDetails>(`project/${projectId}`))
   )
 
 export const listMembers = forge
-  .query()
-  .description('List all members of a Modrinth project team')
-  .input({
-    query: z.object({
-      projectId: z.string()
-    })
+  .query({
+    description: 'List all members of a Modrinth project team',
+    input: {
+      query: z.object({
+        projectId: z.string()
+      })
+    },
+    output: {
+      OK: z.any()
+    }
   })
-  .callback(({ query: { projectId } }) =>
-    callModrinthAPI<ProjectMember[]>(`project/${projectId}/members`)
+  .callback(async ({ query: { projectId }, response }) =>
+    response.ok(
+      await callModrinthAPI<ProjectMember[]>(`project/${projectId}/members`)
+    )
   )
 
 export const getOrganization = forge
-  .query()
-  .description('Get the organization of a Modrinth project')
-  .input({
-    query: z.object({
-      projectId: z.string()
-    })
+  .query({
+    description: 'Get the organization of a Modrinth project',
+    input: {
+      query: z.object({
+        projectId: z.string()
+      })
+    },
+    output: {
+      OK: z.any()
+    }
   })
-  .callback(async ({ query: { projectId } }) => {
+  .callback(async ({ query: { projectId }, response }) => {
     const data = await callModrinthAPI<Organization>(
       `project/${projectId}/organization`,
       'v3'
     )
 
-    return {
+    return response.ok({
       slug: data.slug,
       name: data.name,
       icon: data.icon_url,
       color: data.color
-    }
+    })
   })
 
 export const getVersions = forge
-  .query()
-  .description('List all versions for a Modrinth project')
-  .input({
-    query: z.object({
-      projectId: z.string()
-    })
+  .query({
+    description: 'List all versions for a Modrinth project',
+    input: {
+      query: z.object({
+        projectId: z.string()
+      })
+    },
+    output: {
+      OK: z.any()
+    }
   })
-  .callback(({ query: { projectId } }) =>
-    callModrinthAPI<ProjectVersion[]>(`project/${projectId}/version`)
+  .callback(async ({ query: { projectId }, response }) =>
+    response.ok(
+      await callModrinthAPI<ProjectVersion[]>(`project/${projectId}/version`)
+    )
   )
