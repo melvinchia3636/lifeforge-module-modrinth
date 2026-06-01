@@ -1,6 +1,7 @@
+import { SidebarDivider } from '@lifeforge/ui'
+
 import GeneralSection from '@/components/sidebarSections/GeneralSection'
 import VersionsSection from '@/components/sidebarSections/VersionsSection'
-import { SidebarDivider } from 'lifeforge-ui'
 
 type SidebarSection = [key: string, Component: 'general' | 'version' | React.FC]
 

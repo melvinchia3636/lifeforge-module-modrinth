@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type SetStateAction, useMemo } from 'react'
+
 import {
   parseAsBoolean,
   parseAsInteger,
   parseAsString,
   parseAsStringEnum,
   useQueryStates
-} from 'shared'
+} from '@lifeforge/shared'
 
 export type SortTypes =
   | 'relevance'

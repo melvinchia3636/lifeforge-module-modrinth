@@ -1,4 +1,4 @@
-import { parseAsString } from 'shared'
+import { parseAsString } from '@lifeforge/shared'
 
 import useProjectFilter from '../../../hooks/useProjectFilter'
 

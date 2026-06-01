@@ -1,13 +1,14 @@
+import _ from 'lodash'
+import { type ComponentProps } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import {
   Button,
   SearchInput,
   TagsFilter,
   ViewModeSelector,
   useModuleSidebarState
-} from 'lifeforge-ui'
-import _ from 'lodash'
-import { type ComponentProps } from 'react'
-import { useTranslation } from 'react-i18next'
+} from '@lifeforge/ui'
 
 import type { SortTypes } from '../hooks/useProjectFilter'
 import SortBySelector from './SortBySelector'

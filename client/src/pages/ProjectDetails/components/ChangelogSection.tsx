@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { Button, Pagination, WithQueryData } from 'lifeforge-ui'
+import { Button, Pagination, WithQueryData } from '@lifeforge/ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Markdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
-import { useParams, usePersonalization } from 'shared'
+import { useParams, usePersonalization } from '@lifeforge/shared'
 
 import forgeAPI from '@/utils/forgeAPI'
 

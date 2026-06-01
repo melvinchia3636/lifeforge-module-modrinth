@@ -1,4 +1,4 @@
-import { TagChip } from 'lifeforge-ui'
+import { TagChip } from '@lifeforge/ui'
 
 function ItemTags({
   categories,

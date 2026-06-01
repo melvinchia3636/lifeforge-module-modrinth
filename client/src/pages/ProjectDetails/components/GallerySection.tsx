@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
-import { Card } from 'lifeforge-ui'
+import { Card } from '@lifeforge/ui'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+import { usePersonalization } from '@lifeforge/shared'
 
 import type { ProjectDetails } from '..'
 

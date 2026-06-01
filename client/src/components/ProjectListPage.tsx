@@ -1,5 +1,13 @@
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
+  type ComponentProps,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction
+} from 'react'
+import { useTranslation } from 'react-i18next'
+
+import {
   ContentWrapperWithSidebar,
   ContextMenuGroup,
   ContextMenuItem,
@@ -11,14 +19,7 @@ import {
   SidebarDivider,
   TagsFilter,
   WithQuery
-} from 'lifeforge-ui'
-import {
-  type ComponentProps,
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction
-} from 'react'
-import { useTranslation } from 'react-i18next'
+} from '@lifeforge/ui'
 
 import type { Hit } from '@/components/types'
 

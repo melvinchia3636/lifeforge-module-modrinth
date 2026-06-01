@@ -1,5 +1,6 @@
-import { SidebarItem, SidebarTitle } from 'lifeforge-ui'
 import _ from 'lodash'
+
+import { SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 import {
   findInFilterList,

@@ -2,10 +2,10 @@ import { Icon } from '@iconify/react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
-import { Button, TagChip, useModalStore } from 'lifeforge-ui'
+import { Button, TagChip, useModalStore } from '@lifeforge/ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { usePersonalization, usePromiseLoading } from 'shared'
+import { usePersonalization, usePromiseLoading } from '@lifeforge/shared'
 
 import forgeAPI from '@/utils/forgeAPI'
 

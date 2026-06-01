@@ -1,5 +1,6 @@
-import { SidebarDivider, SidebarItem, SidebarWrapper } from 'lifeforge-ui'
 import { type ReactNode } from 'react'
+
+import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
 
 interface ProjectSidebarProps {
   title: string

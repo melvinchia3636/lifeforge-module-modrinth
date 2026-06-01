@@ -1,10 +1,12 @@
-import type { Hit } from '@/components/types'
-import type { ProjectDetails } from '@/pages/ProjectDetails'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+
+import type { Hit } from '@/components/types'
+import type { ProjectDetails } from '@/pages/ProjectDetails'
 
 function ItemMetadata({
   entry,

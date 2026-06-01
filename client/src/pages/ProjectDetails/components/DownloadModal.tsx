@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
+import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
 import {
   Button,
   ListboxInput,
   ListboxOption,
   ModalHeader,
   WithQuery
-} from 'lifeforge-ui'
-import { useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/utils/forgeAPI'
 

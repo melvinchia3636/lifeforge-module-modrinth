@@ -1,5 +1,6 @@
+import { parseAsString } from '@lifeforge/shared'
+
 import useProjectFilter from '@/hooks/useProjectFilter'
-import { parseAsString } from 'shared'
 
 export default function useFilter() {
   return useProjectFilter({

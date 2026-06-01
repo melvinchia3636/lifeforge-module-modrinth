@@ -3,7 +3,7 @@ import {
   SidebarItem,
   SidebarTitle,
   WithQueryData
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/utils/forgeAPI'
 

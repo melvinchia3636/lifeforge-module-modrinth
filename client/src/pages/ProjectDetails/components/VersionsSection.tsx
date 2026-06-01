@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import { sizeFormatter } from 'human-readable'
-import { Button, Card, Pagination, TagChip, WithQueryData } from 'lifeforge-ui'
+import { Button, Card, Pagination, TagChip, WithQueryData } from '@lifeforge/ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams, usePersonalization } from 'shared'
+import { useParams, usePersonalization } from '@lifeforge/shared'
 
 import { getModIcon } from '@/pages/ModList/constants/icons'
 import forgeAPI from '@/utils/forgeAPI'

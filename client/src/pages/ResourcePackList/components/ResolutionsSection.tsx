@@ -1,4 +1,4 @@
-import { SidebarItem, SidebarTitle } from 'lifeforge-ui'
+import { SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 import { findInFilterList, toggleInFilterList } from '@/hooks/useProjectFilter'
 import useFilter from '@/pages/ResourcePackList/hooks/useFilter'

@@ -1,4 +1,4 @@
-import { Navigate } from 'shared'
+import { Navigate } from '@lifeforge/shared'
 
 import './index.css'
 

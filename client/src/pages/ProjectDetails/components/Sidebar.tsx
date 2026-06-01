@@ -9,10 +9,10 @@ import {
   TagChip,
   WithQuery,
   WithQueryData
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams, usePersonalization } from 'shared'
+import { useParams, usePersonalization } from '@lifeforge/shared'
 import tinycolor from 'tinycolor2'
 
 import forgeAPI from '@/utils/forgeAPI'

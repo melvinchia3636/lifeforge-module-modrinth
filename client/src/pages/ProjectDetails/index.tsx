@@ -8,11 +8,11 @@ import {
   Tabs,
   WithQuery,
   useModuleSidebarState
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { type InferOutput, useNavigate, useParams } from 'shared'
+import { type InferOutput, useNavigate, useParams } from '@lifeforge/shared'
 
 import {
   getDataPackIcon,

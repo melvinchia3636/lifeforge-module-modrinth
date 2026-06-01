@@ -1,8 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { Button } from 'lifeforge-ui'
+import { Button } from '@lifeforge/ui'
 import { toast } from 'react-toastify'
-import { usePromiseLoading } from 'shared'
+import { usePromiseLoading } from '@lifeforge/shared'
 
 import forgeAPI from '@/utils/forgeAPI'
 
