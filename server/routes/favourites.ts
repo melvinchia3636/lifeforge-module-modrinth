@@ -2,8 +2,7 @@ import z from 'zod'
 
 import forge from '../forge'
 import callModrinthAPI from '../functions/modrinthAPI'
-
-import { ProjectDetailsSchema } from './projects'
+import { ProjectDetailsSchema } from '../typescript/schema'
 import { ProjectDetails } from '../typescript/types'
 
 const TEMP_FILE_NAME = 'modrinth_favourites.json'
@@ -44,9 +43,7 @@ export const addItem = forge
     tempFileManager.write(JSON.stringify(tempFileContent, null, 2))
 
     return response.ok(
-      tempFileContent.filter(
-        item => item.project_type === project.project_type
-      )
+      tempFileContent.filter(item => item.project_type === project.project_type)
     )
   })
 
@@ -71,21 +68,23 @@ export const listItemIds = forge
       OK: z.array(z.string())
     }
   })
-  .callback(async ({ query: { projectType }, core: { tempFile }, response }) => {
-    const tempFileManager = new tempFile(TEMP_FILE_NAME)
+  .callback(
+    async ({ query: { projectType }, core: { tempFile }, response }) => {
+      const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
-    const tempFileContent = tempFileManager.read<ProjectDetails[]>()
+      const tempFileContent = tempFileManager.read<ProjectDetails[]>()
 
-    let filteredContent = tempFileContent
+      let filteredContent = tempFileContent
 
-    if (projectType) {
-      filteredContent = tempFileContent.filter(
-        item => item.project_type === projectType
-      )
+      if (projectType) {
+        filteredContent = tempFileContent.filter(
+          item => item.project_type === projectType
+        )
+      }
+
+      return response.ok(filteredContent.map(item => item.id))
     }
-
-    return response.ok(filteredContent.map(item => item.id))
-  })
+  )
 
 export const listItems = forge
   .query({
@@ -112,7 +111,11 @@ export const listItems = forge
     }
   })
   .callback(
-    async ({ query: { projectType, page, query }, core: { tempFile }, response }) => {
+    async ({
+      query: { projectType, page, query },
+      core: { tempFile },
+      response
+    }) => {
       const tempFileManager = new tempFile(TEMP_FILE_NAME)
 
       const tempFileContent = tempFileManager.read<ProjectDetails[]>()
