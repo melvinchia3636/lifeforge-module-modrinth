@@ -11,8 +11,8 @@ export interface Hit {
   downloads: number
   follows: number
   icon_url: string
-  date_created: Date
-  date_modified: Date
+  date_created: string
+  date_modified: string
   newest_version: string
   license: string
   client_side: 'optional' | 'required' | 'unsupported' | 'unknown'
@@ -35,9 +35,9 @@ export interface ProjectDetails {
   description: string
   body: string
   body_url: null
-  published: Date
-  updated: Date
-  approved: Date
+  published: string
+  updated: string
+  approved: string
   queued: null
   status: string
   requested_status: null
@@ -67,7 +67,7 @@ export interface Gallery {
   featured: boolean
   title: null | string
   description: null
-  created: Date
+  created: string
   ordering: number
 }
 
@@ -115,7 +115,7 @@ export interface User {
   username: string
   avatar_url: string
   bio: string | null
-  created: Date
+  created: string
   role: string
   badges: number
   auth_providers: null
@@ -140,7 +140,7 @@ export interface ProjectVersion {
   version_number: string
   changelog: string
   changelog_url: null
-  date_published: Date
+  date_published: string
   downloads: number
   version_type: 'release' | 'beta' | 'alpha'
   status: string

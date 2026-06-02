@@ -2,7 +2,9 @@ import z from 'zod'
 
 import forge from '../forge'
 import callModrinthAPI from '../functions/modrinthAPI'
-import type { ProjectDetails } from '../typescript/types'
+
+import { ProjectDetailsSchema } from './projects'
+import { ProjectDetails } from '../typescript/types'
 
 const TEMP_FILE_NAME = 'modrinth_favourites.json'
 
@@ -15,7 +17,7 @@ export const addItem = forge
       })
     },
     output: {
-      OK: z.any(),
+      OK: z.array(ProjectDetailsSchema),
       CONFLICT: true
     }
   })
@@ -103,7 +105,10 @@ export const listItems = forge
       })
     },
     output: {
-      OK: z.any()
+      OK: z.object({
+        items: z.array(ProjectDetailsSchema),
+        total: z.number()
+      })
     }
   })
   .callback(
@@ -156,7 +161,7 @@ export const removeItem = forge
       })
     },
     output: {
-      OK: z.any()
+      OK: z.array(ProjectDetailsSchema)
     }
   })
   .callback(async ({ body: { projectId }, core: { tempFile }, response }) => {
