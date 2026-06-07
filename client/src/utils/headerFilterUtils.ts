@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import COLORS from 'tailwindcss/colors'
+import { TAILWIND_PALETTE } from '@lifeforge/ui'
 
 export default function constructHeaderFilterItems(
   icons: Record<string, string>
@@ -13,7 +13,7 @@ export default function constructHeaderFilterItems(
   const inversedItems = baseItems.map(item => ({
     ...item,
     id: `!${item.id}`,
-    color: COLORS.red[500]
+    color: TAILWIND_PALETTE.red[500]
   }))
 
   return {

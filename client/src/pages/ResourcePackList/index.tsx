@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import COLORS from 'tailwindcss/colors'
+import { TAILWIND_PALETTE } from '@lifeforge/ui'
 
 import ProjectListPage from '@/components/ProjectListPage'
 import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
@@ -62,7 +62,7 @@ function ResourcePackList() {
           id: `!${resolution.replace(' or higher', '+').replace(' or lower', '-').toLowerCase()}`,
           label: resolution,
           icon: 'tabler:aspect-ratio',
-          color: COLORS.red[500]
+          color: TAILWIND_PALETTE.red[500]
         }))
       ],
       isColored: true
