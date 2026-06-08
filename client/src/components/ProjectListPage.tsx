@@ -17,6 +17,7 @@ import {
   Pagination,
   Scrollbar,
   SidebarDivider,
+  Stack,
   TagsFilter,
   WithQuery
 } from '@lifeforge/ui'
@@ -199,9 +200,8 @@ function ProjectListPage<TFilterKeys extends string[]>({
                 {({ items, total }) =>
                   items?.length > 0 ? (
                     <Scrollbar>
-                      <div className="space-y-3">
+                      <Stack gap="lg" mb="lg">
                         <Pagination
-                          className="mb-6"
                           page={page}
                           totalPages={Math.ceil(total / 20)}
                           onPageChange={
@@ -234,14 +234,13 @@ function ProjectListPage<TFilterKeys extends string[]>({
                         )}
 
                         <Pagination
-                          className="my-6"
                           page={page}
                           totalPages={Math.ceil(total / 20)}
                           onPageChange={
                             setPage as Dispatch<SetStateAction<number>>
                           }
                         />
-                      </div>
+                      </Stack>
                     </Scrollbar>
                   ) : (
                     <EmptyStateScreen

@@ -1,13 +1,14 @@
-import { Card } from '@lifeforge/ui'
 import { useTranslation } from 'react-i18next'
+
 import { useNavigate } from '@lifeforge/shared'
+import { Box, Card, Flex, Text } from '@lifeforge/ui'
 
 import type { ProjectViewItemProps } from '@/components/types'
 
+import ProjectIcon from '../../../ProjectIcon'
+import ProjectMetadata from '../../../ProjectMetadata'
+import ProjectTags from '../../../ProjectTags'
 import FavouriteButton from '../../components/FavouriteButton'
-import ItemIcon from '../../components/ItemIcon'
-import ItemMetadata from '../../components/ItemMetadata'
-import ItemTags from '../../components/ItemTags'
 
 function GridViewItem({
   entry,
@@ -22,33 +23,39 @@ function GridViewItem({
   return (
     <Card
       isInteractive
-      className="flex h-full flex-col"
-      onClick={() => navigate(`/modrinth/project/${entry.slug}`)}
+      onClick={() =>
+        navigate(`/melvinchia3636--modrinth/project/${entry.slug}`)
+      }
     >
-      <div className="flex items-start gap-4">
-        <ItemIcon className="size-24" iconUrl={entry.icon_url} />
-        <div className="min-w-0 flex-1">
-          <h3 className="mr-12 truncate text-lg font-medium">{entry.title}</h3>
+      <Flex align="start" gap="md">
+        <ProjectIcon height="6em" iconUrl={entry.icon_url} width="6em" />
+        <Box flex="1" minWidth="0">
+          <Text truncate as="h3" mr="2xl" size="lg" weight="semibold">
+            {entry.title}
+          </Text>
           {'author' in entry && (
-            <p className="text-custom-500 mr-16 text-sm">
+            <Text as="p" color="primary" mr="3xl" size="sm">
               {t('projectDetails.changelog.by')} {entry.author}
-            </p>
+            </Text>
           )}
-          <ItemMetadata className="mr-16" entry={entry} />
-        </div>
-      </div>
-      <p className="text-bg-500 mt-4 line-clamp-2 flex-1">
-        {entry.description}
-      </p>
-      <ItemTags
+          <ProjectMetadata entry={entry} mr="3xl" />
+        </Box>
+      </Flex>
+      <Box asChild flex="1">
+        <Text as="p" color="muted" lineClamp={2} mt="md">
+          {entry.description}
+        </Text>
+      </Box>
+      <ProjectTags
         categories={entry.categories}
         getIcon={getIcon}
         getKey={getKey}
       />
       <FavouriteButton
-        className="top-2 right-2"
         isFavourite={isFavourite}
         projectId={'project_id' in entry ? entry.project_id : entry.id}
+        right="0.5em"
+        top="0.5em"
       />
     </Card>
   )

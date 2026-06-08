@@ -1,7 +1,6 @@
-import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
-import { Listbox, ListboxOption } from '@lifeforge/ui'
+import { Flex, Icon, Listbox, ListboxOption, Text } from '@lifeforge/ui'
 
 import type { SortTypes } from '../hooks/useProjectFilter'
 
@@ -24,20 +23,21 @@ function SortBySelector({
 
   return (
     <Listbox
-      buttonContent={
-        <div className="flex items-center gap-2">
-          <Icon className="size-6 shrink-0" icon="tabler:arrows-up-down" />
-          <span className="w-full truncate font-medium whitespace-nowrap">
+      display={{ base: 'none', md: 'flex' }}
+      minWidth={{ base: '16em', md: 'min-content' }}
+      renderContent={() => (
+        <Flex align="center" gap="sm">
+          <Icon icon="tabler:arrows-up-down" />
+          <Text weight="medium" whiteSpace="nowrap">
             {t(
               `sortTypes.${
                 SORT_TYPES.find(([value]) => value === sortBy)?.[0] ??
                 'relevance'
               }`
             )}
-          </span>
-        </div>
-      }
-      className="component-bg-with-hover! hidden min-w-64 md:flex md:w-min"
+          </Text>
+        </Flex>
+      )}
       value={sortBy}
       onChange={value => setSortBy(value)}
     >

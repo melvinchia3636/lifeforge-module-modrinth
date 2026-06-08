@@ -1,59 +1,53 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
 
 import { usePersonalization } from '@lifeforge/shared'
+import { Flex, type FlexProps, Icon, Text } from '@lifeforge/ui'
+
+dayjs.extend(relativeTime)
 
 import type { Hit } from '@/components/types'
 import type { ProjectDetails } from '@/pages/ProjectDetails'
 
-function ItemMetadata({
+function ProjectMetadata({
   entry,
-  className
-}: {
-  entry: Hit | ProjectDetails
-  className?: string
-}) {
+  ...rest
+}: { entry: Hit | ProjectDetails } & FlexProps) {
   const { language } = usePersonalization()
 
   return (
-    <div
-      className={clsx(
-        'text-bg-500 mt-2 flex flex-wrap items-center gap-x-3 gap-y-1',
-        className
-      )}
-    >
-      <div className="flex items-center gap-1">
-        <Icon className="size-4" icon="tabler:download" />
-        <span>
+    <Flex color="muted" gapX="md" gapY="xs" mt="sm" wrap="wrap" {...rest}>
+      <Flex align="center" gap="xs">
+        <Icon icon="tabler:download" size="1rem" />
+        <Text>
           {
             sizeFormatter({
               render: (literal, suffix) => `${literal}${suffix}`
             })(entry.downloads) as string
           }
-        </span>
-      </div>
-      <div className="flex items-center gap-1">
-        <Icon className="size-4" icon="tabler:users" />
-        <span>
+        </Text>
+      </Flex>
+      <Flex align="center" gap="xs">
+        <Icon icon="tabler:users" size="1rem" />
+        <Text>
           {
             sizeFormatter({
               render: (literal, suffix) => `${literal}${suffix}`
             })('follows' in entry ? entry.follows : entry.followers) as string
           }
-        </span>
-      </div>
-      <div className="flex items-center gap-1">
-        <Icon className="size-4" icon="tabler:history" />
-        <span>
+        </Text>
+      </Flex>
+      <Flex align="center" gap="xs">
+        <Icon icon="tabler:history" size="1rem" />
+        <Text>
           {dayjs('date_modified' in entry ? entry.date_modified : entry.updated)
             .locale(language)
             .fromNow()}
-        </span>
-      </div>
-    </div>
+        </Text>
+      </Flex>
+    </Flex>
   )
 }
 
-export default ItemMetadata
+export default ProjectMetadata

@@ -1,15 +1,16 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { Card } from '@lifeforge/ui'
 import { useTranslation } from 'react-i18next'
+
 import { useNavigate } from '@lifeforge/shared'
+import { Box, Card, Text } from '@lifeforge/ui'
 
 import type { ProjectViewItemProps } from '@/components/types'
 
+import ProjectIcon from '../../../ProjectIcon'
+import ProjectMetadata from '../../../ProjectMetadata'
+import ProjectTags from '../../../ProjectTags'
 import FavouriteButton from '../../components/FavouriteButton'
-import ItemIcon from '../../components/ItemIcon'
-import ItemMetadata from '../../components/ItemMetadata'
-import ItemTags from '../../components/ItemTags'
 
 dayjs.extend(relativeTime)
 
@@ -26,30 +27,49 @@ function ListViewItem({
   return (
     <Card
       isInteractive
-      className="flex flex-col gap-4 md:flex-row"
-      onClick={() => navigate(`/modrinth/project/${entry.slug}`)}
+      direction={{ base: 'column', md: 'row' }}
+      gap="md"
+      onClick={() =>
+        navigate(`/melvinchia3636--modrinth/project/${entry.slug}`)
+      }
     >
-      <ItemIcon className="size-32" iconUrl={entry.icon_url} />
-      <div>
-        <h3 className="text-xl font-medium md:mr-12">{entry.title}</h3>
+      <ProjectIcon height="8em" iconUrl={entry.icon_url} width="8em" />
+      <Box>
+        <Text
+          as="h3"
+          mr={{ base: 'none', md: '2xl' }}
+          size="xl"
+          weight="semibold"
+        >
+          {entry.title}
+        </Text>
         {'author' in entry && (
-          <p className="text-custom-500 mt-1.5 text-sm md:mr-12">
+          <Text
+            as="p"
+            color="primary"
+            mr={{ base: 'none', md: '2xl' }}
+            mt="xs"
+            size="sm"
+          >
             {t('projectDetails.changelog.by')} {entry.author}
-          </p>
+          </Text>
         )}
-        <p className="text-bg-500 mt-2">{entry.description}</p>
-        <ItemMetadata entry={entry} />
-        <ItemTags
+        <Text as="p" color="muted" mt="sm">
+          {entry.description}
+        </Text>
+        <ProjectMetadata entry={entry} />
+        <ProjectTags
           categories={entry.categories}
           getIcon={getIcon}
           getKey={getKey}
         />
         <FavouriteButton
-          className="top-2 right-2"
           isFavourite={isFavourite}
           projectId={'project_id' in entry ? entry.project_id : entry.id}
+          right="1em"
+          top="1em"
         />
-      </div>
+      </Box>
     </Card>
   )
 }

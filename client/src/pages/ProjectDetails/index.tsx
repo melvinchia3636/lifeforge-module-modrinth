@@ -1,7 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { type InferOutput, useNavigate, useParams } from '@lifeforge/shared'
 import {
+  Box,
   Button,
   ContentWrapperWithSidebar,
+  Flex,
   GoBackButton,
   LayoutWithSidebar,
   Scrollbar,
@@ -9,10 +16,6 @@ import {
   WithQuery,
   useModuleSidebarState
 } from '@lifeforge/ui'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { type InferOutput, useNavigate, useParams } from '@lifeforge/shared'
 
 import {
   getDataPackIcon,
@@ -92,20 +95,23 @@ function ProjectDetails() {
     <WithQuery query={dataQuery} showRetryButton={false}>
       {data => (
         <>
-          <div className="flex-between flex">
+          <Flex align="center" justify="between">
             <GoBackButton onClick={() => navigate(-1)} />
             <Button
-              className="mb-2 xl:hidden"
+              display={{
+                base: 'flex',
+                xl: 'none'
+              }}
               icon="tabler:info-circle"
+              mb="sm"
               variant="plain"
               onClick={() => setIsSidebarOpen(true)}
             />
-          </div>
+          </Flex>
           <Header data={data} getIcon={getIcon} getKey={getKey} />
           <LayoutWithSidebar>
             <ContentWrapperWithSidebar>
               <Tabs
-                className="mb-6"
                 currentTab={currentSection}
                 enabled={
                   [
@@ -143,7 +149,24 @@ function ProjectDetails() {
                   )
                 }}
               />
-              <Scrollbar className="hidden lg:block">
+              <Box
+                asChild
+                display={{ base: 'none', lg: 'block' }}
+                mb="2xl"
+                mt="lg"
+              >
+                <Scrollbar>
+                  {currentSection === 'description' && (
+                    <DescriptionSection description={data.body} />
+                  )}
+                  {currentSection === 'gallery' && (
+                    <GallerySection gallery={data.gallery} />
+                  )}
+                  {currentSection === 'changelog' && <ChangelogSection />}
+                  {currentSection === 'versions' && <VersionsSection />}
+                </Scrollbar>
+              </Box>
+              <Box display={{ base: 'block', lg: 'none' }}>
                 {currentSection === 'description' && (
                   <DescriptionSection description={data.body} />
                 )}
@@ -152,17 +175,7 @@ function ProjectDetails() {
                 )}
                 {currentSection === 'changelog' && <ChangelogSection />}
                 {currentSection === 'versions' && <VersionsSection />}
-              </Scrollbar>
-              <div className="block lg:hidden">
-                {currentSection === 'description' && (
-                  <DescriptionSection description={data.body} />
-                )}
-                {currentSection === 'gallery' && (
-                  <GallerySection gallery={data.gallery} />
-                )}
-                {currentSection === 'changelog' && <ChangelogSection />}
-                {currentSection === 'versions' && <VersionsSection />}
-              </div>
+              </Box>
             </ContentWrapperWithSidebar>
             <Sidebar
               discord_url={data.discord_url}

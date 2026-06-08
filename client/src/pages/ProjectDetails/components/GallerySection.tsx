@@ -1,8 +1,8 @@
-import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
-import { Card } from '@lifeforge/ui'
 import { useTranslation } from 'react-i18next'
+
 import { usePersonalization } from '@lifeforge/shared'
+import { Box, Card, Flex, Grid, Icon, Text } from '@lifeforge/ui'
 
 import type { ProjectDetails } from '..'
 
@@ -12,31 +12,42 @@ function GallerySection({ gallery }: { gallery: ProjectDetails['gallery'] }) {
   const { language } = usePersonalization()
 
   return (
-    <div className="mb-8 grid gap-4 sm:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
+    <Grid gap="md" mb="xl" templateCols="repeat(auto-fit, minmax(260px, 1fr))">
       {gallery
         .sort((a, b) => a.ordering - b.ordering)
         .map(image => (
-          <Card key={image.url} className="flex flex-col p-0!">
-            <img
+          <Card key={image.url} overflow="hidden" p="none">
+            <Box
               alt={t('projectDetails.gallery.imageAlt')}
-              className="aspect-video w-full object-cover"
+              as="img"
               src={image.url}
+              style={{ aspectRatio: '16 / 9', objectFit: 'cover' }}
+              width="100%"
             />
-            <div className="flex flex-1 flex-col p-4">
-              <h2 className="text-xl font-medium">
+            <Flex direction="column" flex="1" p="md">
+              <Text as="h2" size="xl" weight="medium">
                 {image.title || t('projectDetails.gallery.untitled')}
-              </h2>
-              <p className="text-bg-500 mt-2 flex-1">{image.description}</p>
-              <p className="text-bg-500 mt-4 flex items-center gap-1">
-                <Icon className="size-4" icon="tabler:clock" />
-                <span className="text-sm">
+              </Text>
+              <Text color="muted" mt="sm">
+                {image.description}
+              </Text>
+              <Flex
+                align="center"
+                gap="xs"
+                pt="md"
+                style={{
+                  marginTop: 'auto'
+                }}
+              >
+                <Icon color="muted" icon="tabler:clock" size="1rem" />
+                <Text size="sm">
                   {dayjs(image.created).locale(language).format('MMMM D, YYYY')}
-                </span>
-              </p>
-            </div>
+                </Text>
+              </Flex>
+            </Flex>
           </Card>
         ))}
-    </div>
+    </Grid>
   )
 }
 

@@ -1,6 +1,6 @@
-import { TagChip } from '@lifeforge/ui'
+import { Flex, TagChip } from '@lifeforge/ui'
 
-function ItemTags({
+function ProjectTags({
   categories,
   getIcon,
   getKey
@@ -10,7 +10,7 @@ function ItemTags({
   getKey: (category: string) => string | undefined
 }) {
   return (
-    <div className="mt-4 flex flex-wrap gap-2">
+    <Flex gap="sm" mt="md" wrap="wrap">
       {categories.map(category => (
         <TagChip
           key={category}
@@ -18,8 +18,8 @@ function ItemTags({
           label={getKey(category) || category}
         />
       ))}
-    </div>
+    </Flex>
   )
 }
 
-export default ItemTags
+export default ProjectTags

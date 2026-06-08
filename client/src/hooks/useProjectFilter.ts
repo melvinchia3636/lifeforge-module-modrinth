@@ -182,14 +182,15 @@ export function constructSearchParamsFromFilter(
     | 'resourcepack'
     | 'datapack'
     | 'plugin'
-): Record<string, string> {
-  const params: Record<string, string> = {
+) {
+  const params = {
     page: String(filter.page),
     query: filter.searchQuery || '',
     version: filter.version || '',
     sort: filter.sortBy,
     projectType,
-    environments: filter.environments || ''
+    environments: filter.environments || '',
+    categories: ''
   }
 
   Object.entries(filter).forEach(([key, value]) => {

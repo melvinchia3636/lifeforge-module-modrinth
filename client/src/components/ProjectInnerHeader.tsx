@@ -3,9 +3,13 @@ import { type ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
+  Box,
   Button,
+  Flex,
   SearchInput,
+  Stack,
   TagsFilter,
+  Text,
   ViewModeSelector,
   useModuleSidebarState
 } from '@lifeforge/ui'
@@ -63,27 +67,30 @@ function ProjectInnerHeader({
   )
 
   return (
-    <>
-      <header className="flex-between flex w-full">
-        <div className="flex min-w-0 items-end">
-          <h1 className="truncate text-2xl font-semibold lg:text-3xl">
+    <Stack gap="md" mb="lg">
+      <Flex align="center" justify="between">
+        <Flex align="end" gap="sm" minWidth="0" mr="xl">
+          <Text
+            truncate
+            as="h1"
+            size={{ base: '2xl', lg: '3xl' }}
+            weight="semibold"
+          >
             {t(
               `sidebar.${_.camelCase(hasActiveFilters ? 'filtered' : 'all')}${_.capitalize(title)}`
             )}
-          </h1>
-          <span className="text-bg-500 mr-8 ml-2 text-base">
-            ({totalItemsCount.toLocaleString()})
-          </span>
-        </div>
+          </Text>
+          <Text color="muted">({totalItemsCount.toLocaleString()})</Text>
+        </Flex>
         <Button
-          className="lg:hidden"
+          display={{ base: 'flex', lg: 'none' }}
           icon="tabler:menu"
           variant="plain"
           onClick={() => {
             setIsSidebarOpen(true)
           }}
         />
-      </header>
+      </Flex>
       <TagsFilter
         availableFilters={filterItems}
         values={Object.fromEntries(
@@ -94,7 +101,7 @@ function ProjectInnerHeader({
         )}
         onChange={onChanges}
       />
-      <div className="mt-2 mb-6 flex gap-2 md:mt-4 xl:mt-6">
+      <Flex gap="sm">
         <SortBySelector setSortBy={setSortBy} sortBy={sortBy} />
         <SearchInput
           debounceMs={500}
@@ -103,27 +110,28 @@ function ProjectInnerHeader({
           value={searchQuery}
           onChange={setSearchQuery}
         />
-        <ViewModeSelector
-          className="hidden md:flex"
-          currentMode={viewMode}
-          options={[
-            {
-              icon: 'tabler:list',
-              value: 'list'
-            },
-            {
-              icon: 'uil:apps',
-              value: 'grid'
-            },
-            {
-              icon: 'tabler:photo',
-              value: 'gallery'
-            }
-          ]}
-          onModeChange={setViewMode}
-        />
-      </div>
-    </>
+        <Box display={{ base: 'none', md: 'block' }}>
+          <ViewModeSelector
+            currentMode={viewMode}
+            options={[
+              {
+                icon: 'tabler:list',
+                value: 'list'
+              },
+              {
+                icon: 'uil:apps',
+                value: 'grid'
+              },
+              {
+                icon: 'tabler:photo',
+                value: 'gallery'
+              }
+            ]}
+            onModeChange={setViewMode}
+          />
+        </Box>
+      </Flex>
+    </Stack>
   )
 }
 

@@ -6,6 +6,7 @@ import {
   findInFilterList,
   toggleInFilterList
 } from '../../hooks/useProjectFilter'
+import { negationIcon, negationWrapper } from './GeneralSection.css'
 
 function GeneralSection({
   name,
@@ -49,8 +50,8 @@ function GeneralSection({
                 transformString: str => _.kebabCase(str.toLowerCase())
               }) !== null
                 ? {
-                    wrapper: 'after:bg-red-500!',
-                    icon: 'text-red-500! ring-red-500!'
+                    wrapper: negationWrapper,
+                    icon: negationIcon
                   }
                 : undefined
             }

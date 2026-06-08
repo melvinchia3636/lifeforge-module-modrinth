@@ -1,20 +1,19 @@
 import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
-import { Button } from '@lifeforge/ui'
 import { toast } from 'react-toastify'
+
 import { usePromiseLoading } from '@lifeforge/shared'
+import { Button, type FlexProps } from '@lifeforge/ui'
 
 import forgeAPI from '@/utils/forgeAPI'
 
 function FavouriteButton({
   isFavourite,
   projectId,
-  className
+  ...rest
 }: {
   isFavourite: boolean
   projectId: string
-  className: string
-}) {
+} & Omit<FlexProps, 'onClick'>) {
   const queryClient = useQueryClient()
 
   async function toggleFavourite() {
@@ -25,7 +24,9 @@ function FavouriteButton({
         projectId
       })
 
-      queryClient.invalidateQueries({ queryKey: ['modrinth', 'favourites'] })
+      queryClient.invalidateQueries({
+        queryKey: ['melvinchia3636--modrinth', 'favourites']
+      })
     } catch {
       toast.error('Failed to update favourites. Please try again.')
     }
@@ -35,19 +36,16 @@ function FavouriteButton({
 
   return (
     <Button
-      className={clsx('absolute', className)}
+      dangerous={isFavourite}
       icon={isFavourite ? 'tabler:heart-filled' : 'tabler:heart'}
-      iconClassName={
-        isFavourite
-          ? 'text-red-500 group-hover:text-red-600! transition-all'
-          : undefined
-      }
       loading={loading}
+      position="absolute"
       variant="plain"
       onClick={e => {
         e.stopPropagation()
         handleToggleFavourite()
       }}
+      {...rest}
     />
   )
 }

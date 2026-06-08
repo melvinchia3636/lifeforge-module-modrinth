@@ -1,3 +1,5 @@
+import { Grid } from '@lifeforge/ui'
+
 import type { ProjectViewProps } from '@/components/types'
 
 import GridViewItem from './components/GridViewItem'
@@ -9,7 +11,15 @@ function GridView({
   getKey
 }: ProjectViewProps) {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+    <Grid
+      gap="md"
+      templateCols={{
+        base: 1,
+        md: 2,
+        xl: 3,
+        '2xl': 'repeat(auto-fill, minmax(300px, 1fr))'
+      }}
+    >
       {entries.map(entry => (
         <GridViewItem
           key={'project_id' in entry ? entry.project_id : entry.id}
@@ -21,7 +31,7 @@ function GridView({
           )}
         />
       ))}
-    </div>
+    </Grid>
   )
 }
 

@@ -1,3 +1,5 @@
+import { Grid } from '@lifeforge/ui'
+
 import type { ProjectViewProps } from '@/components/types'
 
 import GalleryViewItem from './components/GalleryViewItem'
@@ -9,7 +11,14 @@ function GalleryView({
   getKey
 }: ProjectViewProps) {
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-[repeat(auto-fill,minmax(360px,1fr))]">
+    <Grid
+      gap="md"
+      templateCols={{
+        base: 1,
+        lg: 2,
+        '2xl': 'repeat(auto-fill, minmax(360px, 1fr))'
+      }}
+    >
       {entries.map(entry => (
         <GalleryViewItem
           key={'project_id' in entry ? entry.project_id : entry.id}
@@ -21,7 +30,7 @@ function GalleryView({
           )}
         />
       ))}
-    </div>
+    </Grid>
   )
 }
 

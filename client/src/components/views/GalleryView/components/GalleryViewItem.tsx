@@ -1,13 +1,22 @@
-import { Card } from '@lifeforge/ui'
 import { useTranslation } from 'react-i18next'
+
 import { useNavigate } from '@lifeforge/shared'
+import {
+  Box,
+  Card,
+  Flex,
+  Ring,
+  Stack,
+  Text,
+  colorWithOpacity
+} from '@lifeforge/ui'
 
 import type { ProjectViewItemProps } from '@/components/types'
 
+import ProjectIcon from '../../../ProjectIcon'
+import ProjectMetadata from '../../../ProjectMetadata'
+import ProjectTags from '../../../ProjectTags'
 import FavouriteButton from '../../components/FavouriteButton'
-import ItemIcon from '../../components/ItemIcon'
-import ItemMetadata from '../../components/ItemMetadata'
-import ItemTags from '../../components/ItemTags'
 
 function GalleryViewItem({
   entry,
@@ -22,9 +31,10 @@ function GalleryViewItem({
   return (
     <Card
       isInteractive
-      className="flex flex-col gap-4 p-0!"
+      gap="md"
+      p="none"
       onClick={() => {
-        navigate(`/modrinth/project/${entry.slug}`)
+        navigate(`/melvinchia3636--modrinth/project/${entry.slug}`)
       }}
     >
       {(() => {
@@ -35,8 +45,12 @@ function GalleryViewItem({
               entry.gallery[0]?.url
 
         return (
-          <div
-            className="bg-bg-200 dark:bg-bg-800/70 aspect-video w-full"
+          <Box
+            aspectRatio="16/9"
+            bg={{
+              base: 'bg-200',
+              dark: colorWithOpacity('bg-800', '70%')
+            }}
             style={
               !targetImg
                 ? {
@@ -45,47 +59,87 @@ function GalleryViewItem({
                   }
                 : undefined
             }
+            width="100%"
           >
             {targetImg ? (
-              <img
-                alt={`${entry.title} featured`}
-                className="size-full object-cover"
-                src={targetImg}
-              />
+              <Box
+                asChild
+                height="100%"
+                style={{
+                  objectFit: 'cover'
+                }}
+                width="100%"
+              >
+                <img alt={`${entry.title} featured`} src={targetImg} />
+              </Box>
             ) : null}
-          </div>
+          </Box>
         )
       })()}
-      <div className="flex items-center gap-4 px-4">
-        <ItemIcon
-          className="ring-bg-100 dark:ring-bg-900 size-28 -translate-y-[40%] ring-4"
-          iconUrl={entry.icon_url}
-        />
-        <div className="relative -mt-16 w-full min-w-0 pr-16">
-          <h3 className="min-w-0 truncate text-xl font-medium">
+      <Flex align="center" gap="md" px="md">
+        <Ring
+          asChild
+          ringColor={{
+            base: 'bg-100',
+            dark: 'bg-800'
+          }}
+          ringWidth="4px"
+          style={{
+            transform: 'translateY(-40%)'
+          }}
+        >
+          <ProjectIcon height="7em" iconUrl={entry.icon_url} width="7em" />
+        </Ring>
+        <Box
+          minWidth="0"
+          position="relative"
+          pr="3xl"
+          style={{
+            marginTop: '-4em'
+          }}
+          width="100%"
+        >
+          <Text truncate as="h3" size="xl" weight="semibold">
             {entry.title}
-          </h3>
+          </Text>
           {'author' in entry && (
-            <p className="text-custom-500 mt-1.5 min-w-0 truncate text-sm">
+            <Text truncate as="p" color="primary" mt="xs" size="sm">
               {t('projectDetails.changelog.by')} {entry.author}
-            </p>
+            </Text>
           )}
           <FavouriteButton
-            className="top-0 right-0"
             isFavourite={isFavourite}
             projectId={'project_id' in entry ? entry.project_id : entry.id}
+            right="0"
+            top="0"
           />
-        </div>
-      </div>
-      <div className="-mt-16 flex flex-1 flex-col p-4">
-        <p className="text-bg-500 mt-2 mb-auto">{entry.description}</p>
-        <ItemMetadata className="mt-6" entry={entry} />
-        <ItemTags
+        </Box>
+      </Flex>
+      <Stack
+        direction="column"
+        flex="1"
+        p="md"
+        style={{
+          marginTop: '-3em'
+        }}
+      >
+        <Text
+          as="p"
+          color="muted"
+          mt="sm"
+          style={{
+            marginBottom: 'auto'
+          }}
+        >
+          {entry.description}
+        </Text>
+        <ProjectMetadata entry={entry} mt="lg" />
+        <ProjectTags
           categories={entry.categories}
           getIcon={getIcon}
           getKey={getKey}
         />
-      </div>
+      </Stack>
     </Card>
   )
 }

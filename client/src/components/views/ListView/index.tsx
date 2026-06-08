@@ -1,3 +1,5 @@
+import { Stack } from '@lifeforge/ui'
+
 import type { ProjectViewProps } from '@/components/types'
 
 import ListViewItem from './components/ListViewItem'
@@ -9,7 +11,7 @@ function ListView({
   favouritesIds
 }: ProjectViewProps) {
   return (
-    <div className="space-y-3">
+    <Stack>
       {entries.map(entry => (
         <ListViewItem
           key={'project_id' in entry ? entry.project_id : entry.id}
@@ -21,7 +23,7 @@ function ListView({
           )}
         />
       ))}
-    </div>
+    </Stack>
   )
 }
 

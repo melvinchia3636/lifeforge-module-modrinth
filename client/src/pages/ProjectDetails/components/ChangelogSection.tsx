@@ -1,13 +1,27 @@
-import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { Button, Pagination, WithQueryData } from '@lifeforge/ui'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Markdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
+
 import { useParams, usePersonalization } from '@lifeforge/shared'
+import {
+  Box,
+  Button,
+  Flex,
+  Pagination,
+  Prose,
+  Stack,
+  Text,
+  WithQueryData
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/utils/forgeAPI'
+
+import { timelineItem } from './ChangelogSection.css'
+
+dayjs.extend(relativeTime)
 
 function ChangelogSection() {
   const { t } = useTranslation('apps.melvinchia3636$modrinth')
@@ -38,67 +52,99 @@ function ChangelogSection() {
               })}
             >
               {members => (
-                <div className="my-6 space-y-6">
-                  {data.slice((page - 1) * 20, page * 20).map(version => (
-                    <div
-                      key={version.version_number}
-                      className={clsx(
-                        'before:bg-bg-100 dark:before:bg-bg-900 relative min-w-0 pl-8 before:absolute before:top-3 before:left-0 before:z-10 before:size-5 before:rounded-full before:border-[3px] after:absolute after:top-3 after:left-0 after:h-[calc(100%-1rem)] after:w-[3px] after:translate-x-2 after:rounded-full',
-                        version.version_type === 'release'
-                          ? 'before:border-green-500 after:bg-green-500'
-                          : version.version_type === 'beta'
-                            ? 'before:border-yellow-500 after:bg-yellow-500'
-                            : 'before:border-red-500 after:bg-red-500'
-                      )}
-                    >
-                      <div className="flex-between w-full min-w-0 gap-12">
-                        <h3 className="mb-2 flex min-w-0 flex-col text-2xl font-bold sm:flex-row sm:items-end sm:gap-2">
-                          <span className="truncate">
-                            {version.version_number}
-                          </span>
-                          <span className="text-bg-500 w-full min-w-0 truncate text-base font-normal">
-                            <span>{t('projectDetails.changelog.by')}</span>
-                            <span className="text-custom-500 ml-1 text-base font-medium">
-                              {members.find(
-                                member => member.user.id === version.author_id
-                              )?.user.username ||
-                                t('projectDetails.changelog.unknown')}
-                            </span>
-                            <span className="ml-1">
-                              {t('projectDetails.changelog.on')}{' '}
-                              {dayjs(version.date_published)
-                                .locale(language)
-                                .format('MMMM D, YYYY')}
-                            </span>
-                          </span>
-                        </h3>
-                        <Button
-                          as="a"
-                          disabled={version.files.length === 0}
-                          href={version.files[0]?.url || '#'}
-                          icon="tabler:download"
-                          rel="noopener noreferrer"
-                          target="_blank"
-                          variant="plain"
-                        />
-                      </div>
-                      <div className="prose modrinth-prose mt-4 max-w-full!">
-                        <Markdown rehypePlugins={[rehypeRaw]}>
-                          {version.changelog ||
-                            t('projectDetails.changelog.noChangelog')}
-                        </Markdown>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <Stack gap="lg" my="lg">
+                  {data.slice((page - 1) * 20, page * 20).map(version => {
+                    const dotColor =
+                      version.version_type === 'release'
+                        ? '#22c55e'
+                        : version.version_type === 'beta'
+                          ? '#eab308'
+                          : '#ef4444'
+
+                    return (
+                      <Box
+                        key={version.version_number}
+                        className={timelineItem}
+                        style={
+                          {
+                            '--tl-color': dotColor
+                          } as React.CSSProperties
+                        }
+                      >
+                        <Flex
+                          align="center"
+                          gap="2xl"
+                          justify="between"
+                          mb="md"
+                          minWidth="0"
+                          width="100%"
+                        >
+                          <Flex
+                            asChild
+                            align={{ sm: 'end' }}
+                            direction={{ base: 'column', sm: 'row' }}
+                            gap="sm"
+                            minWidth="0"
+                          >
+                            <Text as="h3" size="2xl" weight="bold">
+                              <Text truncate>{version.version_number}</Text>
+                              <Text
+                                truncate
+                                color="muted"
+                                size="base"
+                                weight="normal"
+                              >
+                                <Text>{t('projectDetails.changelog.by')}</Text>
+                                <Text
+                                  as="span"
+                                  color="custom-500"
+                                  ml="xs"
+                                  weight="medium"
+                                >
+                                  {members.find(
+                                    member =>
+                                      member.user.id === version.author_id
+                                  )?.user.username ||
+                                    t('projectDetails.changelog.unknown')}
+                                </Text>
+                                <Text ml="xs">
+                                  {t('projectDetails.changelog.on')}{' '}
+                                  {dayjs(version.date_published)
+                                    .locale(language)
+                                    .format('MMMM D, YYYY')}
+                                </Text>
+                              </Text>
+                            </Text>
+                          </Flex>
+                          <Button
+                            as="a"
+                            disabled={version.files.length === 0}
+                            href={version.files[0]?.url || '#'}
+                            icon="tabler:download"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            variant="plain"
+                          />
+                        </Flex>
+                        <Prose className="modrinth-prose">
+                          <Markdown rehypePlugins={[rehypeRaw]}>
+                            {version.changelog ||
+                              t('projectDetails.changelog.noChangelog')}
+                          </Markdown>
+                        </Prose>
+                      </Box>
+                    )
+                  })}
+                </Stack>
               )}
             </WithQueryData>
-            <Pagination
-              className="mb-8"
-              page={page}
-              totalPages={Math.ceil(data.length / 20)}
-              onPageChange={setPage}
-            />
+            <Box asChild mt="md">
+              <Pagination
+                page={page}
+                totalPages={Math.ceil(data.length / 20)}
+                onPageChange={setPage}
+              />
+            </Box>
           </>
         )}
       </WithQueryData>

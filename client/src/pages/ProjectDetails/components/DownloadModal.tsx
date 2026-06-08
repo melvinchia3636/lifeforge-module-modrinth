@@ -4,10 +4,13 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import {
+  Box,
   Button,
+  Flex,
   ListboxInput,
   ListboxOption,
   ModalHeader,
+  Stack,
   WithQuery
 } from '@lifeforge/ui'
 
@@ -101,7 +104,7 @@ function DownloadModal({
   }
 
   return (
-    <div className="min-w-[40vw]">
+    <Box minWidth="40vw">
       <ModalHeader
         icon="tabler:download"
         title={t('projectDetails.downloadModal.title', { name })}
@@ -109,11 +112,11 @@ function DownloadModal({
       />
       <WithQuery query={versionsQuery}>
         {() => (
-          <div className="space-y-4">
+          <Stack>
             <ListboxInput
-              buttonContent={<>{selectedVersion}</>}
               icon="tabler:device-gamepad"
               label={t('projectDetails.downloadModal.gameVersion')}
+              renderContent={() => <>{selectedVersion}</>}
               value={selectedVersion}
               onChange={value => {
                 setSelectedVersion(value)
@@ -126,25 +129,26 @@ function DownloadModal({
             </ListboxInput>
             {platformOptions.length > 0 && (
               <ListboxInput
-                buttonContent={
+                icon="tabler:device-desktop"
+                label={t('projectDetails.downloadModal.platform')}
+                renderContent={() => (
                   <>
                     {selectedPlatform ? (
-                      <>
-                        <span
-                          className="size-4"
+                      <Flex align="center" gap="sm">
+                        <Box
                           dangerouslySetInnerHTML={{
                             __html: getIcon(selectedPlatform!) || ''
                           }}
+                          height="1em"
+                          width="1em"
                         />
                         {getKey(selectedPlatform!) || selectedPlatform}
-                      </>
+                      </Flex>
                     ) : (
                       t('projectDetails.downloadModal.selectPlatform')
                     )}
                   </>
-                }
-                icon="tabler:device-desktop"
-                label={t('projectDetails.downloadModal.platform')}
+                )}
                 value={selectedPlatform}
                 onChange={setSelectedPlatform}
               >
@@ -159,17 +163,17 @@ function DownloadModal({
               </ListboxInput>
             )}
             <Button
-              className="mt-6 w-full"
               disabled={!selectedPlatform}
               icon="tabler:download"
+              mt="lg"
               onClick={download}
             >
               {t('projectDetails.downloadModal.download')}
             </Button>
-          </div>
+          </Stack>
         )}
       </WithQuery>
-    </div>
+    </Box>
   )
 }
 
