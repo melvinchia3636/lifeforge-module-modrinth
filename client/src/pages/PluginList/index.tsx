@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import ProjectListPage from '@/components/ProjectListPage'
 import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 

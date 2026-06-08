@@ -23,10 +23,10 @@ import {
 } from '@lifeforge/ui'
 
 import type { Hit } from '@/components/types'
+import { forgeAPI } from '@/manifest'
 
 import type { FilterReturnType } from '../hooks/useProjectFilter'
 import type { ProjectDetails } from '../pages/ProjectDetails'
-import forgeAPI from '../utils/forgeAPI'
 import ProjectInnerHeader from './ProjectInnerHeader'
 import ProjectSidebar from './ProjectSidebar'
 import { SORT_TYPES } from './SortBySelector'

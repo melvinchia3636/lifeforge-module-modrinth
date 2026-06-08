@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
+
 import { TAILWIND_PALETTE } from '@lifeforge/ui'
 
 import ProjectListPage from '@/components/ProjectListPage'
 import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
+import { forgeAPI } from '@/manifest'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 
 import '../../index.css'
-import forgeAPI from '../../utils/forgeAPI'
 import ResolutionsSection from './components/ResolutionsSection'
 import {
   ICONS,

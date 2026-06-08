@@ -1,4 +1,5 @@
 import _ from 'lodash'
+
 import { TAILWIND_PALETTE } from '@lifeforge/ui'
 
 export default function constructHeaderFilterItems(

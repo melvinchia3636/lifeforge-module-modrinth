@@ -16,7 +16,7 @@ import {
 import ProjectIcon from '@/components/ProjectIcon'
 import ProjectMetadata from '@/components/ProjectMetadata'
 import ProjectTags from '@/components/ProjectTags'
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 import type { ProjectDetails } from '..'
 import DownloadModal from './DownloadModal'

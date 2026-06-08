@@ -17,6 +17,7 @@ import {
   useModuleSidebarState
 } from '@lifeforge/ui'
 
+import { forgeAPI } from '@/manifest'
 import {
   getDataPackIcon,
   getDataPackKey
@@ -32,7 +33,6 @@ import {
   getResourcePackKey
 } from '@/pages/ResourcePackList/constants/icons'
 import { getShaderIcon, getShaderKey } from '@/pages/ShaderList/constants/icons'
-import forgeAPI from '@/utils/forgeAPI'
 
 import '../../index.css'
 import ChangelogSection from './components/ChangelogSection'

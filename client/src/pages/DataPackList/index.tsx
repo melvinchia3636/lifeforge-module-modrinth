@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 
 import ProjectListPage from '@/components/ProjectListPage'
 import { constructSearchParamsFromFilter } from '@/hooks/useProjectFilter'
+import { forgeAPI } from '@/manifest'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 
 import '../../index.css'
-import forgeAPI from '../../utils/forgeAPI'
 import { ICONS, getDataPackIcon, getDataPackKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 

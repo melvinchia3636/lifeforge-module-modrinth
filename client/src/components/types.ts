@@ -1,7 +1,7 @@
 import { type InferOutput } from '@lifeforge/shared'
 
+import { forgeAPI } from '@/manifest'
 import type { ProjectDetails } from '@/pages/ProjectDetails'
-import forgeAPI from '@/utils/forgeAPI'
 
 export type Hit = InferOutput<typeof forgeAPI.projects.list>['items'][number]
 

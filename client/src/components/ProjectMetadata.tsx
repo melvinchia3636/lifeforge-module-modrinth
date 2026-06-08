@@ -5,10 +5,10 @@ import { sizeFormatter } from 'human-readable'
 import { usePersonalization } from '@lifeforge/shared'
 import { Flex, type FlexProps, Icon, Text } from '@lifeforge/ui'
 
-dayjs.extend(relativeTime)
-
 import type { Hit } from '@/components/types'
 import type { ProjectDetails } from '@/pages/ProjectDetails'
+
+dayjs.extend(relativeTime)
 
 function ProjectMetadata({
   entry,

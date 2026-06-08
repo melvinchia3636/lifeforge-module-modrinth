@@ -14,7 +14,7 @@ import {
   WithQuery
 } from '@lifeforge/ui'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 function DownloadModal({
   data: { slug, name, getIcon, getKey },

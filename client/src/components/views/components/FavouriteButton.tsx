@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { usePromiseLoading } from '@lifeforge/shared'
 import { Button, type FlexProps } from '@lifeforge/ui'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 function FavouriteButton({
   isFavourite,

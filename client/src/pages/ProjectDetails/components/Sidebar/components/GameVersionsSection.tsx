@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Flex, SidebarTitle, TagChip, WithQuery } from '@lifeforge/ui'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 function GameVersionsSection({ versions }: { versions: string[] }) {
   const { t } = useTranslation('apps.melvinchia3636$modrinth')

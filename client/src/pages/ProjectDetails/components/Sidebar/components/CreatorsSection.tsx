@@ -13,7 +13,7 @@ import {
   WithQueryData
 } from '@lifeforge/ui'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
   const { t } = useTranslation('apps.melvinchia3636$modrinth')

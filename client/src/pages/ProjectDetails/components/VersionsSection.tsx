@@ -18,8 +18,8 @@ import {
   WithQueryData
 } from '@lifeforge/ui'
 
+import { forgeAPI } from '@/manifest'
 import { getModIcon } from '@/pages/ModList/constants/icons'
-import forgeAPI from '@/utils/forgeAPI'
 
 dayjs.extend(relativeTime)
 

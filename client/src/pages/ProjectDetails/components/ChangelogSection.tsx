@@ -17,7 +17,7 @@ import {
   WithQueryData
 } from '@lifeforge/ui'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 import { timelineItem } from './ChangelogSection.css'
 

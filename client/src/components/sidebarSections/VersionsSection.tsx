@@ -5,7 +5,7 @@ import {
   WithQueryData
 } from '@lifeforge/ui'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 function VersionsSection({
   selectedVersion,
