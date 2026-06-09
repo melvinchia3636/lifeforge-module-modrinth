@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { toast ,
+import {
   Box,
   Button,
   Flex,
@@ -10,7 +10,8 @@ import { toast ,
   ListboxOption,
   ModalHeader,
   Stack,
-  WithQuery
+  WithQuery,
+  toast
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'

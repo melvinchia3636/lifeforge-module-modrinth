@@ -2,13 +2,14 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
 import { usePromiseLoading } from '@lifeforge/api'
-import { toast ,
+import {
   Bordered,
   Box,
   Button,
   Flex,
   Text,
   colorWithOpacity,
+  toast,
   useModalStore
 } from '@lifeforge/ui'
 

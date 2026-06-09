@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 
 import { type InferOutput } from '@lifeforge/api'
-import { toast ,
+import {
   Box,
   Button,
   ContentWrapperWithSidebar,
@@ -14,6 +14,7 @@ import { toast ,
   Scrollbar,
   Tabs,
   WithQuery,
+  toast,
   useModuleSidebarState
 } from '@lifeforge/ui'
 
