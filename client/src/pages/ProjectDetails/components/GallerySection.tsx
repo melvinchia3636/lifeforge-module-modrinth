@@ -1,12 +1,20 @@
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization , Box, Card, Flex, Grid, Icon, Text } from '@lifeforge/ui'
+import {
+  Box,
+  Card,
+  Flex,
+  Grid,
+  Icon,
+  Text,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import type { ProjectDetails } from '..'
 
 function GallerySection({ gallery }: { gallery: ProjectDetails['gallery'] }) {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const { language } = usePersonalization()
 

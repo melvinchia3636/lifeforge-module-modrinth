@@ -29,7 +29,7 @@ function ProjectSidebar({
         active={isAllActive}
         icon="tabler:category"
         label={`All ${title}`}
-        namespace="apps.melvinchia3636$modrinth"
+        namespace="apps.melvinchia3636--modrinth"
         number={isAllActive ? totalCount : undefined}
         onClick={() => {
           setShowFavourites(false)
@@ -40,7 +40,7 @@ function ProjectSidebar({
         active={isFavouritesShowing}
         icon="tabler:star"
         label="My Favourites"
-        namespace="apps.melvinchia3636$modrinth"
+        namespace="apps.melvinchia3636--modrinth"
         number={favouritesCount}
         onClick={() => {
           setShowFavourites(true)

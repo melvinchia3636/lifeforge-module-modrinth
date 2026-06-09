@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
-import { usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/api'
 import { Button, type FlexProps } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'

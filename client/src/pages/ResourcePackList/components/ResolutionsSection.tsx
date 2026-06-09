@@ -20,7 +20,7 @@ function ResolutionsSection() {
     <>
       <SidebarTitle
         label="Resolutions"
-        namespace="apps.melvinchia3636$modrinth"
+        namespace="apps.melvinchia3636--modrinth"
       />
       {RESOLUTIONS.map(resolution => (
         <SidebarItem

@@ -22,7 +22,7 @@ function DetailsSection({
   updated: string
   license: { name: string }
 }) {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const { language } = usePersonalization()
 

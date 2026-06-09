@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 
-import { usePersonalization ,
+import {
   Box,
   Button,
   Card,
@@ -15,7 +15,8 @@ import { usePersonalization ,
   Stack,
   TagChip,
   Text,
-  WithQueryData
+  WithQueryData,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
@@ -24,7 +25,7 @@ import { getModIcon } from '@/pages/ModList/constants/icons'
 dayjs.extend(relativeTime)
 
 function VersionsSection() {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const { projectId } = useParams<{ projectId: string }>()
 

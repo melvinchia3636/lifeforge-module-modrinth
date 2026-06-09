@@ -7,7 +7,7 @@ import { Flex, SidebarTitle, TagChip, WithQuery } from '@lifeforge/ui'
 import { forgeAPI } from '@/manifest'
 
 function GameVersionsSection({ versions }: { versions: string[] }) {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const gameVersionsQuery = useQuery(forgeAPI.gameVersions.list.queryOptions())
 

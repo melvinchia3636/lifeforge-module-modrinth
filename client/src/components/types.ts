@@ -1,4 +1,4 @@
-import { type InferOutput } from '@lifeforge/shared'
+import type { InferOutput } from '@lifeforge/api'
 
 import { forgeAPI } from '@/manifest'
 import type { ProjectDetails } from '@/pages/ProjectDetails'

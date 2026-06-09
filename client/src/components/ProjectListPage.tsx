@@ -62,7 +62,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
   getIcon,
   getKey
 }: ProjectListPageProps) {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const {
     page,
@@ -247,7 +247,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
                       icon="tabler:search-off"
                       message={{
                         id: 'search',
-                        namespace: 'apps.melvinchia3636$modrinth'
+                        namespace: 'apps.melvinchia3636--modrinth'
                       }}
                     />
                   )

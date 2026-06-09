@@ -9,7 +9,7 @@ function PlatformsSection({
   loaders: string[]
   getIcon: (key: string) => string
 }) {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   return (
     <>

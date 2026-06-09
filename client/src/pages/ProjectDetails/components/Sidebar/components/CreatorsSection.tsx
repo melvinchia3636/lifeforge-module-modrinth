@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization ,
+import {
   Box,
   Flex,
   Icon,
@@ -10,13 +10,14 @@ import { usePersonalization ,
   SidebarTitle,
   Stack,
   Text,
-  WithQueryData
+  WithQueryData,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 
 function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const { bgTempPalette } = usePersonalization()
 

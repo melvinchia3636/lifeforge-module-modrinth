@@ -18,7 +18,7 @@ function VersionsSection({
     <>
       <SidebarTitle
         label="Game Versions"
-        namespace="apps.melvinchia3636$modrinth"
+        namespace="apps.melvinchia3636--modrinth"
       />
       <Scrollbar>
         <WithQueryData controller={forgeAPI.gameVersions.list}>

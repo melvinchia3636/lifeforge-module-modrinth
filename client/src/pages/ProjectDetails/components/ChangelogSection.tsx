@@ -25,7 +25,7 @@ import { timelineItem } from './ChangelogSection.css'
 dayjs.extend(relativeTime)
 
 function ChangelogSection() {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const { projectId } = useParams<{ projectId: string }>()
 

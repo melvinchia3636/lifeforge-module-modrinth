@@ -13,7 +13,6 @@ export const list = forge
   .callback(async ({ response }) => {
     const raw = await fetch('https://modrinth.com/mods').then(res => res.text())
 
-    console.log(raw)
 
     const virtualConsole = new VirtualConsole()
 

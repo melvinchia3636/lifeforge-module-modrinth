@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { type InferOutput } from '@lifeforge/shared'
-import { useNavigate, useParams } from 'react-router'
+import { type InferOutput } from '@lifeforge/api'
 import {
   Box,
   Button,
@@ -55,7 +55,7 @@ const ALL_ICONS_UTILS = {
 }
 
 function ProjectDetails() {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const navigate = useNavigate()
 

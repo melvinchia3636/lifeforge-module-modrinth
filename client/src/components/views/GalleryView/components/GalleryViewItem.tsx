@@ -24,7 +24,7 @@ function GalleryViewItem({
   getIcon,
   getKey
 }: ProjectViewItemProps) {
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const navigate = useNavigate()
 

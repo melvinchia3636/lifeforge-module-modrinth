@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/api'
 import {
   Bordered,
   Box,
@@ -32,7 +32,7 @@ function Header({
 }) {
   const queryClient = useQueryClient()
 
-  const { t } = useTranslation('apps.melvinchia3636$modrinth')
+  const { t } = useTranslation('apps.melvinchia3636--modrinth')
 
   const { open } = useModalStore()
 
@@ -132,7 +132,7 @@ function Header({
               isFavouriteQuery.data ? 'tabler:heart-filled' : 'tabler:heart'
             }
             loading={isFavouriteQuery.isLoading || loading}
-            namespace="apps.melvinchia3636$modrinth"
+            namespace="apps.melvinchia3636--modrinth"
             variant={isFavouriteQuery.data ? 'plain' : 'secondary'}
             onClick={handleToggleFavourite}
           >
