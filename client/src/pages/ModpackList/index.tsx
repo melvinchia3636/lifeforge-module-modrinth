@@ -6,7 +6,6 @@ import { forgeAPI } from '@/manifest'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 
-import '../../index.css'
 import { ICONS, getModpackIcon, getModpackKey } from './constants/icons'
 import useFilter from './hooks/useFilter'
 

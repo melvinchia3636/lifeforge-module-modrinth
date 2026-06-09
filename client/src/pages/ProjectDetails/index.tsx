@@ -35,7 +35,6 @@ import {
 } from '@/pages/ResourcePackList/constants/icons'
 import { getShaderIcon, getShaderKey } from '@/pages/ShaderList/constants/icons'
 
-import '../../index.css'
 import ChangelogSection from './components/ChangelogSection'
 import DescriptionSection from './components/DescriptionSection'
 import GallerySection from './components/GallerySection'

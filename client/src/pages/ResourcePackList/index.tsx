@@ -8,7 +8,6 @@ import { forgeAPI } from '@/manifest'
 import constructHeaderFilterItems from '@/utils/headerFilterUtils'
 import constructSidebar from '@/utils/sidebarUtils'
 
-import '../../index.css'
 import ResolutionsSection from './components/ResolutionsSection'
 import {
   ICONS,
