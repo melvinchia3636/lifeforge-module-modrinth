@@ -1,9 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 
-import {
+import { toast ,
   Box,
   Button,
   Flex,

@@ -1,9 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 
 import { usePromiseLoading } from '@lifeforge/api'
-import {
+import { toast ,
   Bordered,
   Box,
   Button,
