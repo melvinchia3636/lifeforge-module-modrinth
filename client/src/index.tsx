@@ -1,4 +1,4 @@
-import { Navigate } from '@lifeforge/shared'
+import { Navigate } from 'react-router'
 
 import './index.css'
 

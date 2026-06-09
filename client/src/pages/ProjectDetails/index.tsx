@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { type InferOutput, useNavigate, useParams } from '@lifeforge/shared'
+import { type InferOutput } from '@lifeforge/shared'
+import { useNavigate, useParams } from 'react-router'
 import {
   Box,
   Button,

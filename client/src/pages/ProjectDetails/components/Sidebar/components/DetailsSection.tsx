@@ -2,8 +2,14 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from '@lifeforge/shared'
-import { Flex, Icon, SidebarTitle, Stack, Text } from '@lifeforge/ui'
+import {
+  Flex,
+  Icon,
+  SidebarTitle,
+  Stack,
+  Text,
+  usePersonalization
+} from '@lifeforge/ui'
 
 dayjs.extend(relativeTime)
 

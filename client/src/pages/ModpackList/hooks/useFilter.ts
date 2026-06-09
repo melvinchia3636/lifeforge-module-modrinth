@@ -1,4 +1,4 @@
-import { parseAsString } from '@lifeforge/shared'
+import { parseAsString } from 'nuqs'
 
 import useProjectFilter from '../../../hooks/useProjectFilter'
 

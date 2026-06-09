@@ -3,9 +3,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Markdown from 'react-markdown'
+import { useParams } from 'react-router'
 import rehypeRaw from 'rehype-raw'
 
-import { useParams, usePersonalization } from '@lifeforge/shared'
 import {
   Box,
   Button,
@@ -14,7 +14,8 @@ import {
   Prose,
   Stack,
   Text,
-  WithQueryData
+  WithQueryData,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'

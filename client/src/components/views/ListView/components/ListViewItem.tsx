@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
 
-import { useNavigate } from '@lifeforge/shared'
 import { Box, Card, Text } from '@lifeforge/ui'
 
 import type { ProjectViewItemProps } from '@/components/types'

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
 
-import { useNavigate } from '@lifeforge/shared'
 import { Box, Card, Flex, Text } from '@lifeforge/ui'
 
 import type { ProjectViewItemProps } from '@/components/types'

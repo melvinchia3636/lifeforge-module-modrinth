@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router'
 import tinycolor from 'tinycolor2'
 
-import { useParams, usePersonalization } from '@lifeforge/shared'
-import {
+import { usePersonalization ,
   Box,
   Flex,
   Icon,

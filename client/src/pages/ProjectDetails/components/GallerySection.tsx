@@ -1,8 +1,7 @@
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from '@lifeforge/shared'
-import { Box, Card, Flex, Grid, Icon, Text } from '@lifeforge/ui'
+import { usePersonalization , Box, Card, Flex, Grid, Icon, Text } from '@lifeforge/ui'
 
 import type { ProjectDetails } from '..'
 

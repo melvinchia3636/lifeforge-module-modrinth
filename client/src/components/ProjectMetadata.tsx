@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '@lifeforge/ui'
 import { Flex, type FlexProps, Icon, Text } from '@lifeforge/ui'
 
 import type { Hit } from '@/components/types'

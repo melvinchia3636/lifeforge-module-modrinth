@@ -3,9 +3,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router'
 
-import { useParams, usePersonalization } from '@lifeforge/shared'
-import {
+import { usePersonalization ,
   Box,
   Button,
   Card,
