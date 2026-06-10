@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Flex, SidebarTitle, TagChip, WithQuery } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 
 function GameVersionsSection({ versions }: { versions: string[] }) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const gameVersionsQuery = useQuery(forgeAPI.gameVersions.list.queryOptions())
 

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useNavigate } from 'react-router'
 
 import { Box, Card, Text } from '@lifeforge/ui'
@@ -20,7 +20,7 @@ function ListViewItem({
   getIcon,
   getKey
 }: ProjectViewItemProps) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const navigate = useNavigate()
 

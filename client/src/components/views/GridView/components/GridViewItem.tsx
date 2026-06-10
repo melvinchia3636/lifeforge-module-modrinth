@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useNavigate } from 'react-router'
 
 import { Box, Card, Flex, Text } from '@lifeforge/ui'
@@ -16,7 +16,7 @@ function GridViewItem({
   getIcon,
   getKey
 }: ProjectViewItemProps) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const navigate = useNavigate()
 

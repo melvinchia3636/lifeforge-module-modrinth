@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useParams } from 'react-router'
 import tinycolor from 'tinycolor2'
 
@@ -17,7 +17,7 @@ import {
 import { forgeAPI } from '@/manifest'
 
 function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const { bgTempPalette } = usePersonalization()
 

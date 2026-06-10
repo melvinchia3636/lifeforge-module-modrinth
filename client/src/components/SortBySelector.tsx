@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Flex, Icon, Listbox, ListboxOption, Text } from '@lifeforge/ui'
 
@@ -19,7 +19,7 @@ function SortBySelector({
   sortBy: SortTypes
   setSortBy: (sort: SortTypes) => void
 }) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   return (
     <Listbox

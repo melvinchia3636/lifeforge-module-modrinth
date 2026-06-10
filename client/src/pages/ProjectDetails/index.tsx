@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useNavigate, useParams } from 'react-router'
 
 import { type InferOutput } from '@lifeforge/api'
@@ -54,7 +54,7 @@ const ALL_ICONS_UTILS = {
 }
 
 function ProjectDetails() {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const navigate = useNavigate()
 

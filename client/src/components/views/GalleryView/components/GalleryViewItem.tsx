@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useNavigate } from 'react-router'
 
 import {
@@ -24,7 +24,7 @@ function GalleryViewItem({
   getIcon,
   getKey
 }: ProjectViewItemProps) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const navigate = useNavigate()
 

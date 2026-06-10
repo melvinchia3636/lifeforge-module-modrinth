@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useParams } from 'react-router'
 
 import {
@@ -25,7 +25,7 @@ import { getModIcon } from '@/pages/ModList/constants/icons'
 dayjs.extend(relativeTime)
 
 function VersionsSection() {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const { projectId } = useParams<{ projectId: string }>()
 

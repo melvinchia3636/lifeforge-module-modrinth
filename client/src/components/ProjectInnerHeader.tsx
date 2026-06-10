@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { type ComponentProps } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import {
   Box,
@@ -44,7 +44,7 @@ function ProjectInnerHeader({
   sortBy,
   setSortBy
 }: ProjectInnerHeaderProps) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const { setIsSidebarOpen } = useModuleSidebarState()
 

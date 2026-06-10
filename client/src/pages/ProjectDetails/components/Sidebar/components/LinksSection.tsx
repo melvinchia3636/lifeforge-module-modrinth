@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Box, SidebarDivider, SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
@@ -11,7 +11,7 @@ function LinksSection({
   sourceUrl: string | null
   discordUrl: string | null
 }) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const goToURL = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer')

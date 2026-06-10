@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 import Markdown from 'react-markdown'
 import { useParams } from 'react-router'
 import rehypeRaw from 'rehype-raw'
@@ -25,7 +25,7 @@ import { timelineItem } from './ChangelogSection.css'
 dayjs.extend(relativeTime)
 
 function ChangelogSection() {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const { projectId } = useParams<{ projectId: string }>()
 

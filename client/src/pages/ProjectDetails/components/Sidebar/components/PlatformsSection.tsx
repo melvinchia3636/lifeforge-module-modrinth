@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Flex, SidebarDivider, SidebarTitle, TagChip } from '@lifeforge/ui'
 
@@ -9,7 +9,7 @@ function PlatformsSection({
   loaders: string[]
   getIcon: (key: string) => string
 }) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   return (
     <>

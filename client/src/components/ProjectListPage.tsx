@@ -5,7 +5,7 @@ import {
   type ReactNode,
   type SetStateAction
 } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import {
   ContentWrapperWithSidebar,
@@ -62,7 +62,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
   getIcon,
   getKey
 }: ProjectListPageProps) {
-  const { t } = useTranslation('apps.melvinchia3636--modrinth')
+  const { t } = useModuleTranslation()
 
   const {
     page,
