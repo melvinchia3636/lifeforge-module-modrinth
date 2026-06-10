@@ -26,11 +26,8 @@ dayjs.extend(relativeTime)
 
 function ChangelogSection() {
   const { t } = useModuleTranslation()
-
   const { projectId } = useParams<{ projectId: string }>()
-
   const { language } = usePersonalization()
-
   const [page, setPage] = useState(1)
 
   return (

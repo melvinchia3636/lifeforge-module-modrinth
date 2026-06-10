@@ -35,7 +35,6 @@ function DownloadModal({
   )
 
   const [selectedVersion, setSelectedVersion] = useState<string | null>(null)
-
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null)
 
   const versionOptions = useMemo(() => {

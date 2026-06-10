@@ -45,7 +45,6 @@ function ProjectInnerHeader({
   setSortBy
 }: ProjectInnerHeaderProps) {
   const { t } = useModuleTranslation()
-
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   const hasActiveFilters =

@@ -55,9 +55,7 @@ const ALL_ICONS_UTILS = {
 
 function ProjectDetails() {
   const { t } = useModuleTranslation()
-
   const navigate = useNavigate()
-
   const { projectId } = useParams<{ projectId: string }>()
 
   const [currentSection, setCurrentSection] = useState<

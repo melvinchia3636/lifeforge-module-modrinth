@@ -31,9 +31,7 @@ function Header({
   getKey: (key: string) => string | undefined
 }) {
   const queryClient = useQueryClient()
-
   const { t } = useModuleTranslation()
-
   const { open } = useModalStore()
 
   const isFavouriteQuery = useQuery(

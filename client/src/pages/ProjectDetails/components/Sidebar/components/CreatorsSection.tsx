@@ -18,9 +18,7 @@ import { forgeAPI } from '@/manifest'
 
 function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
   const { t } = useModuleTranslation()
-
   const { bgTempPalette } = usePersonalization()
-
   const { projectId } = useParams<{ projectId: string }>()
 
   return (

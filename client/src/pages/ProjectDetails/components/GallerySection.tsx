@@ -15,7 +15,6 @@ import type { ProjectDetails } from '..'
 
 function GallerySection({ gallery }: { gallery: ProjectDetails['gallery'] }) {
   const { t } = useModuleTranslation()
-
   const { language } = usePersonalization()
 
   return (

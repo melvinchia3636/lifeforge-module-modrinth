@@ -23,7 +23,6 @@ function DetailsSection({
   license: { name: string }
 }) {
   const { t } = useModuleTranslation()
-
   const { language } = usePersonalization()
 
   return (

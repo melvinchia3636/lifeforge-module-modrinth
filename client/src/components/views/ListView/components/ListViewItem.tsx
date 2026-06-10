@@ -21,7 +21,6 @@ function ListViewItem({
   getKey
 }: ProjectViewItemProps) {
   const { t } = useModuleTranslation()
-
   const navigate = useNavigate()
 
   return (

@@ -8,7 +8,6 @@ import { forgeAPI } from '@/manifest'
 
 function GameVersionsSection({ versions }: { versions: string[] }) {
   const { t } = useModuleTranslation()
-
   const gameVersionsQuery = useQuery(forgeAPI.gameVersions.list.queryOptions())
 
   const allVersionsGrouped = useMemo(() => {
