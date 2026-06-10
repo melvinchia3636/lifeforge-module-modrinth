@@ -1,5 +1,4 @@
 import { useModuleTranslation } from '@lifeforge/localization'
-
 import { Box, SidebarDivider, SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 function LinksSection({

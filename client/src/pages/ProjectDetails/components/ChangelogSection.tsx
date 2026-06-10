@@ -1,11 +1,11 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { useState } from 'react'
-import { useModuleTranslation } from '@lifeforge/localization'
 import Markdown from 'react-markdown'
 import { useParams } from 'react-router'
 import rehypeRaw from 'rehype-raw'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Box,
   Button,

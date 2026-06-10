@@ -21,7 +21,7 @@ function GeneralSection({
 }) {
   return (
     <>
-      <SidebarTitle label={name} namespace="apps.melvinchia3636--modrinth" />
+      <SidebarTitle label={name} />
       {Object.keys(icons).map(item => {
         const isActive =
           findInFilterList(selectedItem, item, {

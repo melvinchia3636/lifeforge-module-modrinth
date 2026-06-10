@@ -5,8 +5,8 @@ import {
   type ReactNode,
   type SetStateAction
 } from 'react'
-import { useModuleTranslation } from '@lifeforge/localization'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   ContentWrapperWithSidebar,
   ContextMenuGroup,
@@ -246,8 +246,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
                     <EmptyStateScreen
                       icon="tabler:search-off"
                       message={{
-                        id: 'search',
-                        namespace: 'apps.melvinchia3636--modrinth'
+                        id: 'search'
                       }}
                     />
                   )

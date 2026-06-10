@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
-import { useModuleTranslation } from '@lifeforge/localization'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Box,
   Card,

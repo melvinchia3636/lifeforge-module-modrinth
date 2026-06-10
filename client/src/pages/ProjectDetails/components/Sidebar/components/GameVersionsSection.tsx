@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { useModuleTranslation } from '@lifeforge/localization'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import { Flex, SidebarTitle, TagChip, WithQuery } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'

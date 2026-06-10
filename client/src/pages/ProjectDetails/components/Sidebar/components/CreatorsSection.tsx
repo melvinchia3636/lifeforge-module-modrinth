@@ -1,7 +1,7 @@
-import { useModuleTranslation } from '@lifeforge/localization'
 import { useParams } from 'react-router'
 import tinycolor from 'tinycolor2'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Box,
   Flex,

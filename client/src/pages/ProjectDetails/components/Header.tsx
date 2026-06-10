@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useModuleTranslation } from '@lifeforge/localization'
 
 import { usePromiseLoading } from '@lifeforge/api'
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Bordered,
   Box,
@@ -130,7 +130,6 @@ function Header({
               isFavouriteQuery.data ? 'tabler:heart-filled' : 'tabler:heart'
             }
             loading={isFavouriteQuery.isLoading || loading}
-            namespace="apps.melvinchia3636--modrinth"
             variant={isFavouriteQuery.data ? 'plain' : 'secondary'}
             onClick={handleToggleFavourite}
           >

@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { useModuleTranslation } from '@lifeforge/localization'
 import { useNavigate, useParams } from 'react-router'
 
 import { type InferOutput } from '@lifeforge/api'
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Box,
   Button,

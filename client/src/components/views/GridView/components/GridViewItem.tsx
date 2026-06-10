@@ -1,6 +1,6 @@
-import { useModuleTranslation } from '@lifeforge/localization'
 import { useNavigate } from 'react-router'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import { Box, Card, Flex, Text } from '@lifeforge/ui'
 
 import type { ProjectViewItemProps } from '@/components/types'

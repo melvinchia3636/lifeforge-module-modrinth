@@ -1,5 +1,4 @@
 import { useModuleTranslation } from '@lifeforge/localization'
-
 import { Flex, Icon, Listbox, ListboxOption, Text } from '@lifeforge/ui'
 
 import type { SortTypes } from '../hooks/useProjectFilter'

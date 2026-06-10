@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { type ComponentProps } from 'react'
-import { useModuleTranslation } from '@lifeforge/localization'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Box,
   Button,
@@ -104,7 +104,6 @@ function ProjectInnerHeader({
         <SortBySelector setSortBy={setSortBy} sortBy={sortBy} />
         <SearchInput
           debounceMs={500}
-          namespace="apps.melvinchia3636--modrinth"
           searchTarget={title.replace('All ', '').toLowerCase()}
           value={searchQuery}
           onChange={setSearchQuery}

@@ -1,5 +1,4 @@
 import { useModuleTranslation } from '@lifeforge/localization'
-
 import { Flex, SidebarDivider, SidebarTitle, TagChip } from '@lifeforge/ui'
 
 function PlatformsSection({

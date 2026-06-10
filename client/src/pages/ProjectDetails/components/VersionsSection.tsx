@@ -2,9 +2,9 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { sizeFormatter } from 'human-readable'
 import { useState } from 'react'
-import { useModuleTranslation } from '@lifeforge/localization'
 import { useParams } from 'react-router'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Box,
   Button,
