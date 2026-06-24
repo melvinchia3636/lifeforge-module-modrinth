@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { type ComponentProps } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
@@ -75,9 +74,9 @@ function ProjectInnerHeader({
             size={{ base: '2xl', lg: '3xl' }}
             weight="semibold"
           >
-            {t(
-              `sidebar.${_.camelCase(hasActiveFilters ? 'filtered' : 'all')}${_.capitalize(title)}`
-            )}
+            {t(`sidebar.${hasActiveFilters ? 'filtered' : 'all'}`, {
+              item: t(`items.${title}`)
+            })}
           </Text>
           <Text color="muted">({totalItemsCount.toLocaleString()})</Text>
         </Flex>

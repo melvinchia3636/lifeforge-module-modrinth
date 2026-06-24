@@ -49,19 +49,9 @@
     "gameVersions": "Game Versions",
     "features": "Features",
     "resolutions": "Resolutions",
-    "allMod": "All Mods",
-    "allResourcepack": "All Resource Packs",
-    "allDatapack": "All Data Packs",
-    "allShader": "All Shaders",
-    "allModpack": "All Modpacks",
-    "allPlugin": "All Plugins",
+    "all": "All {{item}}",
     "myFavourites": "My Favourites",
-    "filteredMod": "Filtered Mods",
-    "filteredResourcepack": "Filtered Resource Packs",
-    "filteredDatapack": "Filtered Data Packs",
-    "filteredShader": "Filtered Shaders",
-    "filteredModpack": "Filtered Modpacks",
-    "filteredPlugin": "Filtered Plugins"
+    "filtered": "Filtered {{item}}"
   },
   "projectDetails": {
     "projectNotFound": "Project not found",

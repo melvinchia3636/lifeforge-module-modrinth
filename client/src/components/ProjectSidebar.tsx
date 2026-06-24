@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react'
 
+import { useModuleTranslation } from '@lifeforge/localization'
 import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
 
 interface ProjectSidebarProps {
@@ -23,12 +24,15 @@ function ProjectSidebar({
   setShowFavourites,
   children
 }: ProjectSidebarProps) {
+  const { t } = useModuleTranslation()
+
   return (
     <SidebarWrapper>
       <SidebarItem
         active={isAllActive}
         icon="tabler:category"
-        label={`All ${title}`}
+        label={t('sidebar.all', { item: t('items.' + title) })}
+        namespace={false}
         number={isAllActive ? totalCount : undefined}
         onClick={() => {
           setShowFavourites(false)

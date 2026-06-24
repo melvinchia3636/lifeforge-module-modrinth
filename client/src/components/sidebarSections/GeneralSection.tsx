@@ -57,6 +57,7 @@ function GeneralSection({
             }
             icon={`customHTML:${icons[item as keyof typeof icons]}`}
             label={item}
+            namespace={false}
             onClick={() => {
               updateFilter(prev => ({
                 [name]: toggleInFilterList(prev[name], item, {

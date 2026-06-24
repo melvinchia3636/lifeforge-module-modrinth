@@ -47,19 +47,9 @@
     "categories": "Kategori",
     "loaders": "Pemuatan",
     "gameVersions": "Versi Permainan",
-    "allMod": "Semua Mod",
+    "all": "Semua {{item}}",
     "myFavourites": "Kegemaran Saya",
-    "filteredMod": "Mod Ditapis",
-    "allResourcepack": "Semua Pakej Sumber",
-    "filteredResourcepack": "Pakej Sumber Ditapis",
-    "allDatapack": "Semua Pakej Data",
-    "filteredDatapack": "Pakej Data Ditapis",
-    "allShader": "Semua Shader",
-    "filteredShader": "Shader Ditapis",
-    "allModpack": "Semua Pakej Mod",
-    "filteredModpack": "Pakej Mod Ditapis",
-    "allPlugin": "Semua Pemalam",
-    "filteredPlugins": "Pemalam Ditapis"
+    "filtered": "{{item}} Ditapis"
   },
   "projectDetails": {
     "projectNotFound": "Projek tidak ditemui",

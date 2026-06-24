@@ -26,6 +26,7 @@ function VersionsSection({
                   key={version}
                   active={version === selectedVersion}
                   label={version || 'Unknown'}
+                  namespace={false}
                   onCancelButtonClick={() =>
                     updateFilter({
                       version: null
