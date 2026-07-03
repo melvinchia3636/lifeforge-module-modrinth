@@ -160,6 +160,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
             </>
           )
         }}
+        title={projectType}
       />
       <LayoutWithSidebar>
         <ProjectSidebar

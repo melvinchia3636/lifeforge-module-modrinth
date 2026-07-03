@@ -10,12 +10,24 @@
     "plugin": "Plugin"
   },
   "subsections": {
-    "mods": "Mods",
-    "resourcePacks": "Resource Packs",
-    "datapacks": "Datapacks",
-    "shaders": "Shaders",
-    "modpacks": "Modpacks",
-    "plugins": "Plugins"
+    "mod": {
+      "title": "Mods"
+    },
+    "resourcePack": {
+      "title": "Resource Packs"
+    },
+    "datapack": {
+      "title": "Datapacks"
+    },
+    "shader": {
+      "title": "Shaders"
+    },
+    "modpack": {
+      "title": "Modpacks"
+    },
+    "plugin": {
+      "title": "Plugins"
+    }
   },
   "empty": {
     "search": {

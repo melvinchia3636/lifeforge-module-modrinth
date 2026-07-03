@@ -16,12 +16,12 @@ const { forgeAPI, ...manifest } = createForgeModuleClient({
     '/plugins': lazy(() => import('@/pages/PluginList'))
   },
   subsection: [
-    { icon: 'tabler:cube', label: 'Mods', path: 'mods' },
-    { icon: 'tabler:texture', label: 'Resource Packs', path: 'resource-packs' },
-    { icon: 'tabler:database', label: 'Datapacks', path: 'datapacks' },
-    { icon: 'tabler:sun', label: 'Shaders', path: 'shaders' },
-    { icon: 'uil:box', label: 'Modpacks', path: 'modpacks' },
-    { icon: 'tabler:plug', label: 'Plugins', path: 'plugins' }
+    { icon: 'tabler:cube', label: 'Mod', path: 'mods' },
+    { icon: 'tabler:texture', label: 'Resource Pack', path: 'resource-packs' },
+    { icon: 'tabler:database', label: 'Datapack', path: 'datapacks' },
+    { icon: 'tabler:sun', label: 'Shader', path: 'shaders' },
+    { icon: 'uil:box', label: 'Modpack', path: 'modpacks' },
+    { icon: 'tabler:plug', label: 'Plugin', path: 'plugins' }
   ],
   contract
 })

@@ -25,7 +25,7 @@ function FavouriteButton({
       })
 
       queryClient.invalidateQueries({
-        queryKey: ['melvinchia3636--modrinth', 'favourites']
+        queryKey: forgeAPI.favourites.key
       })
     } catch {
       toast.error('Failed to update favourites. Please try again.')

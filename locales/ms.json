@@ -10,12 +10,24 @@
     "plugin": "Pemalam"
   },
   "subsections": {
-    "mods": "Mod",
-    "resourcePacks": "Pakej Sumber",
-    "datapacks": "Pakej Data",
-    "shaders": "Shader",
-    "modpacks": "Pakej Mod",
-    "plugins": "Pemalam"
+    "mod": {
+      "title": "Mod"
+    },
+    "resourcePack": {
+      "title": "Pakej Sumber"
+    },
+    "datapack": {
+      "title": "Pakej Data"
+    },
+    "shader": {
+      "title": "Shader"
+    },
+    "modpack": {
+      "title": "Pakej Mod"
+    },
+    "plugin": {
+      "title": "Pemalam"
+    }
   },
   "empty": {
     "search": {

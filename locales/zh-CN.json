@@ -10,12 +10,24 @@
     "plugin": "插件"
   },
   "subsections": {
-    "mods": "模组",
-    "resourcePacks": "资源包",
-    "datapacks": "数据包",
-    "shaders": "光影",
-    "modpacks": "模组包",
-    "plugins": "插件"
+    "mod": {
+      "title": "模组"
+    },
+    "resourcePack": {
+      "title": "资源包"
+    },
+    "datapack": {
+      "title": "数据包"
+    },
+    "shader": {
+      "title": "光影"
+    },
+    "modpack": {
+      "title": "模组包"
+    },
+    "plugin": {
+      "title": "插件"
+    }
   },
   "empty": {
     "search": {
