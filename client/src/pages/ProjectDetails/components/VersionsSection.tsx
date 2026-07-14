@@ -33,7 +33,7 @@ function VersionsSection() {
   return (
     <>
       <WithQueryData
-        controller={forgeAPI.projects.getVersions.input({
+        contract={forgeAPI.projects.getVersions.input({
           projectId: projectId!
         })}
       >

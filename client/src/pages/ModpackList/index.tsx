@@ -24,8 +24,8 @@ function ModpackList() {
     version: {
       data:
         versionsQuery.data?.map(e => ({
-          id: e,
-          label: e || 'Unknown',
+          id: e.version,
+          label: e.version || 'Unknown',
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
@@ -36,10 +36,10 @@ function ModpackList() {
 
   const sidebarContent = constructSidebar(
     [
-      ['categories', 'general'],
+      ['categories', 'general', true],
       ['environments', 'general'],
       ['version', 'version'],
-      ['loaders', 'general']
+      ['loaders', 'general', true]
     ],
     ICONS,
     filters

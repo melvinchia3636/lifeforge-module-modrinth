@@ -139,3 +139,10 @@ export const ProjectMemberSchema = z.object({
   payouts_split: z.null(),
   ordering: z.number()
 })
+
+export const MinecraftVersionSchema = z.object({
+  version: z.string(),
+  version_type: z.string(),
+  date: z.string(),
+  major: z.boolean()
+})

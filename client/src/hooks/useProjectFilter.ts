@@ -9,17 +9,11 @@ import {
 import { type SetStateAction, useMemo } from 'react'
 
 export type SortTypes =
-  | 'relevance'
-  | 'downloads'
-  | 'follows'
-  | 'newest'
-  | 'updated'
+  'relevance' | 'downloads' | 'follows' | 'newest' | 'updated'
 
 export type FilterReturnType = {
   page: number
   setPage: (page: number) => void
-  viewMode: 'grid' | 'list' | 'gallery'
-  setViewMode: (mode: 'grid' | 'list' | 'gallery') => void
   sortBy: SortTypes
   setSortBy: (sort: SortTypes) => void
   isFavouritesShowing: boolean
@@ -41,7 +35,6 @@ export default function useProjectFilter<T extends Record<string, any>>(
   const [coreFilters, setCoreFilters] = useQueryStates({
     q: parseAsString.withDefault(''),
     page: parseAsInteger.withDefault(1),
-    view: parseAsStringEnum(['grid', 'list', 'gallery']).withDefault('list'),
     sort: parseAsStringEnum([
       'relevance',
       'downloads',
@@ -70,12 +63,6 @@ export default function useProjectFilter<T extends Record<string, any>>(
       setPage: (page: SetStateAction<number>) => {
         setCoreFilters({
           page: typeof page === 'function' ? page(coreFilters.page) : page
-        })
-      },
-      viewMode: coreFilters.view,
-      setViewMode: (mode: SetStateAction<'grid' | 'list' | 'gallery'>) => {
-        setCoreFilters({
-          view: typeof mode === 'function' ? mode(coreFilters.view) : mode
         })
       },
       sortBy: coreFilters.sort,
@@ -107,7 +94,6 @@ export default function useProjectFilter<T extends Record<string, any>>(
     }
   }, [
     coreFilters.page,
-    coreFilters.view,
     coreFilters.sort,
     coreFilters.favourites,
     coreFilters.q,
@@ -175,12 +161,7 @@ export function toggleInFilterList(
 export function constructSearchParamsFromFilter(
   filter: FilterReturnType,
   projectType:
-    | 'mod'
-    | 'modpack'
-    | 'shader'
-    | 'resourcepack'
-    | 'datapack'
-    | 'plugin'
+    'mod' | 'modpack' | 'shader' | 'resourcepack' | 'datapack' | 'plugin'
 ) {
   const params = {
     page: String(filter.page),
@@ -204,7 +185,6 @@ export function constructSearchParamsFromFilter(
         'version',
         'environments',
         'projectType',
-        'viewMode',
         'sortBy'
       ].includes(key)
     ) {

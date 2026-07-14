@@ -61,6 +61,7 @@
     "gameVersions": "游戏版本",
     "features": "功能",
     "resolutions": "分辨率",
+    "showAllVersions": "显示所有版本",
     "all": "所有{{item}}",
     "myFavourites": "我的收藏",
     "filtered": "已过滤{{item}}"

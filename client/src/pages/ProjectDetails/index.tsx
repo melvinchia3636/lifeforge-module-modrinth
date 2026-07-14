@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 import { type InferOutput } from '@lifeforge/api'
@@ -12,8 +12,8 @@ import {
   GoBackButton,
   LayoutWithSidebar,
   Scrollbar,
-  Tabs,
   WithQuery,
+  createTabbedView,
   toast,
   useModuleSidebarState
 } from '@lifeforge/ui'
@@ -53,15 +53,33 @@ const ALL_ICONS_UTILS = {
   plugin: { getIcon: getPluginIcon, getKey: getPluginKey }
 }
 
+const TABS = [
+  {
+    id: 'description',
+    icon: 'tabler:file-description',
+    Component: DescriptionSection
+  },
+  {
+    id: 'gallery',
+    icon: 'tabler:photo',
+    Component: GallerySection
+  },
+  {
+    id: 'changelog',
+    icon: 'tabler:history',
+    Component: ChangelogSection
+  },
+  {
+    id: 'versions',
+    icon: 'tabler:package',
+    Component: VersionsSection
+  }
+] as const
+
 function ProjectDetails() {
   const { t } = useModuleTranslation()
   const navigate = useNavigate()
   const { projectId } = useParams<{ projectId: string }>()
-
-  const [currentSection, setCurrentSection] = useState<
-    'description' | 'gallery' | 'changelog' | 'versions'
-  >('description')
-
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   const dataQuery = useQuery(
@@ -78,6 +96,16 @@ function ProjectDetails() {
     ALL_ICONS_UTILS[
       (dataQuery.data?.project_type || 'mod') as keyof typeof ALL_ICONS_UTILS
     ]
+
+  const TabbedView = createTabbedView({
+    tabs: TABS.map(e => ({ ...e, name: `projectDetails.tabs.${e.id}` })),
+    enabled: [
+      'description',
+      (dataQuery.data?.gallery.length || 0) > 0 ? 'gallery' : null,
+      'changelog',
+      'versions'
+    ].filter(Boolean) as (typeof TABS)[number]['id'][]
+  })
 
   useEffect(() => {
     if (
@@ -109,71 +137,26 @@ function ProjectDetails() {
           <Header data={data} getIcon={getIcon} getKey={getKey} />
           <LayoutWithSidebar>
             <ContentWrapperWithSidebar>
-              <Tabs
-                currentTab={currentSection}
-                enabled={
-                  [
-                    'description',
-                    data.gallery.length > 0 ? 'gallery' : null,
-                    'changelog',
-                    'versions'
-                  ].filter(Boolean) as string[]
-                }
-                items={[
-                  {
-                    id: 'description',
-                    name: t('projectDetails.tabs.description'),
-                    icon: 'tabler:file-description'
-                  },
-                  {
-                    id: 'gallery',
-                    name: t('projectDetails.tabs.gallery'),
-                    icon: 'tabler:photo'
-                  },
-                  {
-                    id: 'changelog',
-                    name: t('projectDetails.tabs.changelog'),
-                    icon: 'tabler:history'
-                  },
-                  {
-                    id: 'versions',
-                    name: t('projectDetails.tabs.versions'),
-                    icon: 'tabler:package'
-                  }
-                ]}
-                onTabChange={(id: string) => {
-                  setCurrentSection(
-                    id as 'description' | 'gallery' | 'changelog' | 'versions'
-                  )
-                }}
-              />
-              <Box
-                asChild
-                display={{ base: 'none', lg: 'block' }}
-                mb="2xl"
-                mt="lg"
-              >
-                <Scrollbar>
-                  {currentSection === 'description' && (
-                    <DescriptionSection description={data.body} />
-                  )}
-                  {currentSection === 'gallery' && (
-                    <GallerySection gallery={data.gallery} />
-                  )}
-                  {currentSection === 'changelog' && <ChangelogSection />}
-                  {currentSection === 'versions' && <VersionsSection />}
-                </Scrollbar>
-              </Box>
-              <Box display={{ base: 'block', lg: 'none' }}>
-                {currentSection === 'description' && (
-                  <DescriptionSection description={data.body} />
-                )}
-                {currentSection === 'gallery' && (
-                  <GallerySection gallery={data.gallery} />
-                )}
-                {currentSection === 'changelog' && <ChangelogSection />}
-                {currentSection === 'versions' && <VersionsSection />}
-              </Box>
+              <TabbedView.Root>
+                <TabbedView.Selector />
+                {TABS.map(({ id, Component }) => (
+                  <TabbedView.When key={id} tabId={id}>
+                    <Box
+                      asChild
+                      display={{ base: 'none', lg: 'block' }}
+                      mb="2xl"
+                      mt="lg"
+                    >
+                      <Scrollbar>
+                        <Component />
+                      </Scrollbar>
+                    </Box>
+                    <Box display={{ base: 'block', lg: 'none' }}>
+                      <Component />
+                    </Box>
+                  </TabbedView.When>
+                ))}
+              </TabbedView.Root>
             </ContentWrapperWithSidebar>
             <Sidebar
               discord_url={data.discord_url}

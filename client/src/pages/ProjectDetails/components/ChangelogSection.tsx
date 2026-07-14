@@ -33,7 +33,7 @@ function ChangelogSection() {
   return (
     <>
       <WithQueryData
-        controller={forgeAPI.projects.getVersions.input({
+        contract={forgeAPI.projects.getVersions.input({
           projectId: projectId!
         })}
       >
@@ -45,7 +45,7 @@ function ChangelogSection() {
               onPageChange={setPage}
             />
             <WithQueryData
-              controller={forgeAPI.projects.listMembers.input({
+              contract={forgeAPI.projects.listMembers.input({
                 projectId: projectId!
               })}
             >

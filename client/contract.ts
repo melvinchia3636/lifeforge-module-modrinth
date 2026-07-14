@@ -528,9 +528,6 @@ export const contract = {
                 "datapack",
                 "plugin"
               ]
-            },
-            "facets": {
-              "type": "string"
             }
           },
           "required": [
@@ -847,7 +844,28 @@ export const contract = {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string"
+              },
+              "version_type": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string"
+              },
+              "major": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "version",
+              "version_type",
+              "date",
+              "major"
+            ],
+            "additionalProperties": false
           }
         }
       }

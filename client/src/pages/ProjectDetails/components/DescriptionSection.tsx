@@ -1,13 +1,26 @@
 import Markdown from 'react-markdown'
+import { useParams } from 'react-router'
 import rehypeRaw from 'rehype-raw'
 
-import { Prose } from '@lifeforge/ui'
+import { Prose, WithQueryData } from '@lifeforge/ui'
 
-function DescriptionSection({ description }: { description: string }) {
+import { forgeAPI } from '@/manifest'
+
+function DescriptionSection() {
+  const { projectId } = useParams<{ projectId: string }>()
+
   return (
-    <Prose className="modrinth-prose">
-      <Markdown rehypePlugins={[rehypeRaw]}>{description}</Markdown>
-    </Prose>
+    <WithQueryData
+      contract={forgeAPI.projects.getDetails.input({
+        projectId: projectId!
+      })}
+    >
+      {data => (
+        <Prose className="modrinth-prose">
+          <Markdown rehypePlugins={[rehypeRaw]}>{data.body}</Markdown>
+        </Prose>
+      )}
+    </WithQueryData>
   )
 }
 

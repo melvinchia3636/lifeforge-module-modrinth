@@ -1,4 +1,3 @@
-import { useModuleTranslation } from '@lifeforge/localization'
 import { Box, SidebarDivider, SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 function LinksSection({
@@ -10,8 +9,6 @@ function LinksSection({
   sourceUrl: string | null
   discordUrl: string | null
 }) {
-  const { t } = useModuleTranslation()
-
   const goToURL = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer')
   }
@@ -19,13 +16,13 @@ function LinksSection({
   return (
     <>
       <SidebarDivider />
-      <SidebarTitle label={t('projectDetails.sidebar.links')} />
+      <SidebarTitle label="projectDetails.sidebar.links" />
       <Box>
         {issuesUrl && (
           <SidebarItem
             active={false}
             icon="tabler:bug"
-            label={t('projectDetails.sidebar.reportIssue')}
+            label="projectDetails.sidebar.reportIssue"
             onClick={() => goToURL(issuesUrl)}
           />
         )}
@@ -33,7 +30,7 @@ function LinksSection({
           <SidebarItem
             active={false}
             icon="tabler:code"
-            label={t('projectDetails.sidebar.sourceCode')}
+            label="projectDetails.sidebar.sourceCode"
             onClick={() => goToURL(sourceUrl)}
           />
         )}
@@ -41,7 +38,7 @@ function LinksSection({
           <SidebarItem
             active={false}
             icon="tabler:brand-discord"
-            label={t('projectDetails.sidebar.discord')}
+            label="projectDetails.sidebar.discord"
             onClick={() => goToURL(discordUrl)}
           />
         )}

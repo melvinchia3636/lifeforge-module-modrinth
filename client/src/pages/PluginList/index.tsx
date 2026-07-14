@@ -22,10 +22,10 @@ function PluginList() {
 
   const sidebarContent = constructSidebar(
     [
-      ['categories', 'general'],
+      ['categories', 'general', true],
       ['version', 'version'],
-      ['loaders', 'general'],
-      ['platforms', 'general']
+      ['loaders', 'general', true],
+      ['platforms', 'general', true]
     ],
     ICONS,
     filters
@@ -35,8 +35,8 @@ function PluginList() {
     version: {
       data:
         versionsQuery.data?.map(e => ({
-          id: e,
-          label: e || 'Unknown',
+          id: e.version,
+          label: e.version || 'Unknown',
           icon: 'tabler:device-gamepad'
         })) ?? []
     },

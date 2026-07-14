@@ -11,11 +11,13 @@ import { negationIcon, negationWrapper } from './GeneralSection.css'
 function GeneralSection({
   name,
   icons,
+  hasNegation,
   selectedItem,
   updateFilter
 }: {
   name: string
   icons: Record<string, string>
+  hasNegation?: boolean
   selectedItem: string
   updateFilter: React.Dispatch<React.SetStateAction<Record<string, any>>>
 }) {
@@ -32,17 +34,21 @@ function GeneralSection({
         return (
           <SidebarItem
             key={item}
-            actionButtonProps={{
-              icon: 'tabler:ban',
-              onClick: () => {
-                updateFilter(prev => ({
-                  [name]: toggleInFilterList(prev[name], item, {
-                    isNegation: true,
-                    transformString: str => _.kebabCase(str.toLowerCase())
-                  })
-                }))
-              }
-            }}
+            actionButtonProps={
+              hasNegation
+                ? {
+                    icon: 'tabler:ban',
+                    onClick: () => {
+                      updateFilter(prev => ({
+                        [name]: toggleInFilterList(prev[name], item, {
+                          isNegation: true,
+                          transformString: str => _.kebabCase(str.toLowerCase())
+                        })
+                      }))
+                    }
+                  }
+                : undefined
+            }
             active={isActive}
             classNames={
               findInFilterList(selectedItem, item, {

@@ -24,8 +24,8 @@ function ShaderList() {
     version: {
       data:
         versionsQuery.data?.map(e => ({
-          id: e,
-          label: e || 'Unknown',
+          id: e.version,
+          label: e.version || 'Unknown',
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
@@ -37,11 +37,11 @@ function ShaderList() {
 
   const sidebarContent = constructSidebar(
     [
-      ['categories', 'general'],
-      ['features', 'general'],
-      ['performanceImpact', 'general'],
+      ['categories', 'general', true],
+      ['features', 'general', true],
+      ['performanceImpact', 'general', true],
       ['version', 'version'],
-      ['loaders', 'general']
+      ['loaders', 'general', true]
     ],
     ICONS,
     filters

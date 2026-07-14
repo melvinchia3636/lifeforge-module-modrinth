@@ -41,8 +41,8 @@ function ResourcePackList() {
     version: {
       data:
         versionsQuery.data?.map(e => ({
-          id: e,
-          label: e || 'Unknown',
+          id: e.version,
+          label: e.version || 'Unknown',
           icon: 'tabler:device-gamepad'
         })) ?? []
     },
@@ -72,8 +72,8 @@ function ResourcePackList() {
   const sidebarContent = constructSidebar(
     [
       ['version', 'version'],
-      ['categories', 'general'],
-      ['features', 'general'],
+      ['categories', 'general', true],
+      ['features', 'general', true],
       ['resolutions', ResolutionsSection]
     ],
     ICONS,

@@ -55,6 +55,7 @@ function ResolutionsSection() {
           }
           icon="tabler:aspect-ratio"
           label={resolution}
+          namespace={false}
           onClick={() => {
             updateFilter(prev => ({
               resolutions: toggleInFilterList(prev.resolutions, resolution, {

@@ -24,11 +24,11 @@ function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
   return (
     <>
       <SidebarDivider />
-      <SidebarTitle label={t('projectDetails.sidebar.creators')} />
+      <SidebarTitle label="projectDetails.sidebar.creators" />
       <Box px="xl">
         {hasOrganization && (
           <WithQueryData
-            controller={forgeAPI.projects.getOrganization.input({
+            contract={forgeAPI.projects.getOrganization.input({
               projectId: projectId!
             })}
           >
@@ -87,7 +87,7 @@ function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
           </WithQueryData>
         )}
         <WithQueryData
-          controller={forgeAPI.projects.listMembers.input({
+          contract={forgeAPI.projects.listMembers.input({
             projectId: projectId!
           })}
         >

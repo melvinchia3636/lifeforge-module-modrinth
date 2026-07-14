@@ -30,18 +30,14 @@ import type { ProjectDetails } from '../pages/ProjectDetails'
 import ProjectInnerHeader from './ProjectInnerHeader'
 import ProjectSidebar from './ProjectSidebar'
 import { SORT_TYPES } from './SortBySelector'
+import { ViewMode } from './views'
 import GalleryView from './views/GalleryView'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 
 interface ProjectListPageProps {
   projectType:
-    | 'mod'
-    | 'modpack'
-    | 'datapack'
-    | 'resourcepack'
-    | 'shader'
-    | 'plugin'
+    'mod' | 'modpack' | 'datapack' | 'resourcepack' | 'shader' | 'plugin'
   filters: FilterReturnType
   headerFilterItems: ComponentProps<typeof TagsFilter>['availableFilters']
   sidebarContent: ReactNode
@@ -71,8 +67,6 @@ function ProjectListPage<TFilterKeys extends string[]>({
     setShowFavourites,
     searchQuery,
     setSearchQuery,
-    viewMode,
-    setViewMode,
     updateFilter,
     sortBy,
     setSortBy,
@@ -115,7 +109,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
   }
 
   return (
-    <>
+    <ViewMode.Root>
       <ModuleHeader
         contextMenuProps={{
           classNames: {
@@ -124,22 +118,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
           },
           children: (
             <>
-              <ContextMenuGroup
-                icon="tabler:eye"
-                label={t('hamburgerMenu.viewAs')}
-              >
-                {(['grid', 'list', 'gallery'] as const).map(type => (
-                  <ContextMenuItem
-                    key={type}
-                    checked={viewMode === type}
-                    icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
-                    label={t(`viewTypes.${type}`)}
-                    onClick={() => {
-                      setViewMode(type)
-                    }}
-                  />
-                ))}
-              </ContextMenuGroup>
+              <ViewMode.ContextMenuSelector />
               <SidebarDivider noMargin />
               <ContextMenuGroup
                 icon="tabler:arrows-up-down"
@@ -181,11 +160,9 @@ function ProjectListPage<TFilterKeys extends string[]>({
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             setSortBy={setSortBy}
-            setViewMode={setViewMode}
             sortBy={sortBy}
             title={projectType}
             totalItemsCount={finalQuery.data?.total ?? 0}
-            viewMode={viewMode}
             onUpdateFilter={updateFilter}
           />
           <WithQuery query={favouriteIdsQuery}>
@@ -209,31 +186,30 @@ function ProjectListPage<TFilterKeys extends string[]>({
                             setPage as Dispatch<SetStateAction<number>>
                           }
                         />
-                        {viewMode === 'list' && (
+                        <ViewMode.When mode="list">
                           <ListView
                             entries={items}
                             favouritesIds={favIds}
                             getIcon={getIcon}
                             getKey={getKey}
                           />
-                        )}
-                        {viewMode === 'grid' && (
+                        </ViewMode.When>
+                        <ViewMode.When mode="grid">
                           <GridView
                             entries={items}
                             favouritesIds={favIds}
                             getIcon={getIcon}
                             getKey={getKey}
                           />
-                        )}
-                        {viewMode === 'gallery' && (
+                        </ViewMode.When>
+                        <ViewMode.When mode="gallery">
                           <GalleryView
                             entries={items}
                             favouritesIds={favIds}
                             getIcon={getIcon}
                             getKey={getKey}
                           />
-                        )}
-
+                        </ViewMode.When>
                         <Pagination
                           page={page}
                           totalPages={Math.ceil(total / 20)}
@@ -257,7 +233,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
           </WithQuery>
         </ContentWrapperWithSidebar>
       </LayoutWithSidebar>
-    </>
+    </ViewMode.Root>
   )
 }
 

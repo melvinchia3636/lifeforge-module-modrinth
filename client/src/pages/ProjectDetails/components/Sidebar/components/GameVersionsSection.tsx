@@ -14,7 +14,7 @@ function GameVersionsSection({ versions }: { versions: string[] }) {
     const allGrouped: Record<string, Set<string>> = {}
 
     gameVersionsQuery.data?.forEach(version => {
-      const parts = version.split('.')
+      const parts = version.version.split('.')
 
       const minor = parts.slice(0, 2).join('.')
 
@@ -22,7 +22,7 @@ function GameVersionsSection({ versions }: { versions: string[] }) {
         allGrouped[minor] = new Set()
       }
 
-      allGrouped[minor].add(version)
+      allGrouped[minor].add(version.version)
     })
 
     return allGrouped
@@ -69,7 +69,7 @@ function GameVersionsSection({ versions }: { versions: string[] }) {
 
   return (
     <>
-      <SidebarTitle label={t('projectDetails.sidebar.compatibility')} />
+      <SidebarTitle label="projectDetails.sidebar.compatibility" />
       <WithQuery query={gameVersionsQuery}>
         {() => (
           <Flex gap="sm" px="xl" wrap="wrap">

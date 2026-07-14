@@ -162,3 +162,10 @@ export interface Hashes {
   sha512: string
   sha1: string
 }
+
+export interface MinecraftVersion {
+  version: string
+  version_type: string
+  date: string
+  major: boolean
+}

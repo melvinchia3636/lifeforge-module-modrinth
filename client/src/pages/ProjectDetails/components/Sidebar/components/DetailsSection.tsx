@@ -27,7 +27,7 @@ function DetailsSection({
 
   return (
     <>
-      <SidebarTitle label={t('projectDetails.sidebar.details')} />
+      <SidebarTitle label="projectDetails.sidebar.details" />
       <Stack pb="md" px="xl">
         {license.name && (
           <Flex align="center" gap="sm">

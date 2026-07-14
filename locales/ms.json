@@ -59,6 +59,7 @@
     "categories": "Kategori",
     "loaders": "Pemuatan",
     "gameVersions": "Versi Permainan",
+    "showAllVersions": "Tunjukkan semua versi",
     "all": "Semua {{item}}",
     "myFavourites": "Kegemaran Saya",
     "filtered": "{{item}} Ditapis"

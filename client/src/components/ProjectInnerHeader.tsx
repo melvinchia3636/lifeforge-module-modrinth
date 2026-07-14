@@ -2,19 +2,18 @@ import { type ComponentProps } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
 import {
-  Box,
   Button,
   Flex,
   SearchInput,
   Stack,
   TagsFilter,
   Text,
-  ViewModeSelector,
   useModuleSidebarState
 } from '@lifeforge/ui'
 
 import type { SortTypes } from '../hooks/useProjectFilter'
 import SortBySelector from './SortBySelector'
+import { ViewMode } from './views'
 
 interface ProjectInnerHeaderProps {
   totalItemsCount: number
@@ -24,8 +23,6 @@ interface ProjectInnerHeaderProps {
   onUpdateFilter: (updates: Record<string, any>) => void
   searchQuery: string
   setSearchQuery: (query: string) => void
-  viewMode: 'grid' | 'list' | 'gallery'
-  setViewMode: (mode: 'grid' | 'list' | 'gallery') => void
   sortBy: SortTypes
   setSortBy: (sort: SortTypes) => void
 }
@@ -38,8 +35,6 @@ function ProjectInnerHeader({
   onUpdateFilter,
   searchQuery,
   setSearchQuery,
-  viewMode,
-  setViewMode,
   sortBy,
   setSortBy
 }: ProjectInnerHeaderProps) {
@@ -107,26 +102,7 @@ function ProjectInnerHeader({
           value={searchQuery}
           onChange={setSearchQuery}
         />
-        <Box display={{ base: 'none', md: 'block' }}>
-          <ViewModeSelector
-            currentMode={viewMode}
-            options={[
-              {
-                icon: 'tabler:list',
-                value: 'list'
-              },
-              {
-                icon: 'uil:apps',
-                value: 'grid'
-              },
-              {
-                icon: 'tabler:photo',
-                value: 'gallery'
-              }
-            ]}
-            onModeChange={setViewMode}
-          />
-        </Box>
+        <ViewMode.Selector />
       </Flex>
     </Stack>
   )

@@ -3,20 +3,25 @@ import { SidebarDivider } from '@lifeforge/ui'
 import GeneralSection from '@/components/sidebarSections/GeneralSection'
 import VersionsSection from '@/components/sidebarSections/VersionsSection'
 
-type SidebarSection = [key: string, Component: 'general' | 'version' | React.FC]
+type SidebarSection = [
+  key: string,
+  Component: 'general' | 'version' | React.FC,
+  hasNegation?: boolean
+]
 
 export default function constructSidebar(
   sections: SidebarSection[],
   icons: Record<string, Record<string, string>>,
   filters: Record<string, any>
 ) {
-  return sections.map(([key, Component], idx) => (
+  return sections.map(([key, Component, hasNegation], idx) => (
     <>
       {(() => {
         if (Component === 'general') {
           return (
             <GeneralSection
               key={key}
+              hasNegation={hasNegation}
               icons={icons[key]}
               name={key}
               selectedItem={filters[key]}

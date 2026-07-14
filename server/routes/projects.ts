@@ -9,7 +9,7 @@ import {
   ProjectMemberSchema,
   ProjectVersionSchema
 } from '../typescript/schema'
-import {
+import type {
   Hit,
   Organization,
   ProjectDetails,
@@ -40,8 +40,7 @@ export const list = forge
             'plugin'
           ])
           .optional()
-          .default('mod'),
-        facets: z.string().optional()
+          .default('mod')
       })
     },
     output: {
@@ -66,25 +65,29 @@ export const list = forge
     }) => {
       const parsedPage = parseInt(page, 10)
 
-      const facets: string[][] = [[`project_type:${projectType}`]]
+      const new_filters: string[] = [`project_types = '${projectType}'`]
 
       if (version) {
-        facets.push([`versions:${version}`])
+        new_filters.push(`game_versions = '${version}'`)
       }
 
       if (categories) {
         const categoryArray = categories.split(',').filter(Boolean)
 
-        const positiveFilter = categoryArray
-          .filter(c => !c.startsWith('!'))
-          .map(c => `categories:${c}`)
+        const positiveFilter = categoryArray.filter(c => !c.startsWith('!'))
 
-        if (positiveFilter.length > 0) {
-          facets.push(positiveFilter)
+        for (const c of positiveFilter) {
+          new_filters.push(`categories = '${c}'`)
         }
 
-        for (const c of categoryArray.filter(c => c.startsWith('!'))) {
-          facets.push([`categories!=${c.replace('!', '')}`])
+        const negativeFilter = categoryArray
+          .filter(c => c.startsWith('!'))
+          .map(c => c.replace('!', ''))
+
+        if (negativeFilter.length > 0) {
+          new_filters.push(
+            `categories NOT IN [${negativeFilter.map(c => `'${c}'`).join(', ')}]`
+          )
         }
       }
 
@@ -96,14 +99,15 @@ export const list = forge
         const hasServer = envArray.includes('server')
 
         if (hasClient && !hasServer) {
-          facets.push(['client_side:optional', 'client_side:required'])
-          facets.push(['server_side:optional', 'server_side:unsupported'])
+          new_filters.push(
+            `(environment = 'client_only' OR environment = 'client_only_server_optional')`
+          )
         } else if (!hasClient && hasServer) {
-          facets.push(['client_side:optional', 'client_side:unsupported'])
-          facets.push(['server_side:optional', 'server_side:required'])
+          new_filters.push(`(environment = 'server_only')`)
         } else if (hasClient && hasServer) {
-          facets.push(['client_side:required'])
-          facets.push(['server_side:required'])
+          new_filters.push(
+            `(environment = 'client_or_server' OR environment = 'client_or_server_prefers_both')`
+          )
         }
       }
 
@@ -112,7 +116,7 @@ export const list = forge
         offset: `${(parsedPage - 1) * 20}`,
         index: sort,
         query: query ?? '',
-        facets: JSON.stringify(facets)
+        new_filters: new_filters.join(' AND ')
       })
 
       const res = await fetch(

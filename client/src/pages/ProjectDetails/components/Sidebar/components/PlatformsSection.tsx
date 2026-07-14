@@ -1,4 +1,3 @@
-import { useModuleTranslation } from '@lifeforge/localization'
 import { Flex, SidebarDivider, SidebarTitle, TagChip } from '@lifeforge/ui'
 
 function PlatformsSection({
@@ -8,12 +7,10 @@ function PlatformsSection({
   loaders: string[]
   getIcon: (key: string) => string
 }) {
-  const { t } = useModuleTranslation()
-
   return (
     <>
       <SidebarDivider />
-      <SidebarTitle label={t('projectDetails.sidebar.platforms')} />
+      <SidebarTitle label="projectDetails.sidebar.platforms" />
       <Flex gap="sm" px="xl" wrap="wrap">
         {loaders.map(loader => (
           <TagChip

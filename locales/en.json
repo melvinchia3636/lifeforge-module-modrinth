@@ -61,6 +61,7 @@
     "gameVersions": "Game Versions",
     "features": "Features",
     "resolutions": "Resolutions",
+    "showAllVersions": "Show all versions",
     "all": "All {{item}}",
     "myFavourites": "My Favourites",
     "filtered": "Filtered {{item}}"
