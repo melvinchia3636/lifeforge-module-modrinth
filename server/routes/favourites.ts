@@ -3,7 +3,7 @@ import z from 'zod'
 import forge from '../forge'
 import callModrinthAPI from '../functions/modrinthAPI'
 import { ProjectDetailsSchema } from '../typescript/schema'
-import { ProjectDetails } from '../typescript/types'
+import type { ProjectDetails } from '../typescript/types'
 
 const TEMP_FILE_NAME = 'modrinth_favourites.json'
 
