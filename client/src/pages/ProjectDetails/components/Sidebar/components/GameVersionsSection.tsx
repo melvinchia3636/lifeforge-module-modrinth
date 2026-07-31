@@ -1,13 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
-import { useModuleTranslation } from '@lifeforge/localization'
 import { Flex, SidebarTitle, TagChip, WithQuery } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 
 function GameVersionsSection({ versions }: { versions: string[] }) {
-  const { t } = useModuleTranslation()
   const gameVersionsQuery = useQuery(forgeAPI.gameVersions.list.queryOptions())
 
   const allVersionsGrouped = useMemo(() => {

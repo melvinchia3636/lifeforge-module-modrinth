@@ -9,6 +9,7 @@ import {
 import { useModuleTranslation } from '@lifeforge/localization'
 import {
   ContentWrapperWithSidebar,
+  ContextMenu,
   ContextMenuGroup,
   ContextMenuItem,
   EmptyStateScreen,
@@ -111,35 +112,36 @@ function ProjectListPage<TFilterKeys extends string[]>({
   return (
     <ViewMode.Root>
       <ModuleHeader
-        contextMenuProps={{
-          classNames: {
-            wrapper: 'md:hidden flex',
-            menu: 'min-w-64'
-          },
-          children: (
-            <>
-              <ViewMode.ContextMenuSelector />
-              <SidebarDivider noMargin />
-              <ContextMenuGroup
-                icon="tabler:arrows-up-down"
-                label={t('hamburgerMenu.sortBy')}
-              >
-                {SORT_TYPES.map(([type, icon]) => (
-                  <ContextMenuItem
-                    key={type}
-                    checked={sortBy === type}
-                    icon={icon}
-                    label={t(`sortTypes.${type}`)}
-                    onClick={() => {
-                      setSortBy(type)
-                    }}
-                  />
-                ))}
-              </ContextMenuGroup>
-            </>
-          )
-        }}
         title={projectType}
+        trailing={
+          <ContextMenu
+            componentProps={{
+              menu: {
+                minWidth: '16rem'
+              }
+            }}
+            display={{ base: 'block', md: 'none' }}
+          >
+            <ViewMode.ContextMenuSelector />
+            <SidebarDivider noMargin />
+            <ContextMenuGroup
+              icon="tabler:arrows-up-down"
+              label={t('hamburgerMenu.sortBy')}
+            >
+              {SORT_TYPES.map(([type, icon]) => (
+                <ContextMenuItem
+                  key={type}
+                  checked={sortBy === type}
+                  icon={icon}
+                  label={t(`sortTypes.${type}`)}
+                  onClick={() => {
+                    setSortBy(type)
+                  }}
+                />
+              ))}
+            </ContextMenuGroup>
+          </ContextMenu>
+        }
       />
       <LayoutWithSidebar>
         <ProjectSidebar
