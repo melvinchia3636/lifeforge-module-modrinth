@@ -138,14 +138,13 @@ function ProjectDetails() {
           <LayoutWithSidebar>
             <ContentWrapperWithSidebar>
               <TabbedView.Root>
-                <TabbedView.Selector />
+                <TabbedView.Selector mb="lg" />
                 {TABS.map(({ id, Component }) => (
                   <TabbedView.When key={id} tabId={id}>
                     <Box
                       asChild
                       display={{ base: 'none', lg: 'block' }}
                       mb="2xl"
-                      mt="lg"
                     >
                       <Scrollbar>
                         <Component />

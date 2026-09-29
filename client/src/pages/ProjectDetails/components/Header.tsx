@@ -122,7 +122,7 @@ function Header({
               })
             }}
           >
-            {t('projectDetails.header.download')}
+            projectDetails.header.download
           </Button>
           <Button
             dangerous={isFavouriteQuery.data}
