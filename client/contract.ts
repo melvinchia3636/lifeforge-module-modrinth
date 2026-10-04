@@ -1138,8 +1138,7 @@ export const contract = {
             ],
             "additionalProperties": false
           }
-        },
-        "CONFLICT": true
+        }
       }
     },
     "checkItem": {

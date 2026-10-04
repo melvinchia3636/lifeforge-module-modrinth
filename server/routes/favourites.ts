@@ -16,8 +16,7 @@ export const addItem = forge
       })
     },
     output: {
-      OK: z.array(ProjectDetailsSchema),
-      CONFLICT: true
+      OK: z.array(ProjectDetailsSchema)
     }
   })
   .callback(async ({ body: { projectId }, core: { tempFile }, response }) => {
