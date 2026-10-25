@@ -1,9 +1,7 @@
 import {
   Bordered,
   type BorderedProps,
-  Box,
-  Flex,
-  Icon,
+  Image,
   colorWithOpacity
 } from '@lifeforge/ui'
 
@@ -32,27 +30,14 @@ function ProjectIcon({
       }}
       {...rest}
     >
-      <Flex centered>
-        {iconUrl ? (
-          <Box
-            asChild
-            height="100%"
-            position="absolute"
-            style={{
-              objectFit: 'cover'
-            }}
-            width="100%"
-          >
-            <img alt="" src={iconUrl} />
-          </Box>
-        ) : (
-          <Icon
-            color={{ base: 'bg-200', dark: 'bg-700' }}
-            icon="simple-icons:modrinth"
-            size="3em"
-          />
-        )}
-      </Flex>
+      <Image
+        alt=""
+        fallback="simple-icons:modrinth"
+        fit="cover"
+        height="100%"
+        src={iconUrl ?? undefined}
+        width="100%"
+      />
     </Bordered>
   )
 }

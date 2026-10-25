@@ -6,6 +6,7 @@ import {
   Box,
   Flex,
   Icon,
+  Image,
   SidebarDivider,
   SidebarTitle,
   Stack,
@@ -34,9 +35,13 @@ function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
           >
             {data => (
               <Flex align="center" gap="sm" mb="md">
-                <Flex
-                  centered
+                <Image
+                  alt={`${data.name} icon`}
+                  fallback="simple-icons:modrinth"
+                  fit="cover"
+                  height="2.5em"
                   r="md"
+                  src={data.icon ?? undefined}
                   style={{
                     backgroundColor: data?.color
                       ? `#${data.color.toString(16).padStart(6, '0')}`
@@ -54,21 +59,7 @@ function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
                     })()
                   }}
                   width="2.5em"
-                >
-                  {data.icon ? (
-                    <Box
-                      asChild
-                      height="100%"
-                      r="md"
-                      style={{ objectFit: 'cover' }}
-                      width="100%"
-                    >
-                      <img alt={`${data.name} icon`} src={data.icon} />
-                    </Box>
-                  ) : (
-                    <Icon icon="simple-icons:modrinth" />
-                  )}
-                </Flex>
+                />
                 <Box>
                   <Flex asChild align="center" gap="sm">
                     <Text as="p" weight="medium">
@@ -102,21 +93,18 @@ function CreatorSection({ hasOrganization }: { hasOrganization: boolean }) {
                 })
                 .map(member => (
                   <Flex key={member.user.id} align="center" gap="sm">
-                    <Box
-                      asChild
+                    <Image
+                      alt={`${member.user.username} avatar`}
+                      fallback="tabler:user"
+                      fit="cover"
                       height="2.5em"
                       r="md"
-                      style={{ objectFit: 'cover' }}
+                      src={
+                        member.user.avatar_url ||
+                        'https://modrinth.com/static/images/avatar-placeholder.png'
+                      }
                       width="2.5em"
-                    >
-                      <img
-                        alt={`${member.user.username} avatar`}
-                        src={
-                          member.user.avatar_url ||
-                          'https://modrinth.com/static/images/avatar-placeholder.png'
-                        }
-                      />
-                    </Box>
+                    />
                     <Box>
                       <Flex asChild align="center" gap="sm">
                         <Text weight="medium">

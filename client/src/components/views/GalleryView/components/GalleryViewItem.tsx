@@ -5,6 +5,7 @@ import {
   Box,
   Card,
   Flex,
+  Image,
   Ring,
   Stack,
   Text,
@@ -43,36 +44,27 @@ function GalleryViewItem({
             : entry.gallery.filter(e => e.featured)[0]?.url ||
               entry.gallery[0]?.url
 
-        return (
+        return targetImg ? (
+          <Image
+            alt={`${entry.title} featured`}
+            aspectRatio="16/9"
+            bg={{ base: 'bg-200', dark: colorWithOpacity('bg-800', '70%') }}
+            fallback="tabler:photo"
+            fit="cover"
+            overflow="hidden"
+            src={targetImg}
+            width="100%"
+          />
+        ) : (
           <Box
             aspectRatio="16/9"
-            bg={{
-              base: 'bg-200',
-              dark: colorWithOpacity('bg-800', '70%')
+            bg={{ base: 'bg-200', dark: colorWithOpacity('bg-800', '70%') }}
+            style={{
+              backgroundColor:
+                '#' + entry.color?.toString(16).padStart(6, '0')
             }}
-            style={
-              !targetImg
-                ? {
-                    backgroundColor:
-                      '#' + entry.color?.toString(16).padStart(6, '0')
-                  }
-                : undefined
-            }
             width="100%"
-          >
-            {targetImg ? (
-              <Box
-                asChild
-                height="100%"
-                style={{
-                  objectFit: 'cover'
-                }}
-                width="100%"
-              >
-                <img alt={`${entry.title} featured`} src={targetImg} />
-              </Box>
-            ) : null}
-          </Box>
+          />
         )
       })()}
       <Flex align="center" gap="md" px="md">
