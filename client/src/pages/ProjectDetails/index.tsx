@@ -141,11 +141,7 @@ function ProjectDetails() {
                 <TabbedView.Selector mb="lg" />
                 {TABS.map(({ id, Component }) => (
                   <TabbedView.When key={id} tabId={id}>
-                    <Box
-                      asChild
-                      display={{ base: 'none', lg: 'block' }}
-                      mb="2xl"
-                    >
+                    <Box asChild display={{ base: 'none', lg: 'block' }}>
                       <Scrollbar>
                         <Component />
                       </Scrollbar>
