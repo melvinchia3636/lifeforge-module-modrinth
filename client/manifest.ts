@@ -2,9 +2,9 @@ import { lazy } from 'react'
 
 import { createForgeModule } from '@lifeforge/federation'
 
-import contract from './contract'
+import type { Contract } from './contract'
 
-const { forgeAPI, ...manifest } = createForgeModule({
+const { forgeAPI, ...manifest } = createForgeModule<Contract>({
   routes: {
     '/': lazy(() => import('@')),
     '/project/:projectId': lazy(() => import('@/pages/ProjectDetails')),
@@ -22,8 +22,7 @@ const { forgeAPI, ...manifest } = createForgeModule({
     { icon: 'tabler:sun', label: 'Shader', path: 'shaders' },
     { icon: 'uil:box', label: 'Modpack', path: 'modpacks' },
     { icon: 'tabler:plug', label: 'Plugin', path: 'plugins' }
-  ],
-  contract
+  ]
 })
 
 export default manifest

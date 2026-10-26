@@ -1,1778 +1,464 @@
-export const contract = {
-  "projects": {
-    "getDetails": {
-      "method": "get",
-      "description": "Get Modrinth project details",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "projectId"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "client_side": {
-              "type": "string"
-            },
-            "server_side": {
-              "type": "string"
-            },
-            "game_versions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "id": {
-              "type": "string"
-            },
-            "slug": {
-              "type": "string"
-            },
-            "project_type": {
-              "type": "string"
-            },
-            "team": {
-              "type": "string"
-            },
-            "organization": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "title": {
-              "type": "string"
-            },
-            "description": {
-              "type": "string"
-            },
-            "body": {
-              "type": "string"
-            },
-            "body_url": {
-              "type": "null"
-            },
-            "published": {
-              "type": "string"
-            },
-            "updated": {
-              "type": "string"
-            },
-            "approved": {
-              "type": "string"
-            },
-            "queued": {
-              "type": "null"
-            },
-            "status": {
-              "type": "string"
-            },
-            "requested_status": {
-              "type": "null"
-            },
-            "moderator_message": {
-              "type": "null"
-            },
-            "license": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "url": {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "id",
-                "name",
-                "url"
-              ],
-              "additionalProperties": false
-            },
-            "downloads": {
-              "type": "number"
-            },
-            "followers": {
-              "type": "number"
-            },
-            "categories": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "additional_categories": {
-              "type": "array",
-              "items": {}
-            },
-            "loaders": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "versions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "icon_url": {
-              "type": "string"
-            },
-            "issues_url": {
-              "type": "string"
-            },
-            "source_url": {
-              "type": "string"
-            },
-            "wiki_url": {
-              "type": "string"
-            },
-            "discord_url": {
-              "type": "string"
-            },
-            "donation_urls": {
-              "type": "array",
-              "items": {}
-            },
-            "gallery": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "url": {
-                    "type": "string"
-                  },
-                  "raw_url": {
-                    "type": "string"
-                  },
-                  "featured": {
-                    "type": "boolean"
-                  },
-                  "title": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "description": {
-                    "type": "null"
-                  },
-                  "created": {
-                    "type": "string"
-                  },
-                  "ordering": {
-                    "type": "number"
-                  }
-                },
-                "required": [
-                  "url",
-                  "raw_url",
-                  "featured",
-                  "title",
-                  "description",
-                  "created",
-                  "ordering"
-                ],
-                "additionalProperties": false
-              }
-            },
-            "color": {
-              "type": "number"
-            },
-            "thread_id": {
-              "type": "string"
-            },
-            "monetization_status": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "client_side",
-            "server_side",
-            "game_versions",
-            "id",
-            "slug",
-            "project_type",
-            "team",
-            "organization",
-            "title",
-            "description",
-            "body",
-            "body_url",
-            "published",
-            "updated",
-            "approved",
-            "queued",
-            "status",
-            "requested_status",
-            "moderator_message",
-            "license",
-            "downloads",
-            "followers",
-            "categories",
-            "additional_categories",
-            "loaders",
-            "versions",
-            "icon_url",
-            "issues_url",
-            "source_url",
-            "wiki_url",
-            "discord_url",
-            "donation_urls",
-            "gallery",
-            "color",
-            "thread_id",
-            "monetization_status"
-          ],
-          "additionalProperties": false
-        }
-      }
-    },
-    "getOrganization": {
-      "method": "get",
-      "description": "Get the organization of a Modrinth project",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "projectId"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "slug": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "icon": {
-              "type": "string"
-            },
-            "color": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "slug",
-            "name",
-            "icon",
-            "color"
-          ],
-          "additionalProperties": false
-        }
-      }
-    },
-    "getVersions": {
-      "method": "get",
-      "description": "List all versions for a Modrinth project",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "projectId"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "game_versions": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "loaders": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "id": {
-                "type": "string"
-              },
-              "project_id": {
-                "type": "string"
-              },
-              "author_id": {
-                "type": "string"
-              },
-              "featured": {
-                "type": "boolean"
-              },
-              "name": {
-                "type": "string"
-              },
-              "version_number": {
-                "type": "string"
-              },
-              "changelog": {
-                "type": "string"
-              },
-              "changelog_url": {
-                "type": "null"
-              },
-              "date_published": {
-                "type": "string"
-              },
-              "downloads": {
-                "type": "number"
-              },
-              "version_type": {
-                "type": "string",
-                "enum": [
-                  "release",
-                  "beta",
-                  "alpha"
-                ]
-              },
-              "status": {
-                "type": "string"
-              },
-              "requested_status": {
-                "type": "null"
-              },
-              "files": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "hashes": {
-                      "type": "object",
-                      "properties": {
-                        "sha512": {
-                          "type": "string"
-                        },
-                        "sha1": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "sha512",
-                        "sha1"
-                      ],
-                      "additionalProperties": false
-                    },
-                    "url": {
-                      "type": "string"
-                    },
-                    "filename": {
-                      "type": "string"
-                    },
-                    "primary": {
-                      "type": "boolean"
-                    },
-                    "size": {
-                      "type": "number"
-                    },
-                    "file_type": {
-                      "type": "null"
-                    }
-                  },
-                  "required": [
-                    "hashes",
-                    "url",
-                    "filename",
-                    "primary",
-                    "size",
-                    "file_type"
-                  ],
-                  "additionalProperties": false
-                }
-              },
-              "dependencies": {
-                "type": "array",
-                "items": {}
-              }
-            },
-            "required": [
-              "game_versions",
-              "loaders",
-              "id",
-              "project_id",
-              "author_id",
-              "featured",
-              "name",
-              "version_number",
-              "changelog",
-              "changelog_url",
-              "date_published",
-              "downloads",
-              "version_type",
-              "status",
-              "requested_status",
-              "files",
-              "dependencies"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "list": {
-      "method": "get",
-      "description": "List all Modrinth entries",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "page": {
-              "default": "1",
-              "type": "string"
-            },
-            "sort": {
-              "default": "relevance",
-              "type": "string",
-              "enum": [
-                "relevance",
-                "downloads",
-                "follows",
-                "newest",
-                "updated"
-              ]
-            },
-            "query": {
-              "type": "string"
-            },
-            "version": {
-              "type": "string"
-            },
-            "categories": {
-              "type": "string"
-            },
-            "environments": {
-              "type": "string"
-            },
-            "projectType": {
-              "default": "mod",
-              "type": "string",
-              "enum": [
-                "mod",
-                "modpack",
-                "resourcepack",
-                "shader",
-                "datapack",
-                "plugin"
-              ]
-            }
-          },
-          "required": [
-            "page",
-            "sort",
-            "projectType"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "project_id": {
-                    "type": "string"
-                  },
-                  "project_type": {
-                    "type": "string"
-                  },
-                  "slug": {
-                    "type": "string"
-                  },
-                  "author": {
-                    "type": "string"
-                  },
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "categories": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "display_categories": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "versions": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "downloads": {
-                    "type": "number"
-                  },
-                  "follows": {
-                    "type": "number"
-                  },
-                  "icon_url": {
-                    "type": "string"
-                  },
-                  "date_created": {
-                    "type": "string"
-                  },
-                  "date_modified": {
-                    "type": "string"
-                  },
-                  "newest_version": {
-                    "type": "string"
-                  },
-                  "license": {
-                    "type": "string"
-                  },
-                  "client_side": {
-                    "type": "string",
-                    "enum": [
-                      "optional",
-                      "required",
-                      "unsupported",
-                      "unknown"
-                    ]
-                  },
-                  "server_side": {
-                    "type": "string",
-                    "enum": [
-                      "optional",
-                      "required",
-                      "unsupported",
-                      "unknown"
-                    ]
-                  },
-                  "gallery": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "featured_gallery": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "anyOf": [
-                      {
-                        "type": "number"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "project_id",
-                  "project_type",
-                  "slug",
-                  "author",
-                  "title",
-                  "description",
-                  "categories",
-                  "display_categories",
-                  "versions",
-                  "downloads",
-                  "follows",
-                  "icon_url",
-                  "date_created",
-                  "date_modified",
-                  "newest_version",
-                  "license",
-                  "client_side",
-                  "server_side",
-                  "gallery",
-                  "featured_gallery",
-                  "color"
-                ],
-                "additionalProperties": false
-              }
-            },
-            "total": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "items",
-            "total"
-          ],
-          "additionalProperties": false
-        }
-      }
-    },
-    "listMembers": {
-      "method": "get",
-      "description": "List all members of a Modrinth project team",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "projectId"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "role": {
-                "type": "string"
-              },
-              "team_id": {
-                "type": "string"
-              },
-              "user": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "username": {
-                    "type": "string"
-                  },
-                  "avatar_url": {
-                    "type": "string"
-                  },
-                  "bio": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "created": {
-                    "type": "string"
-                  },
-                  "role": {
-                    "type": "string"
-                  },
-                  "badges": {
-                    "type": "number"
-                  },
-                  "auth_providers": {
-                    "type": "null"
-                  },
-                  "email": {
-                    "type": "null"
-                  },
-                  "email_verified": {
-                    "type": "null"
-                  },
-                  "has_password": {
-                    "type": "null"
-                  },
-                  "has_totp": {
-                    "type": "null"
-                  },
-                  "payout_data": {
-                    "type": "null"
-                  },
-                  "stripe_customer_id": {
-                    "type": "null"
-                  },
-                  "allow_friend_requests": {
-                    "type": "null"
-                  },
-                  "github_id": {
-                    "type": "null"
-                  }
-                },
-                "required": [
-                  "id",
-                  "username",
-                  "avatar_url",
-                  "bio",
-                  "created",
-                  "role",
-                  "badges",
-                  "auth_providers",
-                  "email",
-                  "email_verified",
-                  "has_password",
-                  "has_totp",
-                  "payout_data",
-                  "stripe_customer_id",
-                  "allow_friend_requests",
-                  "github_id"
-                ],
-                "additionalProperties": false
-              },
-              "permissions": {
-                "type": "null"
-              },
-              "accepted": {
-                "type": "boolean"
-              },
-              "payouts_split": {
-                "type": "null"
-              },
-              "ordering": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "role",
-              "team_id",
-              "user",
-              "permissions",
-              "accepted",
-              "payouts_split",
-              "ordering"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    }
-  },
-  "gameVersions": {
-    "list": {
-      "method": "get",
-      "description": "List all versions for Minecraft",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "version": {
-                "type": "string"
-              },
-              "version_type": {
-                "type": "string"
-              },
-              "date": {
-                "type": "string"
-              },
-              "major": {
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "version",
-              "version_type",
-              "date",
-              "major"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    }
-  },
-  "favourites": {
-    "addItem": {
-      "method": "post",
-      "description": "Add a favourite project",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "projectId"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "client_side": {
-                "type": "string"
-              },
-              "server_side": {
-                "type": "string"
-              },
-              "game_versions": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "id": {
-                "type": "string"
-              },
-              "slug": {
-                "type": "string"
-              },
-              "project_type": {
-                "type": "string"
-              },
-              "team": {
-                "type": "string"
-              },
-              "organization": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "body": {
-                "type": "string"
-              },
-              "body_url": {
-                "type": "null"
-              },
-              "published": {
-                "type": "string"
-              },
-              "updated": {
-                "type": "string"
-              },
-              "approved": {
-                "type": "string"
-              },
-              "queued": {
-                "type": "null"
-              },
-              "status": {
-                "type": "string"
-              },
-              "requested_status": {
-                "type": "null"
-              },
-              "moderator_message": {
-                "type": "null"
-              },
-              "license": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "url": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "id",
-                  "name",
-                  "url"
-                ],
-                "additionalProperties": false
-              },
-              "downloads": {
-                "type": "number"
-              },
-              "followers": {
-                "type": "number"
-              },
-              "categories": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "additional_categories": {
-                "type": "array",
-                "items": {}
-              },
-              "loaders": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "versions": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "icon_url": {
-                "type": "string"
-              },
-              "issues_url": {
-                "type": "string"
-              },
-              "source_url": {
-                "type": "string"
-              },
-              "wiki_url": {
-                "type": "string"
-              },
-              "discord_url": {
-                "type": "string"
-              },
-              "donation_urls": {
-                "type": "array",
-                "items": {}
-              },
-              "gallery": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string"
-                    },
-                    "raw_url": {
-                      "type": "string"
-                    },
-                    "featured": {
-                      "type": "boolean"
-                    },
-                    "title": {
-                      "anyOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "description": {
-                      "type": "null"
-                    },
-                    "created": {
-                      "type": "string"
-                    },
-                    "ordering": {
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "url",
-                    "raw_url",
-                    "featured",
-                    "title",
-                    "description",
-                    "created",
-                    "ordering"
-                  ],
-                  "additionalProperties": false
-                }
-              },
-              "color": {
-                "type": "number"
-              },
-              "thread_id": {
-                "type": "string"
-              },
-              "monetization_status": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_side",
-              "server_side",
-              "game_versions",
-              "id",
-              "slug",
-              "project_type",
-              "team",
-              "organization",
-              "title",
-              "description",
-              "body",
-              "body_url",
-              "published",
-              "updated",
-              "approved",
-              "queued",
-              "status",
-              "requested_status",
-              "moderator_message",
-              "license",
-              "downloads",
-              "followers",
-              "categories",
-              "additional_categories",
-              "loaders",
-              "versions",
-              "icon_url",
-              "issues_url",
-              "source_url",
-              "wiki_url",
-              "discord_url",
-              "donation_urls",
-              "gallery",
-              "color",
-              "thread_id",
-              "monetization_status"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "checkItem": {
-      "method": "get",
-      "description": "Check if a project is in favourites",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "projectId"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "boolean"
-        }
-      }
-    },
-    "listItemIds": {
-      "method": "get",
-      "description": "List all favourite project IDs",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectType": {
-              "type": "string",
-              "enum": [
-                "mod",
-                "modpack",
-                "resourcepack",
-                "shader",
-                "datapack",
-                "plugin"
-              ]
-            }
-          },
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "listItems": {
-      "method": "get",
-      "description": "List all favourite projects",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectType": {
-              "type": "string",
-              "enum": [
-                "mod",
-                "modpack",
-                "resourcepack",
-                "shader",
-                "datapack",
-                "plugin"
-              ]
-            },
-            "query": {
-              "type": "string"
-            },
-            "page": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "projectType"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "client_side": {
-                    "type": "string"
-                  },
-                  "server_side": {
-                    "type": "string"
-                  },
-                  "game_versions": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "slug": {
-                    "type": "string"
-                  },
-                  "project_type": {
-                    "type": "string"
-                  },
-                  "team": {
-                    "type": "string"
-                  },
-                  "organization": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "body": {
-                    "type": "string"
-                  },
-                  "body_url": {
-                    "type": "null"
-                  },
-                  "published": {
-                    "type": "string"
-                  },
-                  "updated": {
-                    "type": "string"
-                  },
-                  "approved": {
-                    "type": "string"
-                  },
-                  "queued": {
-                    "type": "null"
-                  },
-                  "status": {
-                    "type": "string"
-                  },
-                  "requested_status": {
-                    "type": "null"
-                  },
-                  "moderator_message": {
-                    "type": "null"
-                  },
-                  "license": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "anyOf": [
-                          {
-                            "type": "string"
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "name",
-                      "url"
-                    ],
-                    "additionalProperties": false
-                  },
-                  "downloads": {
-                    "type": "number"
-                  },
-                  "followers": {
-                    "type": "number"
-                  },
-                  "categories": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "additional_categories": {
-                    "type": "array",
-                    "items": {}
-                  },
-                  "loaders": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "versions": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "icon_url": {
-                    "type": "string"
-                  },
-                  "issues_url": {
-                    "type": "string"
-                  },
-                  "source_url": {
-                    "type": "string"
-                  },
-                  "wiki_url": {
-                    "type": "string"
-                  },
-                  "discord_url": {
-                    "type": "string"
-                  },
-                  "donation_urls": {
-                    "type": "array",
-                    "items": {}
-                  },
-                  "gallery": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string"
-                        },
-                        "raw_url": {
-                          "type": "string"
-                        },
-                        "featured": {
-                          "type": "boolean"
-                        },
-                        "title": {
-                          "anyOf": [
-                            {
-                              "type": "string"
-                            },
-                            {
-                              "type": "null"
-                            }
-                          ]
-                        },
-                        "description": {
-                          "type": "null"
-                        },
-                        "created": {
-                          "type": "string"
-                        },
-                        "ordering": {
-                          "type": "number"
-                        }
-                      },
-                      "required": [
-                        "url",
-                        "raw_url",
-                        "featured",
-                        "title",
-                        "description",
-                        "created",
-                        "ordering"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "color": {
-                    "type": "number"
-                  },
-                  "thread_id": {
-                    "type": "string"
-                  },
-                  "monetization_status": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "client_side",
-                  "server_side",
-                  "game_versions",
-                  "id",
-                  "slug",
-                  "project_type",
-                  "team",
-                  "organization",
-                  "title",
-                  "description",
-                  "body",
-                  "body_url",
-                  "published",
-                  "updated",
-                  "approved",
-                  "queued",
-                  "status",
-                  "requested_status",
-                  "moderator_message",
-                  "license",
-                  "downloads",
-                  "followers",
-                  "categories",
-                  "additional_categories",
-                  "loaders",
-                  "versions",
-                  "icon_url",
-                  "issues_url",
-                  "source_url",
-                  "wiki_url",
-                  "discord_url",
-                  "donation_urls",
-                  "gallery",
-                  "color",
-                  "thread_id",
-                  "monetization_status"
-                ],
-                "additionalProperties": false
-              }
-            },
-            "total": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "items",
-            "total"
-          ],
-          "additionalProperties": false
-        }
-      }
-    },
-    "removeItem": {
-      "method": "post",
-      "description": "Remove a favourite project",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "projectId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "projectId"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "client_side": {
-                "type": "string"
-              },
-              "server_side": {
-                "type": "string"
-              },
-              "game_versions": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "id": {
-                "type": "string"
-              },
-              "slug": {
-                "type": "string"
-              },
-              "project_type": {
-                "type": "string"
-              },
-              "team": {
-                "type": "string"
-              },
-              "organization": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "body": {
-                "type": "string"
-              },
-              "body_url": {
-                "type": "null"
-              },
-              "published": {
-                "type": "string"
-              },
-              "updated": {
-                "type": "string"
-              },
-              "approved": {
-                "type": "string"
-              },
-              "queued": {
-                "type": "null"
-              },
-              "status": {
-                "type": "string"
-              },
-              "requested_status": {
-                "type": "null"
-              },
-              "moderator_message": {
-                "type": "null"
-              },
-              "license": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "url": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "id",
-                  "name",
-                  "url"
-                ],
-                "additionalProperties": false
-              },
-              "downloads": {
-                "type": "number"
-              },
-              "followers": {
-                "type": "number"
-              },
-              "categories": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "additional_categories": {
-                "type": "array",
-                "items": {}
-              },
-              "loaders": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "versions": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "icon_url": {
-                "type": "string"
-              },
-              "issues_url": {
-                "type": "string"
-              },
-              "source_url": {
-                "type": "string"
-              },
-              "wiki_url": {
-                "type": "string"
-              },
-              "discord_url": {
-                "type": "string"
-              },
-              "donation_urls": {
-                "type": "array",
-                "items": {}
-              },
-              "gallery": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string"
-                    },
-                    "raw_url": {
-                      "type": "string"
-                    },
-                    "featured": {
-                      "type": "boolean"
-                    },
-                    "title": {
-                      "anyOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "description": {
-                      "type": "null"
-                    },
-                    "created": {
-                      "type": "string"
-                    },
-                    "ordering": {
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "url",
-                    "raw_url",
-                    "featured",
-                    "title",
-                    "description",
-                    "created",
-                    "ordering"
-                  ],
-                  "additionalProperties": false
-                }
-              },
-              "color": {
-                "type": "number"
-              },
-              "thread_id": {
-                "type": "string"
-              },
-              "monetization_status": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "client_side",
-              "server_side",
-              "game_versions",
-              "id",
-              "slug",
-              "project_type",
-              "team",
-              "organization",
-              "title",
-              "description",
-              "body",
-              "body_url",
-              "published",
-              "updated",
-              "approved",
-              "queued",
-              "status",
-              "requested_status",
-              "moderator_message",
-              "license",
-              "downloads",
-              "followers",
-              "categories",
-              "additional_categories",
-              "loaders",
-              "versions",
-              "icon_url",
-              "issues_url",
-              "source_url",
-              "wiki_url",
-              "discord_url",
-              "donation_urls",
-              "gallery",
-              "color",
-              "thread_id",
-              "monetization_status"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    }
-  }
-} as const
+export type EndpointProjectsGetVersions_OutputOK = {
+  game_versions: string[];
+  loaders: string[];
+  id: string;
+  project_id: string;
+  author_id: string;
+  featured: boolean;
+  name: string;
+  version_number: string;
+  changelog: string;
+  changelog_url: null;
+  date_published: string;
+  downloads: number;
+  version_type: "release" | "beta" | "alpha";
+  status: string;
+  requested_status: null;
+  files: {
+    hashes: {
+      sha512: string;
+      sha1: string;
+    };
+    url: string;
+    filename: string;
+    primary: boolean;
+    size: number;
+    file_type: null;
+  }[];
+  dependencies: unknown[];
+}[];
+export type EndpointProjectsListMembers_OutputOK = {
+  role: string;
+  team_id: string;
+  user: {
+    id: string;
+    username: string;
+    avatar_url: string;
+    bio: string | null;
+    created: string;
+    role: string;
+    badges: number;
+    auth_providers: null;
+    email: null;
+    email_verified: null;
+    has_password: null;
+    has_totp: null;
+    payout_data: null;
+    stripe_customer_id: null;
+    allow_friend_requests: null;
+    github_id: null;
+  };
+  permissions: null;
+  accepted: boolean;
+  payouts_split: null;
+  ordering: number;
+}[];
+export type EndpointGameVersionsList_OutputOK = {
+  version: string;
+  version_type: string;
+  date: string;
+  major: boolean;
+}[];
+export type EndpointFavouritesAddItem_OutputOK = {
+  client_side: string;
+  server_side: string;
+  game_versions: string[];
+  id: string;
+  slug: string;
+  project_type: string;
+  team: string;
+  organization: string | null;
+  title: string;
+  description: string;
+  body: string;
+  body_url: null;
+  published: string;
+  updated: string;
+  approved: string;
+  queued: null;
+  status: string;
+  requested_status: null;
+  moderator_message: null;
+  license: {
+    id: string;
+    name: string;
+    url: string | null;
+  };
+  downloads: number;
+  followers: number;
+  categories: string[];
+  additional_categories: unknown[];
+  loaders: string[];
+  versions: string[];
+  icon_url: string;
+  issues_url: string;
+  source_url: string;
+  wiki_url: string;
+  discord_url: string;
+  donation_urls: unknown[];
+  gallery: {
+    url: string;
+    raw_url: string;
+    featured: boolean;
+    title: string | null;
+    description: null;
+    created: string;
+    ordering: number;
+  }[];
+  color: number;
+  thread_id: string;
+  monetization_status: string;
+}[];
+export type EndpointFavouritesCheckItem_OutputOK = boolean;
+export type EndpointFavouritesListItemIds_OutputOK = string[];
+export type EndpointFavouritesRemoveItem_OutputOK = {
+  client_side: string;
+  server_side: string;
+  game_versions: string[];
+  id: string;
+  slug: string;
+  project_type: string;
+  team: string;
+  organization: string | null;
+  title: string;
+  description: string;
+  body: string;
+  body_url: null;
+  published: string;
+  updated: string;
+  approved: string;
+  queued: null;
+  status: string;
+  requested_status: null;
+  moderator_message: null;
+  license: {
+    id: string;
+    name: string;
+    url: string | null;
+  };
+  downloads: number;
+  followers: number;
+  categories: string[];
+  additional_categories: unknown[];
+  loaders: string[];
+  versions: string[];
+  icon_url: string;
+  issues_url: string;
+  source_url: string;
+  wiki_url: string;
+  discord_url: string;
+  donation_urls: unknown[];
+  gallery: {
+    url: string;
+    raw_url: string;
+    featured: boolean;
+    title: string | null;
+    description: null;
+    created: string;
+    ordering: number;
+  }[];
+  color: number;
+  thread_id: string;
+  monetization_status: string;
+}[];
 
-export default contract
+export interface Contract {
+  projects: {
+    getDetails: EndpointProjectsGetDetails;
+    getOrganization: EndpointProjectsGetOrganization;
+    getVersions: EndpointProjectsGetVersions;
+    list: EndpointProjectsList;
+    listMembers: EndpointProjectsListMembers;
+  };
+  gameVersions: {
+    list: EndpointGameVersionsList;
+  };
+  favourites: {
+    addItem: EndpointFavouritesAddItem;
+    checkItem: EndpointFavouritesCheckItem;
+    listItemIds: EndpointFavouritesListItemIds;
+    listItems: EndpointFavouritesListItems;
+    removeItem: EndpointFavouritesRemoveItem;
+  };
+}
+export interface EndpointProjectsGetDetails {
+  method: "get";
+  input: {
+    query?: EndpointProjectsGetDetails_InputQuery;
+  };
+  output: {
+    OK: EndpointProjectsGetDetails_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointProjectsGetDetails_InputQuery {
+  projectId: string;
+}
+export interface EndpointProjectsGetDetails_OutputOK {
+  client_side: string;
+  server_side: string;
+  game_versions: string[];
+  id: string;
+  slug: string;
+  project_type: string;
+  team: string;
+  organization: string | null;
+  title: string;
+  description: string;
+  body: string;
+  body_url: null;
+  published: string;
+  updated: string;
+  approved: string;
+  queued: null;
+  status: string;
+  requested_status: null;
+  moderator_message: null;
+  license: {
+    id: string;
+    name: string;
+    url: string | null;
+  };
+  downloads: number;
+  followers: number;
+  categories: string[];
+  additional_categories: unknown[];
+  loaders: string[];
+  versions: string[];
+  icon_url: string;
+  issues_url: string;
+  source_url: string;
+  wiki_url: string;
+  discord_url: string;
+  donation_urls: unknown[];
+  gallery: {
+    url: string;
+    raw_url: string;
+    featured: boolean;
+    title: string | null;
+    description: null;
+    created: string;
+    ordering: number;
+  }[];
+  color: number;
+  thread_id: string;
+  monetization_status: string;
+}
+export interface EndpointProjectsGetOrganization {
+  method: "get";
+  input: {
+    query?: EndpointProjectsGetOrganization_InputQuery;
+  };
+  output: {
+    OK: EndpointProjectsGetOrganization_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointProjectsGetOrganization_InputQuery {
+  projectId: string;
+}
+export interface EndpointProjectsGetOrganization_OutputOK {
+  slug: string;
+  name: string;
+  icon: string;
+  color: number;
+}
+export interface EndpointProjectsGetVersions {
+  method: "get";
+  input: {
+    query?: EndpointProjectsGetVersions_InputQuery;
+  };
+  output: {
+    OK: EndpointProjectsGetVersions_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointProjectsGetVersions_InputQuery {
+  projectId: string;
+}
+export interface EndpointProjectsList {
+  method: "get";
+  input: {
+    query?: EndpointProjectsList_InputQuery;
+  };
+  output: {
+    OK: EndpointProjectsList_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointProjectsList_InputQuery {
+  page: string;
+  sort: "relevance" | "downloads" | "follows" | "newest" | "updated";
+  query?: string;
+  version?: string;
+  categories?: string;
+  environments?: string;
+  projectType: "mod" | "modpack" | "resourcepack" | "shader" | "datapack" | "plugin";
+}
+export interface EndpointProjectsList_OutputOK {
+  items: {
+    project_id: string;
+    project_type: string;
+    slug: string;
+    author: string;
+    title: string;
+    description: string;
+    categories: string[];
+    display_categories: string[];
+    versions: string[];
+    downloads: number;
+    follows: number;
+    icon_url: string;
+    date_created: string;
+    date_modified: string;
+    newest_version: string;
+    license: string;
+    client_side: "optional" | "required" | "unsupported" | "unknown";
+    server_side: "optional" | "required" | "unsupported" | "unknown";
+    gallery: string[];
+    featured_gallery: string | null;
+    color: number | null;
+  }[];
+  total: number;
+}
+export interface EndpointProjectsListMembers {
+  method: "get";
+  input: {
+    query?: EndpointProjectsListMembers_InputQuery;
+  };
+  output: {
+    OK: EndpointProjectsListMembers_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointProjectsListMembers_InputQuery {
+  projectId: string;
+}
+export interface EndpointGameVersionsList {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointGameVersionsList_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFavouritesAddItem {
+  method: "post";
+  input: {
+    body?: EndpointFavouritesAddItem_InputBody;
+  };
+  output: {
+    OK: EndpointFavouritesAddItem_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFavouritesAddItem_InputBody {
+  projectId: string;
+}
+export interface EndpointFavouritesCheckItem {
+  method: "get";
+  input: {
+    query?: EndpointFavouritesCheckItem_InputQuery;
+  };
+  output: {
+    OK: EndpointFavouritesCheckItem_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFavouritesCheckItem_InputQuery {
+  projectId: string;
+}
+export interface EndpointFavouritesListItemIds {
+  method: "get";
+  input: {
+    query?: EndpointFavouritesListItemIds_InputQuery;
+  };
+  output: {
+    OK: EndpointFavouritesListItemIds_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFavouritesListItemIds_InputQuery {
+  projectType?: "mod" | "modpack" | "resourcepack" | "shader" | "datapack" | "plugin";
+}
+export interface EndpointFavouritesListItems {
+  method: "get";
+  input: {
+    query?: EndpointFavouritesListItems_InputQuery;
+  };
+  output: {
+    OK: EndpointFavouritesListItems_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFavouritesListItems_InputQuery {
+  projectType: "mod" | "modpack" | "resourcepack" | "shader" | "datapack" | "plugin";
+  query?: string;
+  page?: string;
+}
+export interface EndpointFavouritesListItems_OutputOK {
+  items: {
+    client_side: string;
+    server_side: string;
+    game_versions: string[];
+    id: string;
+    slug: string;
+    project_type: string;
+    team: string;
+    organization: string | null;
+    title: string;
+    description: string;
+    body: string;
+    body_url: null;
+    published: string;
+    updated: string;
+    approved: string;
+    queued: null;
+    status: string;
+    requested_status: null;
+    moderator_message: null;
+    license: {
+      id: string;
+      name: string;
+      url: string | null;
+    };
+    downloads: number;
+    followers: number;
+    categories: string[];
+    additional_categories: unknown[];
+    loaders: string[];
+    versions: string[];
+    icon_url: string;
+    issues_url: string;
+    source_url: string;
+    wiki_url: string;
+    discord_url: string;
+    donation_urls: unknown[];
+    gallery: {
+      url: string;
+      raw_url: string;
+      featured: boolean;
+      title: string | null;
+      description: null;
+      created: string;
+      ordering: number;
+    }[];
+    color: number;
+    thread_id: string;
+    monetization_status: string;
+  }[];
+  total: number;
+}
+export interface EndpointFavouritesRemoveItem {
+  method: "post";
+  input: {
+    body?: EndpointFavouritesRemoveItem_InputBody;
+  };
+  output: {
+    OK: EndpointFavouritesRemoveItem_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFavouritesRemoveItem_InputBody {
+  projectId: string;
+}
