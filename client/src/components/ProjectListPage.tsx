@@ -1,9 +1,7 @@
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import {
   type ComponentProps,
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction
+  type ReactNode
 } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
@@ -185,7 +183,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
                           page={page}
                           totalPages={Math.ceil(total / 20)}
                           onPageChange={
-                            setPage as Dispatch<SetStateAction<number>>
+                            setPage
                           }
                         />
                         <ViewMode.When mode="list">
@@ -216,7 +214,7 @@ function ProjectListPage<TFilterKeys extends string[]>({
                           page={page}
                           totalPages={Math.ceil(total / 20)}
                           onPageChange={
-                            setPage as Dispatch<SetStateAction<number>>
+                            setPage
                           }
                         />
                       </Stack>

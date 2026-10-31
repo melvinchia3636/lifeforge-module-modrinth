@@ -61,7 +61,7 @@ function GeneralSection({
                   }
                 : undefined
             }
-            icon={`customHTML:${icons[item as keyof typeof icons]}`}
+            icon={`customHTML:${icons[item]}`}
             label={item}
             namespace={false}
             onClick={() => {

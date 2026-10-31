@@ -24,7 +24,7 @@ function ProjectMetadata({
           {
             sizeFormatter({
               render: (literal, suffix) => `${literal}${suffix}`
-            })(entry.downloads) as string
+            })(entry.downloads)
           }
         </Text>
       </Flex>
@@ -34,7 +34,7 @@ function ProjectMetadata({
           {
             sizeFormatter({
               render: (literal, suffix) => `${literal}${suffix}`
-            })('follows' in entry ? entry.follows : entry.followers) as string
+            })('follows' in entry ? entry.follows : entry.followers)
           }
         </Text>
       </Flex>

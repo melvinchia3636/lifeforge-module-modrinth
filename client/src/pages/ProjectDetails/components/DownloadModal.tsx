@@ -136,12 +136,12 @@ function DownloadModal({
                       <Flex align="center" gap="sm">
                         <Box
                           dangerouslySetInnerHTML={{
-                            __html: getIcon(selectedPlatform!) || ''
+                            __html: getIcon(selectedPlatform) || ''
                           }}
                           height="1em"
                           width="1em"
                         />
-                        {getKey(selectedPlatform!) || selectedPlatform}
+                        {getKey(selectedPlatform) || selectedPlatform}
                       </Flex>
                     ) : (
                       t('projectDetails.downloadModal.selectPlatform')
